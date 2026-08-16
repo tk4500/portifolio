@@ -59,6 +59,14 @@ function openLiveSite() {
     <!-- Content body -->
     <div class="p-8 max-w-3xl mx-auto space-y-8">
 
+      <!-- Tech Stack -->
+      <div v-if="currentProject.stack && currentProject.stack.length > 0" class="flex flex-wrap gap-3">
+        <h3 class="w-full text-sm font-bold uppercase tracking-wider opacity-60">{{ t('programs.projectViewer.techStack') }}</h3>
+        <div v-for="(techIcon, idx) in currentProject.stack" :key="idx" class="w-10 h-10 bg-white/50 dark:bg-black/50 p-2 rounded-lg border border-[var(--window-border)] flex items-center justify-center hover:shadow-md transition-shadow">
+          <AppIcon :icon="techIcon" fallback="🧩" class="text-xl" />
+        </div>
+      </div>
+
       <!-- Actions -->
       <div class="flex flex-wrap gap-4">
         <button

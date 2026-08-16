@@ -68,7 +68,8 @@
       "openLiveSite": "Open Live Site",
       "viewSource": "View Source (GitHub)",
       "screenshots": "Screenshots",
-      "noScreenshots": "No screenshots available for this project."
+      "noScreenshots": "No screenshots available for this project.",
+      "techStack": "Technologies Used"
     },
     "stack": {
       "description": "Technologies, frameworks, and tools I use.",

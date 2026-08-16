@@ -1,13 +1,41 @@
 {
   "en": [
     {
+      "id": "portfolio_os",
+      "name": "Desktop Metaphor Portfolio",
+      "description": "A dynamic, interactive portfolio website mimicking a classic desktop OS environment. Built with Vue 3 and Tailwind CSS, featuring draggable windows, a dynamic taskbar, and fully JSON-driven content with bilingual support (EN/PT).",
+      "url": "https://tk4500.github.io/portifolio/",
+      "github": "https://github.com/tk4500/portifolio",
+      "icon": "🪟",
+      "screenshots": [],
+      "stack": [
+        "icons/vuejs-original.svg",
+        "icons/typescript-original.svg",
+        "icons/tailwindcss-original.svg",
+        "icons/vite-original.svg",
+        "icons/githubactions-original.svg",
+        "🤖"
+      ]
+    },
+    {
       "id": "winthor_integration",
       "name": "WinThor B2B Integration",
       "description": "An automated application integrating FastAPI and React with the WinThor ERP system to process B2B orders from PDF files. Built using Docker and deployed on Oracle Cloud infrastructure.",
       "url": "",
       "github": "https://github.com/tk4500/docker-pdf-winthor",
       "icon": "⚙️",
-      "screenshots": []
+      "screenshots": [],
+      "stack": [
+        "icons/fastapi-original.svg",
+        "icons/react-original.svg",
+        "icons/docker-original.svg",
+        "icons/oracle-original.svg",
+        "icons/postgresql-original.svg",
+        "icons/python-original.svg",
+        "icons/sqlalchemy-original.svg",
+        "icons/gemini.svg",
+        "icons/axios-plain.svg"
+      ]
     },
     {
       "id": "nextrole",
@@ -16,7 +44,13 @@
       "url": "https://chromewebstore.google.com/detail/ffbangkcbcikejabbidnalhhkiglfoaf",
       "github": "https://github.com/tk4500/resume-ai-extension",
       "icon": "🧩",
-      "screenshots": []
+      "screenshots": [],
+      "stack": [
+        "icons/javascript-original.svg",
+        "icons/html5-original.svg",
+        "icons/css3-original.svg",
+        "icons/gemini.svg"
+      ]
     },
     {
       "id": "devs_journey",
@@ -25,7 +59,16 @@
       "url": "https://devsjourney-97162.web.app/",
       "github": "https://github.com/tk4500/devsjourney-97162",
       "icon": "🚀",
-      "screenshots": []
+      "screenshots": [],
+      "stack": [
+        "icons/angular-original.svg",
+        "icons/primeng-original.svg",
+        "icons/blockly.png",
+        "icons/javascript-original.svg",
+        "icons/typescript-original.svg",
+        "icons/googlecloud-original.svg",
+        "icons/firebase-original.svg"
+      ]
     },
     {
       "id": "aula_maker",
@@ -34,7 +77,14 @@
       "url": "https://tk4500.github.io/aula-maker/",
       "github": "https://github.com/tk4500/aula-maker",
       "icon": "📝",
-      "screenshots": []
+      "screenshots": [],
+      "stack": [
+        "icons/html5-original.svg",
+        "icons/javascript-original.svg",
+        "icons/css3-original.svg",
+        "icons/githubactions-original.svg",
+        "icons/gemini.svg"
+      ]
     },
     {
       "id": "firecast_plugins",
@@ -43,7 +93,12 @@
       "url": "",
       "github": "https://github.com/tk4500/genericAi",
       "icon": "🎲",
-      "screenshots": []
+      "screenshots": [],
+      "stack": [
+        "icons/lua-original.svg",
+        "icons/git-original.svg",
+        "icons/gemini.svg"
+      ]
     },
     {
       "id": "geotetraarmor",
@@ -52,10 +107,32 @@
       "url": "https://modrinth.com/mod/geotetraarmor-fork",
       "github": "https://github.com/tk4500/GeoTetraArmor",
       "icon": "⛏️",
-      "screenshots": []
+      "screenshots": [],
+      "stack": [
+        "icons/java-original.svg",
+        "icons/github.svg",
+        "icons/gradle-original.svg"
+      ]
     }
   ],
   "pt": [
+    {
+      "id": "portfolio_os",
+      "name": "Portfólio OS (Desktop Metaphor)",
+      "description": "Um site de portfólio dinâmico e interativo que imita um ambiente clássico de sistema operacional desktop. Construído com Vue 3 e Tailwind CSS, possui janelas arrastáveis, uma barra de tarefas dinâmica e conteúdo totalmente alimentado por JSON com suporte bilíngue (EN/PT).",
+      "url": "https://tk4500.github.io/portifolio/",
+      "github": "https://github.com/tk4500/portifolio",
+      "icon": "🪟",
+      "screenshots": [],
+      "stack": [
+        "icons/vuejs-original.svg",
+        "icons/typescript-original.svg",
+        "icons/tailwindcss-original.svg",
+        "icons/vite-original.svg",
+        "icons/githubactions-original.svg",
+        "🤖"
+      ]
+    },
     {
       "id": "winthor_integration",
       "name": "Integração B2B WinThor",
@@ -63,7 +140,18 @@
       "url": "",
       "github": "https://github.com/tk4500/docker-pdf-winthor",
       "icon": "⚙️",
-      "screenshots": []
+      "screenshots": [],
+      "stack": [
+        "icons/fastapi-original.svg",
+        "icons/react-original.svg",
+        "icons/docker-original.svg",
+        "icons/oracle-original.svg",
+        "icons/postgresql-original.svg",
+        "icons/python-original.svg",
+        "icons/sqlalchemy-original.svg",
+        "icons/gemini.svg",
+        "icons/axios-plain.svg"
+      ]
     },
     {
       "id": "nextrole",
@@ -72,7 +160,13 @@
       "url": "https://chromewebstore.google.com/detail/ffbangkcbcikejabbidnalhhkiglfoaf",
       "github": "https://github.com/tk4500/resume-ai-extension",
       "icon": "🧩",
-      "screenshots": []
+      "screenshots": [],
+      "stack": [
+        "icons/javascript-original.svg",
+        "icons/html5-original.svg",
+        "icons/css3-original.svg",
+        "icons/gemini.svg"
+      ]
     },
     {
       "id": "devs_journey",
@@ -81,7 +175,16 @@
       "url": "https://devsjourney-97162.web.app/",
       "github": "https://github.com/tk4500/devsjourney-97162",
       "icon": "🚀",
-      "screenshots": []
+      "screenshots": [],
+      "stack": [
+        "icons/angular-original.svg",
+        "icons/primeng-original.svg",
+        "icons/blockly.png",
+        "icons/javascript-original.svg",
+        "icons/typescript-original.svg",
+        "icons/googlecloud-original.svg",
+        "icons/firebase-original.svg"
+      ]
     },
     {
       "id": "aula_maker",
@@ -90,7 +193,14 @@
       "url": "https://tk4500.github.io/aula-maker/",
       "github": "https://github.com/tk4500/aula-maker",
       "icon": "📝",
-      "screenshots": []
+      "screenshots": [],
+      "stack": [
+        "icons/html5-original.svg",
+        "icons/javascript-original.svg",
+        "icons/css3-original.svg",
+        "icons/githubactions-original.svg",
+        "icons/gemini.svg"
+      ]
     },
     {
       "id": "firecast_plugins",
@@ -99,7 +209,12 @@
       "url": "",
       "github": "https://github.com/tk4500/genericAi",
       "icon": "🎲",
-      "screenshots": []
+      "screenshots": [],
+      "stack": [
+        "icons/lua-original.svg",
+        "icons/git-original.svg",
+        "icons/gemini.svg"
+      ]
     },
     {
       "id": "geotetraarmor",
@@ -108,7 +223,12 @@
       "url": "https://modrinth.com/mod/geotetraarmor-fork",
       "github": "https://github.com/tk4500/GeoTetraArmor",
       "icon": "⛏️",
-      "screenshots": []
+      "screenshots": [],
+      "stack": [
+        "icons/java-original.svg",
+        "icons/github.svg",
+        "icons/gradle-original.svg"
+      ]
     }
   ]
 }

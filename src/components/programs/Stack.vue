@@ -32,28 +32,28 @@ const categories = computed(() => {
       <div v-for="(category, cIdx) in categories" :key="cIdx" class="space-y-4">
         <h2 class="text-xl font-bold border-b border-[var(--window-border)] pb-2">{{ category.category }}</h2>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
           <div
             v-for="item in category.items"
             :key="item.id"
-            class="bg-black/5 dark:bg-white/5 border border-[var(--window-border)] rounded-lg p-4 hover:shadow-md transition-shadow"
+            class="bg-black/5 dark:bg-white/5 border border-[var(--window-border)] rounded-lg p-3 hover:shadow-md transition-shadow flex flex-col justify-between"
           >
-            <div class="flex items-center gap-3 mb-3">
+            <div class="flex items-center gap-3 mb-2">
               <div class="w-8 h-8 flex-shrink-0 bg-white/50 dark:bg-black/50 p-1.5 rounded-md flex items-center justify-center border border-[var(--window-border)]">
                 <AppIcon :icon="item.icon" :fallback="item.name.charAt(0)" />
               </div>
-              <span class="font-medium">{{ item.name }}</span>
+              <span class="font-medium text-sm truncate" :title="item.name">{{ item.name }}</span>
             </div>
 
             <!-- Usage level bar -->
-            <div>
-              <div class="flex justify-between text-xs opacity-70 mb-1">
+            <div class="mt-auto">
+              <div class="flex justify-between text-[10px] opacity-70 mb-1">
                 <span>{{ t('programs.stack.usage') || 'Usage Level' }}</span>
                 <span>{{ item.level }}%</span>
               </div>
-              <div class="w-full bg-black/10 dark:bg-white/10 rounded-full h-2 overflow-hidden">
+              <div class="w-full bg-black/10 dark:bg-white/10 rounded-full h-1.5 overflow-hidden">
                 <div
-                  class="bg-emerald-500 h-2 rounded-full transition-all duration-1000 ease-out"
+                  class="bg-emerald-500 h-1.5 rounded-full transition-all duration-1000 ease-out"
                   :style="`width: ${item.level}%`"
                 ></div>
               </div>

@@ -68,7 +68,8 @@
       "openLiveSite": "Abrir Site Ao Vivo",
       "viewSource": "Ver Código (GitHub)",
       "screenshots": "Capturas de Tela",
-      "noScreenshots": "Nenhuma captura de tela disponível para este projeto."
+      "noScreenshots": "Nenhuma captura de tela disponível para este projeto.",
+      "techStack": "Tecnologias Utilizadas"
     },
     "stack": {
       "description": "Tecnologias, frameworks e ferramentas que utilizo.",

@@ -3,26 +3,279 @@
     {
       "category": "Frontend",
       "items": [
-        { "id": "vue", "name": "Vue 3", "icon": "icons/vue.svg", "level": 90 },
-        { "id": "react", "name": "React", "icon": "icons/react.svg", "level": 85 },
-        { "id": "tailwind", "name": "Tailwind CSS", "icon": "icons/tailwind.svg", "level": 95 },
-        { "id": "typescript", "name": "TypeScript", "icon": "icons/typescript.svg", "level": 80 }
+        {
+          "id": "angular",
+          "name": "Angular",
+          "icon": "icons/angular-original.svg",
+          "level": 90
+        },
+        {
+          "id": "vue",
+          "name": "Vue 3",
+          "icon": "icons/vuejs-original.svg",
+          "level": 85
+        },
+        {
+          "id": "react",
+          "name": "React",
+          "icon": "icons/react-original.svg",
+          "level": 80
+        },
+        {
+          "id": "js",
+          "name": "JavaScript",
+          "icon": "icons/javascript-original.svg",
+          "level": 95
+        },
+        {
+          "id": "typescript",
+          "name": "TypeScript",
+          "icon": "icons/typescript-original.svg",
+          "level": 90
+        },
+        {
+          "id": "html5",
+          "name": "HTML5",
+          "icon": "icons/html5-original.svg",
+          "level": 95
+        },
+        {
+          "id": "css3",
+          "name": "CSS3",
+          "icon": "icons/css3-original.svg",
+          "level": 90
+        },
+        {
+          "id": "primeng",
+          "name": "PrimeNG",
+          "icon": "icons/primeng-original.svg",
+          "level": 90
+        },
+        {
+          "id": "tailwind",
+          "name": "Tailwind CSS",
+          "icon": "icons/tailwindcss-original.svg",
+          "level": 90
+        },
+        {
+          "id": "bootstrap",
+          "name": "Bootstrap",
+          "icon": "icons/bootstrap-original.svg",
+          "level": 85
+        },
+        {
+          "id": "nextjs",
+          "name": "Next.js",
+          "icon": "icons/nextjs-original.svg",
+          "level": 75
+        }
       ]
     },
     {
       "category": "Backend",
       "items": [
-        { "id": "node", "name": "Node.js", "icon": "icons/node.svg", "level": 85 },
-        { "id": "python", "name": "Python", "icon": "icons/python.svg", "level": 75 },
-        { "id": "fastapi", "name": "FastAPI", "icon": "icons/fastapi.svg", "level": 70 }
+        {
+          "id": "java",
+          "name": "Java",
+          "icon": "icons/java-original.svg",
+          "level": 95
+        },
+        {
+          "id": "springboot",
+          "name": "Spring Boot",
+          "icon": "icons/spring-original.svg",
+          "level": 90
+        },
+        {
+          "id": "csharp",
+          "name": "C#",
+          "icon": "icons/csharp-original.svg",
+          "level": 80
+        },
+        {
+          "id": "python",
+          "name": "Python",
+          "icon": "icons/python-original.svg",
+          "level": 75
+        },
+        {
+          "id": "fastapi",
+          "name": "FastAPI",
+          "icon": "icons/fastapi-original.svg",
+          "level": 75
+        },
+        {
+          "id": "node",
+          "name": "Node.js",
+          "icon": "icons/nodejs-original.svg",
+          "level": 70
+        },
+        {
+          "id": "lua",
+          "name": "Lua",
+          "icon": "icons/lua-original.svg",
+          "level": 60
+        },
+        {
+          "id": "hibernate",
+          "name": "Hibernate/JPA",
+          "icon": "icons/hibernate-original.svg",
+          "level": 85
+        },
+        {
+          "id": "sqlalchemy",
+          "name": "SQLAlchemy",
+          "icon": "icons/sqlalchemy-original.svg",
+          "level": 75
+        }
       ]
     },
     {
-      "category": "Tools & Others",
+      "category": "Tools, Cloud & Others",
       "items": [
-        { "id": "git", "name": "Git", "icon": "icons/git.svg", "level": 90 },
-        { "id": "docker", "name": "Docker", "icon": "icons/docker.svg", "level": 70 },
-        { "id": "figma", "name": "Figma", "icon": "icons/figma.svg", "level": 60 }
+        {
+          "id": "postgresql",
+          "name": "PostgreSQL",
+          "icon": "icons/postgresql-original.svg",
+          "level": 85
+        },
+        {
+          "id": "mysql",
+          "name": "MySQL",
+          "icon": "icons/mysql-original.svg",
+          "level": 80
+        },
+        {
+          "id": "rabbitmq",
+          "name": "RabbitMQ",
+          "icon": "icons/rabbitmq-original.svg",
+          "level": 75
+        },
+        {
+          "id": "mongodb",
+          "name": "MongoDB",
+          "icon": "icons/mongodb-original.svg",
+          "level": 70
+        },
+        {
+          "id": "git",
+          "name": "Git",
+          "icon": "icons/git-original.svg",
+          "level": 90
+        },
+        {
+          "id": "github",
+          "name": "GitHub",
+          "icon": "icons/github-original.svg",
+          "level": 90
+        },
+        {
+          "id": "docker",
+          "name": "Docker",
+          "icon": "icons/docker-original.svg",
+          "level": 80
+        },
+        {
+          "id": "linux",
+          "name": "Linux",
+          "icon": "icons/linux-original.svg",
+          "level": 80
+        },
+        {
+          "id": "ubuntu",
+          "name": "Ubuntu",
+          "icon": "icons/ubuntu-original.svg",
+          "level": 85
+        },
+        {
+          "id": "oracle-cloud",
+          "name": "Oracle Cloud",
+          "icon": "icons/oracle-original.svg",
+          "level": 70
+        },
+        {
+          "id": "gcp",
+          "name": "Google Cloud",
+          "icon": "icons/googlecloud-original.svg",
+          "level": 70
+        },
+        {
+          "id": "firebase",
+          "name": "Firebase",
+          "icon": "icons/firebase-original.svg",
+          "level": 75
+        },
+        {
+          "id": "supabase",
+          "name": "Supabase",
+          "icon": "icons/supabase-original.svg",
+          "level": 70
+        },
+        {
+          "id": "vercel",
+          "name": "Vercel",
+          "icon": "icons/vercel-original.svg",
+          "level": 80
+        },
+        {
+          "id": "vps",
+          "name": "VPS Hosting",
+          "icon": "☁️",
+          "level": 75
+        },
+        {
+          "id": "githubactions",
+          "name": "GitHub Actions",
+          "icon": "icons/githubactions-original.svg",
+          "level": 70
+        },
+        {
+          "id": "vite",
+          "name": "Vite",
+          "icon": "icons/vite-original.svg",
+          "level": 85
+        },
+        {
+          "id": "npm",
+          "name": "NPM",
+          "icon": "icons/npm-original.svg",
+          "level": 85
+        },
+        {
+          "id": "b2b",
+          "name": "B2B Integrations",
+          "icon": "🔗",
+          "level": 85
+        },
+        {
+          "id": "figma",
+          "name": "Figma",
+          "icon": "icons/figma-original.svg",
+          "level": 60
+        }
+      ]
+    },
+    {
+      "category": "Artificial Intelligence",
+      "items": [
+        {
+          "id": "ollama",
+          "name": "Ollama",
+          "icon": "icons/ollama.png",
+          "level": 75
+        },
+        {
+          "id": "gemini",
+          "name": "Gemini AI",
+          "icon": "icons/gemini.svg",
+          "level": 80
+        },
+        {
+          "id": "9router",
+          "name": "9Router",
+          "icon": "icons/9router.svg",
+          "level": 70
+        }
       ]
     }
   ],
@@ -30,26 +283,279 @@
     {
       "category": "Frontend",
       "items": [
-        { "id": "vue", "name": "Vue 3", "icon": "icons/vue.svg", "level": 90 },
-        { "id": "react", "name": "React", "icon": "icons/react.svg", "level": 85 },
-        { "id": "tailwind", "name": "Tailwind CSS", "icon": "icons/tailwind.svg", "level": 95 },
-        { "id": "typescript", "name": "TypeScript", "icon": "icons/typescript.svg", "level": 80 }
+        {
+          "id": "angular",
+          "name": "Angular",
+          "icon": "icons/angular-original.svg",
+          "level": 90
+        },
+        {
+          "id": "vue",
+          "name": "Vue 3",
+          "icon": "icons/vuejs-original.svg",
+          "level": 85
+        },
+        {
+          "id": "react",
+          "name": "React",
+          "icon": "icons/react-original.svg",
+          "level": 80
+        },
+        {
+          "id": "js",
+          "name": "JavaScript",
+          "icon": "icons/javascript-original.svg",
+          "level": 95
+        },
+        {
+          "id": "typescript",
+          "name": "TypeScript",
+          "icon": "icons/typescript-original.svg",
+          "level": 90
+        },
+        {
+          "id": "html5",
+          "name": "HTML5",
+          "icon": "icons/html5-original.svg",
+          "level": 95
+        },
+        {
+          "id": "css3",
+          "name": "CSS3",
+          "icon": "icons/css3-original.svg",
+          "level": 90
+        },
+        {
+          "id": "primeng",
+          "name": "PrimeNG",
+          "icon": "icons/primeng-original.svg",
+          "level": 90
+        },
+        {
+          "id": "tailwind",
+          "name": "Tailwind CSS",
+          "icon": "icons/tailwindcss-original.svg",
+          "level": 90
+        },
+        {
+          "id": "bootstrap",
+          "name": "Bootstrap",
+          "icon": "icons/bootstrap-original.svg",
+          "level": 85
+        },
+        {
+          "id": "nextjs",
+          "name": "Next.js",
+          "icon": "icons/nextjs-original.svg",
+          "level": 75
+        }
       ]
     },
     {
       "category": "Backend",
       "items": [
-        { "id": "node", "name": "Node.js", "icon": "icons/node.svg", "level": 85 },
-        { "id": "python", "name": "Python", "icon": "icons/python.svg", "level": 75 },
-        { "id": "fastapi", "name": "FastAPI", "icon": "icons/fastapi.svg", "level": 70 }
+        {
+          "id": "java",
+          "name": "Java",
+          "icon": "icons/java-original.svg",
+          "level": 95
+        },
+        {
+          "id": "springboot",
+          "name": "Spring Boot",
+          "icon": "icons/spring-original.svg",
+          "level": 90
+        },
+        {
+          "id": "csharp",
+          "name": "C#",
+          "icon": "icons/csharp-original.svg",
+          "level": 80
+        },
+        {
+          "id": "python",
+          "name": "Python",
+          "icon": "icons/python-original.svg",
+          "level": 75
+        },
+        {
+          "id": "fastapi",
+          "name": "FastAPI",
+          "icon": "icons/fastapi-original.svg",
+          "level": 75
+        },
+        {
+          "id": "node",
+          "name": "Node.js",
+          "icon": "icons/nodejs-original.svg",
+          "level": 70
+        },
+        {
+          "id": "lua",
+          "name": "Lua",
+          "icon": "icons/lua-original.svg",
+          "level": 60
+        },
+        {
+          "id": "hibernate",
+          "name": "Hibernate/JPA",
+          "icon": "icons/hibernate-original.svg",
+          "level": 85
+        },
+        {
+          "id": "sqlalchemy",
+          "name": "SQLAlchemy",
+          "icon": "icons/sqlalchemy-original.svg",
+          "level": 75
+        }
       ]
     },
     {
-      "category": "Ferramentas & Outros",
+      "category": "Ferramentas, Cloud & Outros",
       "items": [
-        { "id": "git", "name": "Git", "icon": "icons/git.svg", "level": 90 },
-        { "id": "docker", "name": "Docker", "icon": "icons/docker.svg", "level": 70 },
-        { "id": "figma", "name": "Figma", "icon": "icons/figma.svg", "level": 60 }
+        {
+          "id": "postgresql",
+          "name": "PostgreSQL",
+          "icon": "icons/postgresql-original.svg",
+          "level": 85
+        },
+        {
+          "id": "mysql",
+          "name": "MySQL",
+          "icon": "icons/mysql-original.svg",
+          "level": 80
+        },
+        {
+          "id": "rabbitmq",
+          "name": "RabbitMQ",
+          "icon": "icons/rabbitmq-original.svg",
+          "level": 75
+        },
+        {
+          "id": "mongodb",
+          "name": "MongoDB",
+          "icon": "icons/mongodb-original.svg",
+          "level": 70
+        },
+        {
+          "id": "git",
+          "name": "Git",
+          "icon": "icons/git-original.svg",
+          "level": 90
+        },
+        {
+          "id": "github",
+          "name": "GitHub",
+          "icon": "icons/github-original.svg",
+          "level": 90
+        },
+        {
+          "id": "docker",
+          "name": "Docker",
+          "icon": "icons/docker-original.svg",
+          "level": 80
+        },
+        {
+          "id": "linux",
+          "name": "Linux",
+          "icon": "icons/linux-original.svg",
+          "level": 80
+        },
+        {
+          "id": "ubuntu",
+          "name": "Ubuntu",
+          "icon": "icons/ubuntu-original.svg",
+          "level": 85
+        },
+        {
+          "id": "oracle-cloud",
+          "name": "Oracle Cloud",
+          "icon": "icons/oracle-original.svg",
+          "level": 70
+        },
+        {
+          "id": "gcp",
+          "name": "Google Cloud",
+          "icon": "icons/googlecloud-original.svg",
+          "level": 70
+        },
+        {
+          "id": "firebase",
+          "name": "Firebase",
+          "icon": "icons/firebase-original.svg",
+          "level": 75
+        },
+        {
+          "id": "supabase",
+          "name": "Supabase",
+          "icon": "icons/supabase-original.svg",
+          "level": 70
+        },
+        {
+          "id": "vercel",
+          "name": "Vercel",
+          "icon": "icons/vercel-original.svg",
+          "level": 80
+        },
+        {
+          "id": "vps",
+          "name": "Hospedagem VPS",
+          "icon": "☁️",
+          "level": 75
+        },
+        {
+          "id": "githubactions",
+          "name": "GitHub Actions",
+          "icon": "icons/githubactions-original.svg",
+          "level": 70
+        },
+        {
+          "id": "vite",
+          "name": "Vite",
+          "icon": "icons/vite-original.svg",
+          "level": 85
+        },
+        {
+          "id": "npm",
+          "name": "NPM",
+          "icon": "icons/npm-original.svg",
+          "level": 85
+        },
+        {
+          "id": "b2b",
+          "name": "Integrações B2B",
+          "icon": "🔗",
+          "level": 85
+        },
+        {
+          "id": "figma",
+          "name": "Figma",
+          "icon": "icons/figma-original.svg",
+          "level": 60
+        }
+      ]
+    },
+    {
+      "category": "Inteligência Artificial",
+      "items": [
+        {
+          "id": "ollama",
+          "name": "Ollama",
+          "icon": "icons/ollama.png",
+          "level": 75
+        },
+        {
+          "id": "gemini",
+          "name": "Gemini AI",
+          "icon": "icons/gemini.svg",
+          "level": 80
+        },
+        {
+          "id": "9router",
+          "name": "9Router",
+          "icon": "icons/9router.svg",
+          "level": 70
+        }
       ]
     }
   ]
