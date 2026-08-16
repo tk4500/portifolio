@@ -3,8 +3,8 @@
     "profile": {
       "name": "Tarcísio Luiz Pereira Bogo",
       "bio": "FullStack Developer with a degree in Systems Analysis and Development (IFSC) and previous background in Mechatronics. Specialized in building end-to-end applications, I have hands-on experience with technologies such as Java, Spring Boot, Angular, React, FastAPI, and Node.js. Recently, I have focused my energy on freelance projects, delivering solutions ranging from the automation and integration of complex ERPs to the development of web extensions and bespoke AI tools. I am driven by creating clean, modular code aimed at solving real business problems.",
-      "avatar": "/pfp.jpeg",
-      "resume": "/Profile.pdf"
+      "avatar": "pfp.jpeg",
+      "resume": "Profile.pdf"
     },
     "tabs": [
       {
@@ -109,8 +109,8 @@
     "profile": {
       "name": "Tarcísio Luiz Pereira Bogo",
       "bio": "Desenvolvedor FullStack graduado em Análise e Desenvolvimento de Sistemas (IFSC), com vivência prévia em Mecatrônica. Especializado em construir aplicações end-to-end, tenho experiência prática com tecnologias como Java, Spring Boot, Angular, React, FastAPI e Node.js. Nos últimos tempos, tenho focado minha energia em projetos freelance, entregando soluções que vão desde a automação e integração de ERPs complexos até o desenvolvimento de extensões web e ferramentas sob medida com IA. Sou motivado pela criação de código limpo, modular e voltado para a resolução de problemas reais de negócios.",
-      "avatar": "/pfp.jpeg",
-      "resume": "/Profile.pdf"
+      "avatar": "pfp.jpeg",
+      "resume": "Profile.pdf"
     },
     "tabs": [
       {

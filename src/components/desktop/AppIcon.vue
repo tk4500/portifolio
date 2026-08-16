@@ -11,7 +11,9 @@ const isImage = computed(() => {
   // Check if it's a file path or URL
   return props.icon.includes('.svg') ||
          props.icon.includes('.png') ||
+         props.icon.includes('.webp') ||
          props.icon.includes('.jpg') ||
+         props.icon.includes('.jpeg') ||
          props.icon.startsWith('/') ||
          props.icon.startsWith('http');
 })
