@@ -16,7 +16,7 @@ const categories = computed(() => {
   <div class="h-full bg-[var(--window-bg)] text-[var(--window-title-text)] overflow-y-auto">
     <!-- Header banner -->
     <div class="bg-gradient-to-r from-teal-600 to-emerald-700 text-white p-8">
-      <div class="flex items-center gap-4 max-w-3xl mx-auto">
+      <div class="flex items-center gap-4 max-w-6xl mx-auto w-full">
         <div class="text-6xl bg-white/20 p-4 rounded-xl backdrop-blur-sm">
           🛠️
         </div>
@@ -28,7 +28,7 @@ const categories = computed(() => {
     </div>
 
     <!-- Content body -->
-    <div class="p-8 max-w-3xl mx-auto space-y-8">
+    <div class="p-8 max-w-6xl mx-auto w-full space-y-8">
       <div v-for="(category, cIdx) in categories" :key="cIdx" class="space-y-4">
         <h2 class="text-xl font-bold border-b border-[var(--window-border)] pb-2">{{ category.category }}</h2>
 
