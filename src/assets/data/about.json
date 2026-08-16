@@ -1,0 +1,214 @@
+{
+  "en": {
+    "profile": {
+      "name": "Tarcísio Luiz Pereira Bogo",
+      "bio": "FullStack Developer with a degree in Systems Analysis and Development (IFSC) and previous background in Mechatronics. Specialized in building end-to-end applications, I have hands-on experience with technologies such as Java, Spring Boot, Angular, React, FastAPI, and Node.js. Recently, I have focused my energy on freelance projects, delivering solutions ranging from the automation and integration of complex ERPs to the development of web extensions and bespoke AI tools. I am driven by creating clean, modular code aimed at solving real business problems.",
+      "avatar": "/pfp.jpeg",
+      "resume": "/Profile.pdf"
+    },
+    "tabs": [
+      {
+        "id": "work",
+        "title": "Work Experience",
+        "items": [
+          {
+            "title": "Administrative Assistant",
+            "subtitle": "Sulfrios Indústria, Comércio e Transportes de Alimentos Ltda",
+            "period": "January 2026 - February 2026",
+            "details": "Içara, SC"
+          },
+          {
+            "title": "Software Developer (Intern)",
+            "subtitle": "Trier Sistemas",
+            "period": "July 2024 - May 2025",
+            "details": "• Development and maintenance of web applications (microservices) with Java (Spring Boot) and Angular, focused on the goods receipt module.\n• Bug resolution and improvements implementation in Java microservices, utilizing REST APIs and RabbitMQ.\n• Angular interfaces development using PrimeNG (proprietary fork); UI components implementation for backend features (email sending, product synchronization).\n• Experience with PostgreSQL, SQL queries, JPA/Hibernate.\n• Microservice migration execution and unit test creation (JUnit).\n• Practical experience with Docker, Git, and agile methodologies (Scrum)."
+          },
+          {
+            "title": "IT Support Assistant",
+            "subtitle": "Fort Atacadista",
+            "period": "October 2022 - May 2024",
+            "details": "• On-site technical support for IT assets (hardware, software, systems), diagnosing and resolving problems for employees.\n• Ticket management (Ellevo), prioritizing and resolving critical incidents, including POS failures and system update optimization (reduced key process from 11 to 3 days).\n• Preventive/corrective maintenance of computers, printers, scanners, ECFs, routers, servers, and Raspberry Pis.\n• Technical interface with employees, third parties, and clients; contribution to the optimization of support manuals."
+          },
+          {
+            "title": "Administrative Assistant",
+            "subtitle": "Fort Atacadista",
+            "period": "August 2022 - September 2022",
+            "details": "• Customer service (phone, chat, email) for product, inventory, and pricing information.\n• Interdepartmental collaboration to ensure sales information accuracy and shelf inspection."
+          },
+          {
+            "title": "Stock Clerk",
+            "subtitle": "Fort Atacadista",
+            "period": "September 2021 - July 2022",
+            "details": "• Responsible for stocking, pricing, expiration date control, and product inventory, following layout and optimizing inventory management.\n• Daily interaction with customers to assist with product location and information, improving the shopping experience."
+          }
+        ]
+      },
+      {
+        "id": "academics",
+        "title": "Academics",
+        "items": [
+          {
+            "title": "Degree in Systems Analysis and Development (CST)",
+            "subtitle": "IFSC - Instituto Federal de Santa Catarina",
+            "period": "July 2022 - December 2025",
+            "details": "Higher Technology Course (CST)"
+          },
+          {
+            "title": "Bachelor's in Mechatronics Engineering (Incomplete)",
+            "subtitle": "IFSC - Instituto Federal de Santa Catarina",
+            "period": "January 2018 - June 2022",
+            "details": "Bachelor's Degree program"
+          },
+          {
+            "title": "Integrated Technical Course in Mechatronics, Robotics, and Control & Automation Engineering",
+            "subtitle": "IFSC - Instituto Federal de Santa Catarina",
+            "period": "February 2015 - December 2017",
+            "details": "Integrated Technical High School Course"
+          }
+        ]
+      },
+      {
+        "id": "certifications",
+        "title": "Certifications",
+        "items": [
+          {
+            "title": "C#: creating your first application",
+            "subtitle": "Alura",
+            "period": "",
+            "details": "Completed certification course"
+          },
+          {
+            "title": "C#: applying Object Orientation",
+            "subtitle": "Alura",
+            "period": "",
+            "details": "Completed certification course"
+          },
+          {
+            "title": "HTML and CSS: practicing HTML/CSS",
+            "subtitle": "Alura",
+            "period": "",
+            "details": "Completed certification course"
+          },
+          {
+            "title": "Java: applying Object Orientation",
+            "subtitle": "Alura",
+            "period": "",
+            "details": "Completed certification course"
+          },
+          {
+            "title": "Java: consuming API, writing files and handling errors",
+            "subtitle": "Alura",
+            "period": "",
+            "details": "Completed certification course"
+          }
+        ]
+      }
+    ]
+  },
+  "pt": {
+    "profile": {
+      "name": "Tarcísio Luiz Pereira Bogo",
+      "bio": "Desenvolvedor FullStack graduado em Análise e Desenvolvimento de Sistemas (IFSC), com vivência prévia em Mecatrônica. Especializado em construir aplicações end-to-end, tenho experiência prática com tecnologias como Java, Spring Boot, Angular, React, FastAPI e Node.js. Nos últimos tempos, tenho focado minha energia em projetos freelance, entregando soluções que vão desde a automação e integração de ERPs complexos até o desenvolvimento de extensões web e ferramentas sob medida com IA. Sou motivado pela criação de código limpo, modular e voltado para a resolução de problemas reais de negócios.",
+      "avatar": "/pfp.jpeg",
+      "resume": "/Profile.pdf"
+    },
+    "tabs": [
+      {
+        "id": "work",
+        "title": "Experiência Profissional",
+        "items": [
+          {
+            "title": "Assistente administrativo",
+            "subtitle": "Sulfrios Indústria, Comércio e Transportes de Alimentos Ltda",
+            "period": "Janeiro de 2026 - Fevereiro de 2026",
+            "details": "Içara, SC"
+          },
+          {
+            "title": "Desenvolvedor de software (Estágio)",
+            "subtitle": "Trier Sistemas",
+            "period": "Julho de 2024 - Maio de 2025",
+            "details": "• Desenvolvimento e manutenção de aplicações web (microsserviços) com Java (Spring Boot) e Angular, focado no módulo de entrada de mercadorias.\n• Resolução de bugs e implementação de melhorias em microsserviços Java, utilizando APIs REST e RabbitMQ.\n• Desenvolvimento de interfaces Angular com PrimeNG (fork proprietário); implementação de componentes de UI para funcionalidades backend (envio de e-mails, sincronização de produtos).\n• Experiência com PostgreSQL, queries SQL, JPA/Hibernate.\n• Execução de migração de microsserviço e criação de testes unitários (JUnit).\n• Prática com Docker, Git e metodologias ágeis (Scrum)."
+          },
+          {
+            "title": "Auxiliar de Suporte de T.I.",
+            "subtitle": "Fort Atacadista",
+            "period": "Outubro de 2022 - Maio de 2024",
+            "details": "• Suporte técnico presencial a ativos de T.I. (hardware, software, sistemas), diagnosticando e solucionando problemas para colaboradores.\n• Gerenciamento de chamados (Ellevo), priorizando e resolvendo incidentes críticos, incluindo falhas em PDVs e otimização de atualizações de sistema (redução de 11 para 3 dias em processo chave).\n• Manutenção preventiva/corretiva de computadores, impressoras, scanners, ECFs, roteadores, servidores e Raspberry Pis.\n• Interface técnica com colaboradores, terceirizados e clientes; contribuição para otimização de manuais de suporte."
+          },
+          {
+            "title": "Auxiliar administrativo",
+            "subtitle": "Fort Atacadista",
+            "period": "Agosto de 2022 - Setembro de 2022",
+            "details": "• Atendimento a clientes (telefone, chat, e-mail) para informações de produtos, estoque e precificação.\n• Colaboração interdepartamental para garantir precisão de informações de vendas e fiscalização de gôndolas."
+          },
+          {
+            "title": "Repositor",
+            "subtitle": "Fort Atacadista",
+            "period": "Setembro de 2021 - Julho de 2022",
+            "details": "• Responsável pelo abastecimento, precificação, controle de validade e inventário de produtos, seguindo layout e otimizando a gestão de estoque.\n• Interação diária com clientes para auxílio na localização de produtos e informações, melhorando a experiência de compra."
+          }
+        ]
+      },
+      {
+        "id": "academics",
+        "title": "Formação Acadêmica",
+        "items": [
+          {
+            "title": "Curso Superior de Tecnologia (CST), Análise e Desenvolvimento de Sistemas",
+            "subtitle": "IFSC - Instituto Federal de Santa Catarina",
+            "period": "Julho de 2022 - Dezembro de 2025",
+            "details": "Curso Superior de Tecnologia"
+          },
+          {
+            "title": "Bacharelado, Engenharia Mecatrônica Incompleto",
+            "subtitle": "IFSC - Instituto Federal de Santa Catarina",
+            "period": "Janeiro de 2018 - Junho de 2022",
+            "details": "Curso de Bacharelado"
+          },
+          {
+            "title": "Curso Técnico Integrado, Mecatrônica, Robótica e Engenharia de Controle e Automação",
+            "subtitle": "IFSC - Instituto Federal de Santa Catarina",
+            "period": "Fevereiro de 2015 - Dezembro de 2017",
+            "details": "Ensino Médio Técnico Integrado"
+          }
+        ]
+      },
+      {
+        "id": "certifications",
+        "title": "Certificações",
+        "items": [
+          {
+            "title": "C#: criando sua primeira aplicação",
+            "subtitle": "Alura",
+            "period": "",
+            "details": "Curso de certificação concluído"
+          },
+          {
+            "title": "C#: aplicando a Orientação a Objetos",
+            "subtitle": "Alura",
+            "period": "",
+            "details": "Curso de certificação concluído"
+          },
+          {
+            "title": "HTML e CSS: praticando HTML/CSS",
+            "subtitle": "Alura",
+            "period": "",
+            "details": "Curso de certificação concluído"
+          },
+          {
+            "title": "Java: aplicando a Orientação a Objetos",
+            "subtitle": "Alura",
+            "period": "",
+            "details": "Curso de certificação concluído"
+          },
+          {
+            "title": "Java: consumindo API, gravando arquivos e lidando com erros",
+            "subtitle": "Alura",
+            "period": "",
+            "details": "Curso de certificação concluído"
+          }
+        ]
+      }
+    ]
+  }
+}

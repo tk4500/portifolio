@@ -1,0 +1,78 @@
+{
+  "desktop": {
+    "icons": {
+      "about": "Sobre Mim",
+      "contact": "Contato",
+      "projects": "Projetos",
+      "settings": "Configurações",
+      "stack": "Habilidades"
+    }
+  },
+  "taskbar": {
+    "start": "Iniciar",
+    "language": "Idioma"
+  },
+  "startMenu": {
+    "developer": "Desenvolvedor",
+    "portfolioSystem": "Sistema de Portfólio",
+    "apps": "Aplicativos",
+    "closeAll": "Fechar Todos os Programas"
+  },
+  "programs": {
+    "about": {
+      "title": "Sobre Mim",
+      "content": "Olá! Sou um desenvolvedor construindo coisas legais.",
+      "skills": "Minhas Habilidades"
+    },
+    "contact": {
+      "title": "Contato",
+      "email": "E-mail",
+      "github": "GitHub",
+      "linkedin": "LinkedIn"
+    },
+    "projects": {
+      "title": "Meus Projetos"
+    },
+    "settings": {
+      "title": "Configurações do Sistema",
+      "taskbarPosition": "Posição da Barra de Tarefas",
+      "backgroundAppearance": "Aparência do Fundo",
+      "theme": "Tema",
+      "themes": {
+        "light": "Claro",
+        "dark": "Escuro",
+        "system": "Padrão do Sistema"
+      },
+      "positions": {
+        "bottom": "Embaixo",
+        "top": "No topo",
+        "left": "Esquerda",
+        "right": "Direita"
+      },
+      "colors": {
+        "darkGradient": "Gradiente Escuro",
+        "lightBlue": "Azul Claro",
+        "midnight": "Meia-noite",
+        "sunset": "Pôr do Sol",
+        "forest": "Floresta",
+        "matrix": "Matrix",
+        "lavender": "Lavanda",
+        "crimson": "Carmesim"
+      }
+    },
+    "archive": {
+      "up": "Subir",
+      "items": "itens"
+    },
+    "projectViewer": {
+      "openLiveSite": "Abrir Site Ao Vivo",
+      "viewSource": "Ver Código (GitHub)",
+      "screenshots": "Capturas de Tela",
+      "noScreenshots": "Nenhuma captura de tela disponível para este projeto."
+    },
+    "stack": {
+      "description": "Tecnologias, frameworks e ferramentas que utilizo.",
+      "usage": "Nível de Uso"
+    }
+  }
+}

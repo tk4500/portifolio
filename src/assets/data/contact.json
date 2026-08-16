@@ -1,0 +1,90 @@
+{
+  "en": [
+    {
+      "id": "email",
+      "label": "Email",
+      "url": "mailto:tarcisioluizpereirabogo@gmail.com",
+      "icon": "📧",
+      "color": "text-blue-600 border-blue-200 hover:bg-blue-50"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp",
+      "url": "https://wa.me/5548999442746",
+      "icon": "/icons/whatsapp.webp",
+      "color": "text-green-600 border-green-200 hover:bg-green-50"
+    },
+    {
+      "id": "github",
+      "label": "GitHub",
+      "url": "https://github.com/tk4500",
+      "icon": "/icons/github.svg",
+      "color": "text-gray-900 border-gray-300 hover:bg-gray-100"
+    },
+    {
+      "id": "linkedin",
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/tarcisio-bogo/",
+      "icon": "/icons/linkedin.svg",
+      "color": "text-blue-700 border-blue-300 hover:bg-blue-50"
+    },
+    {
+      "id": "discord",
+      "label": "Discord",
+      "url": "https://discord.com/users/317432691660423169",
+      "icon": "/icons/discord.svg",
+      "color": "text-indigo-600 border-indigo-200 hover:bg-indigo-50"
+    },
+    {
+      "id": "99freelas",
+      "label": "99Freelas",
+      "url": "https://www.99freelas.com.br/user/tarcisio-luiz",
+      "icon": "/icons/99.png",
+      "color": "text-teal-600 border-teal-200 hover:bg-teal-50"
+    }
+  ],
+  "pt": [
+    {
+      "id": "email",
+      "label": "Email",
+      "url": "mailto:tarcisioluizpereirabogo@gmail.com",
+      "icon": "📧",
+      "color": "text-blue-600 border-blue-200 hover:bg-blue-50"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp",
+      "url": "https://wa.me/5548999442746",
+      "icon": "/icons/whatsapp.webp",
+      "color": "text-green-600 border-green-200 hover:bg-green-50"
+    },
+    {
+      "id": "github",
+      "label": "GitHub",
+      "url": "https://github.com/tk4500",
+      "icon": "/icons/github.svg",
+      "color": "text-gray-900 border-gray-300 hover:bg-gray-100"
+    },
+    {
+      "id": "linkedin",
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/tarcisio-bogo/",
+      "icon": "/icons/linkedin.svg",
+      "color": "text-blue-700 border-blue-300 hover:bg-blue-50"
+    },
+    {
+      "id": "discord",
+      "label": "Discord",
+      "url": "https://discord.com/users/317432691660423169",
+      "icon": "/icons/discord.svg",
+      "color": "text-indigo-600 border-indigo-200 hover:bg-indigo-50"
+    },
+    {
+      "id": "99freelas",
+      "label": "99Freelas",
+      "url": "https://www.99freelas.com.br/user/tarcisio-luiz",
+      "icon": "/icons/99.png",
+      "color": "text-teal-600 border-teal-200 hover:bg-teal-50"
+    }
+  ]
+}

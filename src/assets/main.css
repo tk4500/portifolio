@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Custom minimal variables for OS look */
+:root {
+  --desktop-bg: #1e1e2e;
+  --window-bg: rgba(255, 255, 255, 0.95);
+  --window-border: rgba(0, 0, 0, 0.1);
+  --window-titlebar: #f3f4f6;
+  --window-title-text: #111827;
+  --taskbar-bg: rgba(30, 30, 46, 0.85);
+  --taskbar-text: #ffffff;
+  --accent: #3b82f6;
+}
+
+html.dark {
+  --window-bg: rgba(30, 30, 46, 0.95);
+  --window-border: rgba(255, 255, 255, 0.1);
+  --window-titlebar: #181825;
+  --window-title-text: #f3f4f6;
+}
+
+/* Base styles to prevent scrolling on the desktop */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  user-select: none; /* Prevent text selection while dragging */
+}
+
+/* Glassmorphism utility */
+.glass {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Hide scrollbar for taskbar */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

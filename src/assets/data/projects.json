@@ -1,0 +1,114 @@
+{
+  "en": [
+    {
+      "id": "winthor_integration",
+      "name": "WinThor B2B Integration",
+      "description": "An automated application integrating FastAPI and React with the WinThor ERP system to process B2B orders from PDF files. Built using Docker and deployed on Oracle Cloud infrastructure.",
+      "url": "",
+      "github": "https://github.com/tk4500/docker-pdf-winthor",
+      "icon": "⚙️",
+      "screenshots": []
+    },
+    {
+      "id": "nextrole",
+      "name": "NextRole",
+      "description": "A Chrome extension designed to parse job descriptions and generate highly customized resumes using the Gemini API.",
+      "url": "https://chromewebstore.google.com/detail/ffbangkcbcikejabbidnalhhkiglfoaf",
+      "github": "https://github.com/tk4500/resume-ai-extension",
+      "icon": "🧩",
+      "screenshots": []
+    },
+    {
+      "id": "devs_journey",
+      "name": "Dev's Journey",
+      "description": "My Computer Science Final Paper (TCC). A complete full-stack application demonstrating advanced software architecture and modern web development skills.",
+      "url": "https://devsjourney-97162.web.app/",
+      "github": "https://github.com/tk4500/devsjourney-97162",
+      "icon": "🚀",
+      "screenshots": []
+    },
+    {
+      "id": "aula_maker",
+      "name": "Aula Maker",
+      "description": "A static BYOK (Bring Your Own Key) web application that utilizes the Gemini API to help educators plan and structure their lessons efficiently.",
+      "url": "https://tk4500.github.io/aula-maker/",
+      "github": "https://github.com/tk4500/aula-maker",
+      "icon": "📝",
+      "screenshots": []
+    },
+    {
+      "id": "firecast_plugins",
+      "name": "Firecast RPG Plugins",
+      "description": "A collection of custom Lua plugins for the Firecast VTT. Includes a Universal AI integration (freelance project), NPC managers, log extractors, and data interpreters.",
+      "url": "",
+      "github": "https://github.com/tk4500/genericAi",
+      "icon": "🎲",
+      "screenshots": []
+    },
+    {
+      "id": "geotetraarmor",
+      "name": "GeoTetraArmor (Fork)",
+      "description": "An open-source modification and fork for Minecraft, focused on enhancing the integration between the Tetra mod and other in-game progression systems.",
+      "url": "https://modrinth.com/mod/geotetraarmor-fork",
+      "github": "https://github.com/tk4500/GeoTetraArmor",
+      "icon": "⛏️",
+      "screenshots": []
+    }
+  ],
+  "pt": [
+    {
+      "id": "winthor_integration",
+      "name": "Integração B2B WinThor",
+      "description": "Uma aplicação automatizada integrando FastAPI e React com o ERP WinThor para processar pedidos B2B a partir de arquivos PDF. Construída com Docker e implantada na Oracle Cloud.",
+      "url": "",
+      "github": "https://github.com/tk4500/docker-pdf-winthor",
+      "icon": "⚙️",
+      "screenshots": []
+    },
+    {
+      "id": "nextrole",
+      "name": "NextRole",
+      "description": "Extensão para Chrome desenvolvida para analisar descrições de vagas e gerar currículos altamente personalizados utilizando a API do Gemini.",
+      "url": "https://chromewebstore.google.com/detail/ffbangkcbcikejabbidnalhhkiglfoaf",
+      "github": "https://github.com/tk4500/resume-ai-extension",
+      "icon": "🧩",
+      "screenshots": []
+    },
+    {
+      "id": "devs_journey",
+      "name": "Dev's Journey",
+      "description": "Meu Trabalho de Conclusão de Curso (TCC). Uma aplicação full-stack completa que demonstra habilidades avançadas de arquitetura de software e desenvolvimento web moderno.",
+      "url": "https://devsjourney-97162.web.app/",
+      "github": "https://github.com/tk4500/devsjourney-97162",
+      "icon": "🚀",
+      "screenshots": []
+    },
+    {
+      "id": "aula_maker",
+      "name": "Aula Maker",
+      "description": "Aplicação web estática no modelo BYOK (Bring Your Own Key) que utiliza a API do Gemini para ajudar educadores a planejar e estruturar suas aulas com eficiência.",
+      "url": "https://tk4500.github.io/aula-maker/",
+      "github": "https://github.com/tk4500/aula-maker",
+      "icon": "📝",
+      "screenshots": []
+    },
+    {
+      "id": "firecast_plugins",
+      "name": "Plugins para Firecast RPG",
+      "description": "Uma coleção de plugins customizados em Lua para o VTT Firecast. Inclui uma integração de IA Universal (projeto freelance), gerenciadores de NPCs, extratores de logs e interpretadores.",
+      "url": "",
+      "github": "https://github.com/tk4500/genericAi",
+      "icon": "🎲",
+      "screenshots": []
+    },
+    {
+      "id": "geotetraarmor",
+      "name": "GeoTetraArmor (Fork)",
+      "description": "Um fork e modificação open-source para Minecraft, focado em aprimorar a integração entre o mod Tetra e outros sistemas de progressão do jogo.",
+      "url": "https://modrinth.com/mod/geotetraarmor-fork",
+      "github": "https://github.com/tk4500/GeoTetraArmor",
+      "icon": "⛏️",
+      "screenshots": []
+    }
+  ]
+}

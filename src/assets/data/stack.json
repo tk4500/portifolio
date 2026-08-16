@@ -1,0 +1,56 @@
+{
+  "en": [
+    {
+      "category": "Frontend",
+      "items": [
+        { "id": "vue", "name": "Vue 3", "icon": "/icons/vue.svg", "level": 90 },
+        { "id": "react", "name": "React", "icon": "/icons/react.svg", "level": 85 },
+        { "id": "tailwind", "name": "Tailwind CSS", "icon": "/icons/tailwind.svg", "level": 95 },
+        { "id": "typescript", "name": "TypeScript", "icon": "/icons/typescript.svg", "level": 80 }
+      ]
+    },
+    {
+      "category": "Backend",
+      "items": [
+        { "id": "node", "name": "Node.js", "icon": "/icons/node.svg", "level": 85 },
+        { "id": "python", "name": "Python", "icon": "/icons/python.svg", "level": 75 },
+        { "id": "fastapi", "name": "FastAPI", "icon": "/icons/fastapi.svg", "level": 70 }
+      ]
+    },
+    {
+      "category": "Tools & Others",
+      "items": [
+        { "id": "git", "name": "Git", "icon": "/icons/git.svg", "level": 90 },
+        { "id": "docker", "name": "Docker", "icon": "/icons/docker.svg", "level": 70 },
+        { "id": "figma", "name": "Figma", "icon": "/icons/figma.svg", "level": 60 }
+      ]
+    }
+  ],
+  "pt": [
+    {
+      "category": "Frontend",
+      "items": [
+        { "id": "vue", "name": "Vue 3", "icon": "/icons/vue.svg", "level": 90 },
+        { "id": "react", "name": "React", "icon": "/icons/react.svg", "level": 85 },
+        { "id": "tailwind", "name": "Tailwind CSS", "icon": "/icons/tailwind.svg", "level": 95 },
+        { "id": "typescript", "name": "TypeScript", "icon": "/icons/typescript.svg", "level": 80 }
+      ]
+    },
+    {
+      "category": "Backend",
+      "items": [
+        { "id": "node", "name": "Node.js", "icon": "/icons/node.svg", "level": 85 },
+        { "id": "python", "name": "Python", "icon": "/icons/python.svg", "level": 75 },
+        { "id": "fastapi", "name": "FastAPI", "icon": "/icons/fastapi.svg", "level": 70 }
+      ]
+    },
+    {
+      "category": "Ferramentas & Outros",
+      "items": [
+        { "id": "git", "name": "Git", "icon": "/icons/git.svg", "level": 90 },
+        { "id": "docker", "name": "Docker", "icon": "/icons/docker.svg", "level": 70 },
+        { "id": "figma", "name": "Figma", "icon": "/icons/figma.svg", "level": 60 }
+      ]
+    }
+  ]
+}

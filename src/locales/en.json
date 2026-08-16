@@ -1,0 +1,78 @@
+{
+  "desktop": {
+    "icons": {
+      "about": "About Me",
+      "contact": "Contact",
+      "projects": "Projects",
+      "settings": "Settings",
+      "stack": "Tech Stack"
+    }
+  },
+  "taskbar": {
+    "start": "Start",
+    "language": "Language"
+  },
+  "startMenu": {
+    "developer": "Developer",
+    "portfolioSystem": "Portfolio System",
+    "apps": "Apps",
+    "closeAll": "Close All Programs"
+  },
+  "programs": {
+    "about": {
+      "title": "About Me",
+      "content": "Hello! I am a developer building cool things.",
+      "skills": "My Skills"
+    },
+    "contact": {
+      "title": "Contact",
+      "email": "Email",
+      "github": "GitHub",
+      "linkedin": "LinkedIn"
+    },
+    "projects": {
+      "title": "My Projects"
+    },
+    "settings": {
+      "title": "System Settings",
+      "taskbarPosition": "Taskbar Position",
+      "backgroundAppearance": "Background Appearance",
+      "theme": "Theme",
+      "themes": {
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System Default"
+      },
+      "positions": {
+        "bottom": "Bottom",
+        "top": "Top",
+        "left": "Left",
+        "right": "Right"
+      },
+      "colors": {
+        "darkGradient": "Dark Gradient",
+        "lightBlue": "Light Blue",
+        "midnight": "Midnight",
+        "sunset": "Sunset",
+        "forest": "Forest",
+        "matrix": "Matrix",
+        "lavender": "Lavender",
+        "crimson": "Crimson"
+      }
+    },
+    "archive": {
+      "up": "Up",
+      "items": "items"
+    },
+    "projectViewer": {
+      "openLiveSite": "Open Live Site",
+      "viewSource": "View Source (GitHub)",
+      "screenshots": "Screenshots",
+      "noScreenshots": "No screenshots available for this project."
+    },
+    "stack": {
+      "description": "Technologies, frameworks, and tools I use.",
+      "usage": "Usage Level"
+    }
+  }
+}
