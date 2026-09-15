@@ -43,7 +43,7 @@ function handleDesktopClick() {
 
 <template>
   <div
-    class="h-screen w-screen bg-[var(--desktop-bg)] relative overflow-hidden"
+    class="h-screen w-screen bg-[var(--desktop-bg)] relative overflow-hidden grain-overlay"
     :style="{ background: systemStore.backgroundColor }"
     @click="handleDesktopClick"
   >

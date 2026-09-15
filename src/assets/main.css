@@ -2,40 +2,59 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Custom minimal variables for OS look */
+/* Custom variables for OS look */
 :root {
-  --desktop-bg: #1e1e2e;
-  --window-bg: rgba(255, 255, 255, 0.95);
-  --window-border: rgba(0, 0, 0, 0.1);
-  --window-titlebar: #f3f4f6;
-  --window-title-text: #111827;
-  --taskbar-bg: rgba(30, 30, 46, 0.85);
+  --desktop-bg: #0f0f14;
+  --window-bg: rgba(255, 255, 255, 0.97);
+  --window-border: rgba(0, 0, 0, 0.08);
+  --window-titlebar: #f5f5f7;
+  --window-title-text: #1a1a2e;
+  --taskbar-bg: rgba(15, 15, 20, 0.82);
   --taskbar-text: #ffffff;
-  --accent: #3b82f6;
+  --accent: #e8590c;
+  --accent-hover: #d04e08;
+  --accent-subtle: rgba(232, 89, 12, 0.08);
 }
 
 html.dark {
-  --window-bg: rgba(30, 30, 46, 0.95);
-  --window-border: rgba(255, 255, 255, 0.1);
-  --window-titlebar: #181825;
-  --window-title-text: #f3f4f6;
+  --window-bg: rgba(22, 22, 30, 0.96);
+  --window-border: rgba(255, 255, 255, 0.06);
+  --window-titlebar: #16161e;
+  --window-title-text: #e8e8ed;
+  --accent-subtle: rgba(232, 89, 12, 0.12);
 }
 
-/* Base styles to prevent scrolling on the desktop */
+/* Base styles */
 html, body {
   margin: 0;
   padding: 0;
-  height: 100vh;
+  height: 100dvh;
   width: 100vw;
   overflow: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  user-select: none; /* Prevent text selection while dragging */
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  user-select: none;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Glassmorphism utility */
+/* Glassmorphism with proper edge refraction */
 .glass {
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(16px) saturate(1.6);
+  -webkit-backdrop-filter: blur(16px) saturate(1.6);
+  box-shadow: inset 0 0.5px 0 0 rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* Grain overlay for depth */
+.grain-overlay::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  z-index: 9998;
 }
 
 /* Hide scrollbar for taskbar */
@@ -45,4 +64,39 @@ html, body {
 .hide-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Active/pressed state for buttons */
+button:active:not(:disabled),
+a:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+/* Smooth transitions for all interactive elements */
+button, a {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Custom scrollbar styling */
+.overflow-y-auto::-webkit-scrollbar,
+.overflow-auto::-webkit-scrollbar {
+  width: 6px;
+}
+.overflow-y-auto::-webkit-scrollbar-track,
+.overflow-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+.overflow-y-auto::-webkit-scrollbar-thumb,
+.overflow-auto::-webkit-scrollbar-thumb {
+  background: rgba(128, 128, 128, 0.3);
+  border-radius: 3px;
+}
+.overflow-y-auto::-webkit-scrollbar-thumb:hover,
+.overflow-auto::-webkit-scrollbar-thumb:hover {
+  background: rgba(128, 128, 128, 0.5);
+}
+
+/* Tabular figures for data */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
 }

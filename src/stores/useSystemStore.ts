@@ -11,7 +11,7 @@ interface DesktopIconState {
 
 export const useSystemStore = defineStore('system', () => {
   const taskbarPosition = ref<'bottom' | 'top' | 'left' | 'right'>('bottom')
-  const backgroundColor = ref('linear-gradient(135deg, #1e1e2e 0%, #2d2b55 100%)')
+  const backgroundColor = ref('linear-gradient(145deg, #0f0f14 0%, #1a1a24 50%, #12121a 100%)')
   const isStartMenuOpen = ref(false)
   const theme = ref<'light' | 'dark' | 'system'>('system')
 

@@ -56,17 +56,17 @@ function launchApp(id: string, titleKey: string, icon: string) {
       @click.stop
     >
       <div class="flex items-center gap-4 border-b border-[var(--window-border)] pb-4">
-        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center text-2xl">
+        <div class="w-12 h-12 bg-[var(--accent-subtle)] rounded-xl flex items-center justify-center text-2xl border border-[var(--accent)]/10">
           👨‍💻
         </div>
         <div>
-          <h3 class="font-bold text-lg">{{ t('startMenu.developer') }}</h3>
+          <h3 class="font-semibold text-base tracking-tight">{{ t('startMenu.developer') }}</h3>
           <p class="text-xs opacity-60">{{ t('startMenu.portfolioSystem') }}</p>
         </div>
       </div>
 
       <div class="flex-1 overflow-y-auto">
-        <h4 class="text-xs font-semibold opacity-50 uppercase tracking-wider mb-2 px-2">{{ t('startMenu.apps') }}</h4>
+        <h4 class="text-xs font-medium opacity-40 tracking-wide mb-2 px-2">{{ t('startMenu.apps') }}</h4>
         <div class="grid grid-cols-1 gap-1">
           <button
             v-for="app in apps"

@@ -51,13 +51,13 @@
       },
       "colors": {
         "darkGradient": "Gradiente Escuro",
-        "lightBlue": "Azul Claro",
+        "lightBlue": "Azul Suave",
         "midnight": "Meia-noite",
-        "sunset": "Pôr do Sol",
-        "forest": "Floresta",
-        "matrix": "Matrix",
-        "lavender": "Lavanda",
-        "crimson": "Carmesim"
+        "sunset": "Brasa Quente",
+        "forest": "Floresta Profunda",
+        "matrix": "Grafite",
+        "lavender": "Pedra Quente",
+        "crimson": "Oceano Profundo"
       }
     },
     "archive": {

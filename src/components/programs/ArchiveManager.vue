@@ -41,7 +41,7 @@ function openProject(project: any) {
       <div
         v-for="project in projects"
         :key="project.id"
-        class="w-24 flex flex-col items-center gap-1 p-2 rounded hover:bg-blue-50 dark:hover:bg-blue-900/30 cursor-pointer group transition-colors"
+        class="w-24 flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-[var(--accent-subtle)] cursor-pointer group transition-all"
         @click="openProject(project)"
       >
         <AppIcon :icon="project.icon" class="text-4xl group-hover:scale-110 transition-transform" />

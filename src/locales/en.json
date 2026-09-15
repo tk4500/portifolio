@@ -51,13 +51,13 @@
       },
       "colors": {
         "darkGradient": "Dark Gradient",
-        "lightBlue": "Light Blue",
+        "lightBlue": "Soft Blue",
         "midnight": "Midnight",
-        "sunset": "Sunset",
-        "forest": "Forest",
-        "matrix": "Matrix",
-        "lavender": "Lavender",
-        "crimson": "Crimson"
+        "sunset": "Warm Ember",
+        "forest": "Deep Forest",
+        "matrix": "Graphite",
+        "lavender": "Warm Stone",
+        "crimson": "Deep Ocean"
       }
     },
     "archive": {

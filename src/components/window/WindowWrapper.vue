@@ -159,10 +159,10 @@ const isFocused = computed(() => {
 <template>
   <div
     v-show="!windowState.isMinimized"
-    class="fixed flex flex-col bg-[var(--window-bg)] rounded-t-lg rounded-b shadow-2xl overflow-hidden border transition-shadow duration-200"
+    class="fixed flex flex-col bg-[var(--window-bg)] rounded-xl shadow-2xl overflow-hidden border transition-all duration-200"
     :class="[
-      isFocused ? 'border-gray-400 shadow-[0_10px_30px_rgba(0,0,0,0.3)]' : 'border-gray-200 shadow-md',
-      windowState.isMaximized || windowState.snappedPosition ? 'rounded-none transition-all' : ''
+      isFocused ? 'border-[var(--window-border)] shadow-[0_12px_40px_rgba(0,0,0,0.25)]' : 'border-[var(--window-border)] shadow-[0_4px_12px_rgba(0,0,0,0.1)] opacity-90',
+      windowState.isMaximized || windowState.snappedPosition ? 'rounded-none' : ''
     ]"
     :style="computedStyle"
     @mousedown="focus"
@@ -170,8 +170,8 @@ const isFocused = computed(() => {
     <!-- Title Bar -->
     <div
       ref="titleBarRef"
-      class="h-10 bg-[var(--window-titlebar)] border-b border-[var(--window-border)] flex items-center justify-between px-3 select-none"
-      :class="isFocused ? 'bg-gray-100' : 'bg-gray-50 opacity-80'"
+      class="h-10 bg-[var(--window-titlebar)] border-b border-[var(--window-border)] flex items-center justify-between px-3 select-none transition-opacity duration-200"
+      :class="isFocused ? 'opacity-100' : 'opacity-70'"
       @dblclick="toggleMaximize"
     >
       <div class="flex items-center gap-2 overflow-hidden">

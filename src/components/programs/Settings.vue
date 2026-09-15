@@ -7,14 +7,14 @@ const systemStore = useSystemStore()
 const { t } = useI18n()
 
 const colors = computed(() => [
-  { name: t('programs.settings.colors.darkGradient'), value: 'linear-gradient(135deg, #1e1e2e 0%, #2d2b55 100%)' },
-  { name: t('programs.settings.colors.lightBlue'), value: '#e0f2fe' },
-  { name: t('programs.settings.colors.midnight'), value: '#0f172a' },
-  { name: t('programs.settings.colors.sunset'), value: 'linear-gradient(to right, #ff7e5f, #feb47b)' },
-  { name: t('programs.settings.colors.forest'), value: 'linear-gradient(to right, #134e5e, #71b280)' },
-  { name: 'Matrix', value: 'linear-gradient(to right, #000000, #0f9b0f)' },
-  { name: 'Lavender', value: 'linear-gradient(to right, #e6e6fa, #d8bfd8)' },
-  { name: 'Crimson', value: 'linear-gradient(to right, #dc143c, #800000)' }
+  { name: t('programs.settings.colors.darkGradient'), value: 'linear-gradient(145deg, #0f0f14 0%, #1a1a24 50%, #12121a 100%)' },
+  { name: t('programs.settings.colors.midnight'), value: '#0c1017' },
+  { name: t('programs.settings.colors.lightBlue'), value: 'linear-gradient(145deg, #f0f4f8, #e2e8f0)' },
+  { name: t('programs.settings.colors.sunset'), value: 'linear-gradient(145deg, #1a120e, #2a1810 50%, #1a120e)' },
+  { name: t('programs.settings.colors.forest'), value: 'linear-gradient(145deg, #0a1210, #0e1a16 50%, #0a1210)' },
+  { name: 'Graphite', value: 'linear-gradient(145deg, #18181b, #1f1f23 50%, #18181b)' },
+  { name: 'Warm Stone', value: 'linear-gradient(145deg, #f5f0eb, #ebe4dc)' },
+  { name: 'Deep Ocean', value: 'linear-gradient(145deg, #0a0e1a, #0e1424 50%, #0a0e1a)' }
 ])
 
 const positions = ['bottom', 'top', 'left', 'right']
@@ -37,7 +37,7 @@ const themes = ['light', 'dark', 'system']
             :key="thm"
             @click="systemStore.applyTheme(thm as any)"
             class="px-4 py-2 rounded border transition-all font-medium"
-            :class="systemStore.theme === thm ? 'bg-blue-600 text-white border-blue-600 shadow-md' : 'bg-transparent hover:bg-black/10 dark:hover:bg-white/10 border-[var(--window-border)]'"
+            :class="systemStore.theme === thm ? 'bg-[var(--accent)] text-white border-[var(--accent)] shadow-md' : 'bg-transparent hover:bg-black/10 dark:hover:bg-white/10 border-[var(--window-border)]'"
           >
             {{ t(`programs.settings.themes.${thm}`) }}
           </button>
@@ -55,7 +55,7 @@ const themes = ['light', 'dark', 'system']
             :key="pos"
             @click="systemStore.setTaskbarPosition(pos as any)"
             class="px-4 py-2 rounded capitalize border transition-all font-medium"
-            :class="systemStore.taskbarPosition === pos ? 'bg-blue-600 text-white border-blue-600 shadow-md' : 'bg-transparent hover:bg-black/10 dark:hover:bg-white/10 border-[var(--window-border)]'"
+            :class="systemStore.taskbarPosition === pos ? 'bg-[var(--accent)] text-white border-[var(--accent)] shadow-md' : 'bg-transparent hover:bg-black/10 dark:hover:bg-white/10 border-[var(--window-border)]'"
           >
             {{ t(`programs.settings.positions.${pos}`) }}
           </button>
@@ -73,7 +73,7 @@ const themes = ['light', 'dark', 'system']
             :key="color.name"
             @click="systemStore.setBackgroundColor(color.value)"
             class="h-20 rounded-lg shadow-sm border-2 transition-all hover:scale-105"
-            :class="systemStore.backgroundColor === color.value ? 'border-blue-500 scale-105' : 'border-transparent dark:border-gray-700'"
+            :class="systemStore.backgroundColor === color.value ? 'border-[var(--accent)] scale-105 shadow-[0_0_12px_rgba(232,89,12,0.2)]' : 'border-transparent dark:border-gray-800'"
             :style="{ background: color.value }"
             :title="color.name"
           ></button>

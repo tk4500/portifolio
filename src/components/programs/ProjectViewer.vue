@@ -8,7 +8,6 @@ import AppIcon from '../desktop/AppIcon.vue'
 const props = defineProps<{
   project: {
     id: string
-    // Other fields exist on initial load, but we rely on id for reactive translation
     name?: string
     description?: string
     url?: string
@@ -43,15 +42,17 @@ function openLiveSite() {
 
 <template>
   <div class="h-full bg-[var(--window-bg)] text-[var(--window-title-text)] overflow-y-auto">
-    <!-- Header banner -->
-    <div class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-8">
-      <div class="flex items-center gap-4 max-w-3xl mx-auto">
-        <div class="text-6xl bg-white/20 p-4 rounded-xl backdrop-blur-sm">
+    <!-- Header banner — refined dark surface -->
+    <div class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white p-8 relative overflow-hidden">
+      <!-- Subtle accent glow -->
+      <div class="absolute -top-20 -right-20 w-60 h-60 bg-[var(--accent)] opacity-[0.06] rounded-full blur-3xl pointer-events-none"></div>
+      <div class="flex items-center gap-5 max-w-3xl mx-auto relative z-10">
+        <div class="text-5xl bg-white/8 p-4 rounded-2xl backdrop-blur-sm border border-white/[0.06]">
           <AppIcon :icon="currentProject.icon" fallback="🚀" />
         </div>
         <div>
-          <h1 class="text-3xl font-bold">{{ currentProject.name }}</h1>
-          <p class="mt-2 text-blue-100 max-w-xl">{{ currentProject.description }}</p>
+          <h1 class="text-2xl font-semibold tracking-tight">{{ currentProject.name }}</h1>
+          <p class="mt-2 text-white/60 max-w-xl text-sm leading-relaxed">{{ currentProject.description }}</p>
         </div>
       </div>
     </div>
@@ -61,18 +62,18 @@ function openLiveSite() {
 
       <!-- Tech Stack -->
       <div v-if="currentProject.stack && currentProject.stack.length > 0" class="flex flex-wrap gap-3">
-        <h3 class="w-full text-sm font-bold uppercase tracking-wider opacity-60">{{ t('programs.projectViewer.techStack') }}</h3>
-        <div v-for="(techIcon, idx) in currentProject.stack" :key="idx" class="w-10 h-10 bg-white/50 dark:bg-black/50 p-2 rounded-lg border border-[var(--window-border)] flex items-center justify-center hover:shadow-md transition-shadow">
+        <h3 class="w-full text-xs font-semibold tracking-wide opacity-40">{{ t('programs.projectViewer.techStack') }}</h3>
+        <div v-for="(techIcon, idx) in currentProject.stack" :key="idx" class="w-10 h-10 bg-black/[0.04] dark:bg-white/[0.04] p-2 rounded-lg border border-[var(--window-border)] flex items-center justify-center hover:shadow-md hover:scale-105 transition-all">
           <AppIcon :icon="techIcon" fallback="🧩" class="text-xl" />
         </div>
       </div>
 
       <!-- Actions -->
-      <div class="flex flex-wrap gap-4">
+      <div class="flex flex-wrap gap-3">
         <button
           v-if="currentProject.url"
           @click="openLiveSite"
-          class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded shadow transition-colors flex items-center gap-2"
+          class="px-5 py-2.5 bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white font-medium rounded-lg shadow-sm hover:shadow-md transition-all flex items-center gap-2 text-sm"
         >
           <span>🌐</span> {{ t('programs.projectViewer.openLiveSite') }}
         </button>
@@ -81,7 +82,7 @@ function openLiveSite() {
           :href="currentProject.github"
           target="_blank"
           rel="noopener noreferrer"
-          class="px-5 py-2.5 bg-gray-800 dark:bg-white/20 hover:bg-gray-900 dark:hover:bg-white/30 text-white font-medium rounded shadow transition-colors flex items-center gap-2"
+          class="px-5 py-2.5 bg-gray-800 dark:bg-white/10 hover:bg-gray-700 dark:hover:bg-white/15 text-white font-medium rounded-lg shadow-sm hover:shadow-md transition-all flex items-center gap-2 text-sm"
         >
           <span>💻</span> {{ t('programs.projectViewer.viewSource') }}
         </a>
@@ -89,19 +90,19 @@ function openLiveSite() {
 
       <!-- Screenshots section -->
       <div v-if="currentProject.screenshots && currentProject.screenshots.length > 0">
-        <h2 class="text-xl font-bold mb-4 border-b border-[var(--window-border)] pb-2">{{ t('programs.projectViewer.screenshots') }}</h2>
+        <h2 class="text-lg font-semibold mb-4 border-b border-[var(--window-border)] pb-2 tracking-tight">{{ t('programs.projectViewer.screenshots') }}</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <img
             v-for="(img, idx) in currentProject.screenshots"
             :key="idx"
             :src="img"
-            class="rounded-lg shadow-md border border-[var(--window-border)] w-full hover:shadow-lg transition-shadow cursor-pointer"
-            alt="Project screenshot"
+            class="rounded-xl shadow-sm border border-[var(--window-border)] w-full hover:shadow-lg hover:scale-[1.02] transition-all cursor-pointer"
+            :alt="`${currentProject.name} screenshot ${Number(idx) + 1}`"
           />
         </div>
       </div>
 
-      <div v-else class="opacity-60 italic p-4 bg-black/5 dark:bg-white/5 rounded border border-[var(--window-border)] text-center">
+      <div v-else class="opacity-40 italic p-6 bg-black/[0.03] dark:bg-white/[0.03] rounded-xl border border-[var(--window-border)] text-center text-sm">
         {{ t('programs.projectViewer.noScreenshots') }}
       </div>
     </div>

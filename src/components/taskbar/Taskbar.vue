@@ -190,7 +190,7 @@ const taskbarClass = computed(() => {
           <Teleport to="body">
             <div
               v-if="group.length > 1 && openDropdownId === group[0].appId"
-              class="fixed bg-white/95 dark:bg-black/90 backdrop-blur-md rounded-lg shadow-xl border border-[var(--window-border)] p-1 min-w-[150px] z-[9999] text-[var(--window-title-text)] flex flex-col gap-1"
+              class="fixed bg-white/95 dark:bg-black/90 backdrop-blur-md rounded-lg shadow-xl border border-[var(--window-border)] p-1 min-w-[150px] z-[100] text-[var(--window-title-text)] flex flex-col gap-1"
               :style="dropdownStyle"
               @click.stop
             >
