@@ -1,6 +1,26 @@
 {
   "en": [
     {
+      "id": "ai_chess",
+      "name": "AI Chess Battleground",
+      "description": "A premium Chess platform built with Python (FastAPI) and JavaScript (React/HTM) focused on AI Battles. Play against state-of-the-art LLMs or pit different models against each other in a highly immersive and controlled environment, featuring session persistence, Stockfish evaluation bar, and a stunning Neo-Glassmorphism design.",
+      "url": "",
+      "github": "https://github.com/tk4500/ai-chess-game",
+      "icon": "♟️",
+      "screenshots": [
+        "screenshots/141404.png"
+      ],
+      "stack": [
+        "icons/python-original.svg",
+        "icons/fastapi-original.svg",
+        "icons/javascript-original.svg",
+        "icons/react-original.svg",
+        "icons/html5-original.svg",
+        "icons/css3-original.svg",
+        "icons/ollama.png"
+      ]
+    },
+    {
       "id": "portfolio_os",
       "name": "Desktop Metaphor Portfolio",
       "description": "A dynamic, interactive portfolio website mimicking a classic desktop OS environment. Built with Vue 3 and Tailwind CSS, featuring draggable windows, a dynamic taskbar, and fully JSON-driven content with bilingual support (EN/PT).",
@@ -124,6 +144,26 @@
     }
   ],
   "pt": [
+    {
+      "id": "ai_chess",
+      "name": "AI Chess Battleground",
+      "description": "Uma plataforma premium de Xadrez desenvolvida em Python (FastAPI) e JavaScript (React/HTM) focada em Rinhas de Inteligências Artificiais. Jogue contra LLMs de ponta ou coloque diferentes modelos para jogar entre si em um ambiente altamente imersivo e controlado, com persistência de sessões, barra de avaliação da Stockfish e um design deslumbrante (Neo-Glassmorphism).",
+      "url": "",
+      "github": "https://github.com/tk4500/ai-chess-game",
+      "icon": "♟️",
+      "screenshots": [
+        "screenshots/141404.png"
+      ],
+      "stack": [
+        "icons/python-original.svg",
+        "icons/fastapi-original.svg",
+        "icons/javascript-original.svg",
+        "icons/react-original.svg",
+        "icons/html5-original.svg",
+        "icons/css3-original.svg",
+        "icons/ollama.png"
+      ]
+    },
     {
       "id": "portfolio_os",
       "name": "Portfólio OS (Desktop Metaphor)",
