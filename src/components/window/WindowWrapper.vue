@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useDraggable, useWindowSize } from '@vueuse/core'
 import { useWindowsStore, type WindowState } from '../../stores/useWindowsStore'
 import { useI18n } from 'vue-i18n'
@@ -12,6 +12,7 @@ const props = defineProps<{
 const windowsStore = useWindowsStore()
 const { t } = useI18n()
 const { width: screenWidth } = useWindowSize()
+const isMobile = computed(() => screenWidth.value < 768)
 
 // Titlebar ref for drag handle
 const titleBarRef = ref<HTMLElement | null>(null)
@@ -28,6 +29,7 @@ const initialValue = { x: props.windowState.x, y: props.windowState.y }
 useDraggable(titleBarRef, {
   initialValue,
   onStart: () => {
+    if (isMobile.value) return false // prevent drag on mobile
     windowsStore.focusWindow(props.windowState.id)
     // Removed the clearing of maximize/snap here, moved it to onMove
     // so clicking the title bar doesn't instantly resize it, only dragging does
@@ -65,28 +67,39 @@ useDraggable(titleBarRef, {
   }
 })
 
+// Touch + Mouse coordinate normalizer
+function getClientX(e: MouseEvent | TouchEvent) {
+  return 'touches' in e ? e.touches[0].clientX : e.clientX
+}
+function getClientY(e: MouseEvent | TouchEvent) {
+  return 'touches' in e ? e.touches[0].clientY : e.clientY
+}
+
 // Resize handlers
-function startResize(e: MouseEvent, direction: string) {
-  if (props.windowState.isMaximized || props.windowState.snappedPosition) return
+function startResize(e: MouseEvent | TouchEvent, direction: string) {
+  if (props.windowState.isMaximized || props.windowState.snappedPosition || isMobile.value) return
   isResizing.value = true
   resizeDirection = direction
   resizeStart = {
-    x: e.clientX,
-    y: e.clientY,
+    x: getClientX(e),
+    y: getClientY(e),
     w: props.windowState.width,
     h: props.windowState.height
   }
 
   // Attach window event listeners for smooth resizing
-  window.addEventListener('mousemove', handleResize)
+  window.addEventListener('mousemove', handleResize as EventListener)
+  window.addEventListener('touchmove', handleResize as EventListener, { passive: false })
   window.addEventListener('mouseup', stopResize)
+  window.addEventListener('touchend', stopResize)
 }
 
-function handleResize(e: MouseEvent) {
+function handleResize(e: MouseEvent | TouchEvent) {
   if (!isResizing.value) return
+  if ('touches' in e && e.cancelable) e.preventDefault() // prevent scrolling while resizing
 
-  const dx = e.clientX - resizeStart.x
-  const dy = e.clientY - resizeStart.y
+  const dx = getClientX(e) - resizeStart.x
+  const dy = getClientY(e) - resizeStart.y
 
   let newW = resizeStart.w
   let newH = resizeStart.h
@@ -99,13 +112,15 @@ function handleResize(e: MouseEvent) {
 
 function stopResize() {
   isResizing.value = false
-  window.removeEventListener('mousemove', handleResize)
+  window.removeEventListener('mousemove', handleResize as EventListener)
+  window.removeEventListener('touchmove', handleResize as EventListener)
   window.removeEventListener('mouseup', stopResize)
+  window.removeEventListener('touchend', stopResize)
 }
 
 // Keep position locked if maximized/snapped, otherwise use store position
 const computedStyle = computed(() => {
-  if (props.windowState.isMaximized) {
+  if (props.windowState.isMaximized || isMobile.value) {
     return {
       top: '0px',
       left: '0px',
@@ -154,6 +169,21 @@ const isFocused = computed(() => {
   const allZIndexes = windowsStore.activeWindows.map(w => w.zIndex)
   return props.windowState.zIndex === Math.max(...allZIndexes)
 })
+
+function handleKeydown(e: KeyboardEvent) {
+  if (e.key === 'Escape' && isFocused.value) {
+    close()
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeydown)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown)
+})
+
 </script>
 
 <template>
@@ -162,7 +192,7 @@ const isFocused = computed(() => {
     class="fixed flex flex-col bg-[var(--window-bg)] rounded-xl shadow-2xl overflow-hidden border transition-all duration-200"
     :class="[
       isFocused ? 'border-[var(--window-border)] shadow-[0_12px_40px_rgba(0,0,0,0.25)]' : 'border-[var(--window-border)] shadow-[0_4px_12px_rgba(0,0,0,0.1)] opacity-90',
-      windowState.isMaximized || windowState.snappedPosition ? 'rounded-none' : ''
+      windowState.isMaximized || windowState.snappedPosition || isMobile ? 'rounded-none' : ''
     ]"
     :style="computedStyle"
     @mousedown="focus"
@@ -183,17 +213,17 @@ const isFocused = computed(() => {
 
       <!-- Window Controls -->
       <div class="flex gap-2">
-        <button @click.stop="minimize" class="w-7 h-7 flex items-center justify-center rounded hover:bg-black/10 text-gray-600">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="5" width="10" height="2" fill="currentColor"/></svg>
-        </button>
-        <button @click.stop="toggleMaximize" class="w-7 h-7 flex items-center justify-center rounded hover:bg-black/10 text-gray-600">
-          <svg v-if="!windowState.isMaximized" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1.5" y="1.5" width="9" height="9" stroke="currentColor" stroke-width="1.5"/></svg>
-          <svg v-else width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1.5" y="3.5" width="7" height="7" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 3.5V1.5H10.5V8.5H8.5" stroke="currentColor" stroke-width="1.5"/></svg>
-        </button>
-        <button @click.stop="close" class="w-7 h-7 flex items-center justify-center rounded hover:bg-red-500 hover:text-white text-gray-600 transition-colors">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2L10 10M10 2L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        </button>
-      </div>
+              <button @click.stop="minimize" class="w-7 h-7 flex items-center justify-center rounded hover:bg-black/10 text-[var(--window-title-text)] transition-colors">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="5" width="10" height="2" fill="currentColor"/></svg>
+              </button>
+              <button @click.stop="toggleMaximize" class="w-7 h-7 flex items-center justify-center rounded hover:bg-black/10 text-[var(--window-title-text)] transition-colors">
+                <svg v-if="!windowState.isMaximized" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1.5" y="1.5" width="9" height="9" stroke="currentColor" stroke-width="1.5"/></svg>
+                <svg v-else width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1.5" y="3.5" width="7" height="7" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 3.5V1.5H10.5V8.5H8.5" stroke="currentColor" stroke-width="1.5"/></svg>
+              </button>
+              <button @click.stop="close" class="w-7 h-7 flex items-center justify-center rounded hover:bg-red-500 hover:text-white text-[var(--window-title-text)] transition-colors">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2L10 10M10 2L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </button>
+            </div>
     </div>
 
     <!-- Content Area -->
@@ -204,13 +234,13 @@ const isFocused = computed(() => {
     </div>
 
     <!-- Resize Handles -->
-    <div v-if="!windowState.isMaximized && !windowState.snappedPosition">
+    <div v-if="!windowState.isMaximized && !windowState.snappedPosition && !isMobile">
       <!-- Right Handle -->
-      <div class="absolute right-0 top-0 bottom-0 w-2 cursor-e-resize z-20" @mousedown.stop="startResize($event, 'e')"></div>
+      <div class="absolute right-0 top-0 bottom-0 w-5 cursor-e-resize z-20" @mousedown.stop="startResize($event, 'e')" @touchstart.stop="startResize($event, 'e')"></div>
       <!-- Bottom Handle -->
-      <div class="absolute bottom-0 left-0 right-0 h-2 cursor-s-resize z-20" @mousedown.stop="startResize($event, 's')"></div>
+      <div class="absolute bottom-0 left-0 right-0 h-5 cursor-s-resize z-20" @mousedown.stop="startResize($event, 's')" @touchstart.stop="startResize($event, 's')"></div>
       <!-- Bottom Right Corner -->
-      <div class="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize z-30" @mousedown.stop="startResize($event, 'se')"></div>
+      <div class="absolute bottom-0 right-0 w-6 h-6 cursor-se-resize z-30" @mousedown.stop="startResize($event, 'se')" @touchstart.stop="startResize($event, 'se')"></div>
     </div>
   </div>
 

@@ -4,7 +4,7 @@ import WindowWrapper from '../window/WindowWrapper.vue'
 import Taskbar from '../taskbar/Taskbar.vue'
 import { useWindowsStore } from '../../stores/useWindowsStore'
 import { useSystemStore } from '../../stores/useSystemStore'
-import { defineAsyncComponent, computed } from 'vue'
+import { defineAsyncComponent, computed, onMounted } from 'vue'
 
 const windowsStore = useWindowsStore()
 const systemStore = useSystemStore()
@@ -34,6 +34,23 @@ const desktopPadding = computed(() => {
 })
 
 // Close start menu or dropdowns if user clicks anywhere on desktop
+
+onMounted(() => {
+  if (windowsStore.windows.length === 0) {
+    const aboutIcon = systemStore.desktopIcons.find(i => i.id === 'about')
+    if (aboutIcon) {
+      windowsStore.registerOrOpenWindow({
+        appId: 'about',
+        titleKey: aboutIcon.titleKey,
+        component: 'about',
+        width: 600,
+        height: 500,
+        icon: aboutIcon.icon
+      })
+    }
+  }
+})
+
 function handleDesktopClick() {
   if (systemStore.isStartMenuOpen) {
     systemStore.closeStartMenu()
