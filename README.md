@@ -6,6 +6,7 @@ A dynamic, interactive portfolio website built with **Vue 3**, **TypeScript**, *
 
 *   **OS-like Window Management:** Draggable, resizable windows with edge snapping, maximize/minimize capabilities, and z-index focus tracking.
 *   **Dynamic Taskbar & Start Menu:** Features a taskbar (configurable to bottom, top, left, or right) that groups active applications. The Start Menu serves as an app launcher.
+*   **Mobile & Web Usability Bridging:** Automatically maximizes windows on mobile screens to avoid touch-friction, and uses single-click interactions for web-native muscle memory. 
 *   **Fully Bilingual (i18n):** Complete English and Portuguese (PT-BR) support. UI strings and all JSON data content switch instantly.
 *   **Data-Driven Programs:** 
     *   **About Me:** A tabbed interface displaying professional experience, academics, and certifications.
@@ -23,6 +24,12 @@ A dynamic, interactive portfolio website built with **Vue 3**, **TypeScript**, *
 *   **State Management:** [Pinia](https://pinia.vuejs.org/)
 *   **Localization:** [Vue I18n](https://vue-i18n.intlify.dev/)
 *   **Interactivity:** [@vueuse/core](https://vueuse.org/) (specifically `useDraggable`, `useWindowSize`)
+
+## 🏗️ Architecture & Decisions
+
+This project simulates a desktop environment using Vue 3 and Pinia for global state management. For deep technical context on the engineering constraints, mobile fallbacks, and security compromises regarding the iframe recursion loop, please read the Architecture Decision Records (ADRs):
+
+- [ADR-001: Web-Native Adaptation of Desktop OS Metaphor](docs/decisions/0001-os-metaphor-architecture.md)
 
 ## 📦 Project Structure
 

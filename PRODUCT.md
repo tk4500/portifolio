@@ -6,6 +6,10 @@
 
 web
 
+## Stack
+
+Vue 3 and Pinia
+
 ## Users
 
 Freelance contractors and prospective clients evaluating freelance services. They are looking to understand capabilities, past projects, and how to make contact.

@@ -1,0 +1,11 @@
+{
+  "repo_name": "portifolio",
+  "source_path": "C:/Users/tarci/Desktop/portifolio",
+  "source_sha": "59ff4f8f20df3512437d53ff575219681bb45433",
+  "generated_at": "2026-09-29T06:15:00Z",
+  "generator": "hermes-agent code-wiki skill v0.1.0",
+  "modules_documented": [
+    "stores",
+    "window"
+  ]
+}
