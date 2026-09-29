@@ -1,6 +1,29 @@
 {
   "en": [
     {
+      "id": "telegram_mirror",
+      "name": "CloneX (Telegram Mirror)",
+      "description": "A high-performance, dark-themed operations dashboard and backend pipeline designed to seamlessly copy, customize, and mirror messages between Telegram channels and groups. Features FloodWait protection, a checkpointing system, and real-time telemetry.",
+      "url": "",
+      "github": "https://github.com/tk4500/TelegramMirror",
+      "icon": "📱",
+      "screenshots": [
+        "screenshots/telegram-mirror/dashboard.png",
+        "screenshots/telegram-mirror/clonagem.png",
+        "screenshots/telegram-mirror/monitor.png",
+        "screenshots/telegram-mirror/configurações.png",
+        "screenshots/telegram-mirror/contas.png",
+        "screenshots/telegram-mirror/login.png"
+      ],
+      "stack": [
+        "icons/python-original.svg",
+        "icons/html5-original.svg",
+        "icons/javascript-original.svg",
+        "icons/tailwindcss-original.svg",
+        "icons/sqlite-original.svg"
+      ]
+    },
+    {
       "id": "ai_chess",
       "name": "AI Chess Battleground",
       "description": "A premium Chess platform built with Python (FastAPI) and JavaScript (React/HTM) focused on AI Battles. Play against state-of-the-art LLMs or pit different models against each other in a highly immersive and controlled environment, featuring session persistence, Stockfish evaluation bar, and a stunning Neo-Glassmorphism design.",
@@ -144,6 +167,29 @@
     }
   ],
   "pt": [
+    {
+      "id": "telegram_mirror",
+      "name": "CloneX (Telegram Mirror)",
+      "description": "Um dashboard de operações de alta performance e pipeline backend projetado para copiar, customizar e espelhar mensagens perfeitamente entre canais e grupos do Telegram. Conta com proteção FloodWait, sistema de checkpoints e telemetria em tempo real.",
+      "url": "",
+      "github": "https://github.com/tk4500/TelegramMirror",
+      "icon": "📱",
+      "screenshots": [
+        "screenshots/telegram-mirror/dashboard.png",
+        "screenshots/telegram-mirror/clonagem.png",
+        "screenshots/telegram-mirror/monitor.png",
+        "screenshots/telegram-mirror/configurações.png",
+        "screenshots/telegram-mirror/contas.png",
+        "screenshots/telegram-mirror/login.png"
+      ],
+      "stack": [
+        "icons/python-original.svg",
+        "icons/html5-original.svg",
+        "icons/javascript-original.svg",
+        "icons/tailwindcss-original.svg",
+        "icons/sqlite-original.svg"
+      ]
+    },
     {
       "id": "ai_chess",
       "name": "AI Chess Battleground",
