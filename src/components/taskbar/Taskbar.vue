@@ -135,7 +135,7 @@ const taskbarClass = computed(() => {
         @click.stop="systemStore.toggleStartMenu()"
         class="bg-white/10 hover:bg-white/20 rounded-md font-medium transition-colors flex items-center justify-center gap-2 relative"
         :class="[
-          isHorizontal ? 'px-4 h-9' : 'w-9 h-9 mt-1',
+          isHorizontal ? 'px-4 h-9' : 'w-9 h-9 min-h-[36px] min-w-[36px] mt-1',
           systemStore.isStartMenuOpen ? 'bg-white/30' : ''
         ]"
       >
@@ -151,7 +151,8 @@ const taskbarClass = computed(() => {
         <div
           v-for="group in groupedWindows"
           :key="group[0].appId"
-          class="relative group/taskbar flex-shrink-1 min-w-[50px]"
+          class="relative group/taskbar flex-shrink-0"
+          :class="isHorizontal ? 'min-w-[50px]' : 'w-9 min-w-[36px] max-w-[36px]'"
         >
           <button
             @click.stop="handleGroupClick(group, $event)"
@@ -160,7 +161,7 @@ const taskbarClass = computed(() => {
               isGroupActive(group)
                 ? 'bg-white/20 border-white/20 shadow-inner'
                 : 'bg-transparent hover:bg-white/10 border-transparent',
-              isHorizontal ? 'pl-3 h-9 max-w-[150px]' : 'w-9 h-9 justify-center !pr-0'
+              isHorizontal ? 'pl-3 h-9 max-w-[150px]' : 'w-9 h-9 min-h-[36px] min-w-[36px] max-w-[36px] justify-center !pr-0 !pl-0'
             ]"
             :title="t(group[0].titleKey)"
           >

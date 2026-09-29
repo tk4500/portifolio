@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useDraggable, useWindowSize } from '@vueuse/core'
+import { useSystemStore } from '../../stores/useSystemStore'
 import { useWindowsStore, type WindowState } from '../../stores/useWindowsStore'
 import { useI18n } from 'vue-i18n'
 import AppIcon from '../desktop/AppIcon.vue'
@@ -10,6 +11,7 @@ const props = defineProps<{
 }>()
 
 const windowsStore = useWindowsStore()
+const systemStore = useSystemStore()
 const { t } = useI18n()
 const { width: screenWidth } = useWindowSize()
 const isMobile = computed(() => screenWidth.value < 768)
@@ -120,23 +122,53 @@ function stopResize() {
 
 // Keep position locked if maximized/snapped, otherwise use store position
 const computedStyle = computed(() => {
+  const tbPos = systemStore.taskbarPosition
+  const tbSize = 48 // 48px taskbar size
+  
+  let baseTop = '0px'
+  let baseLeft = '0px'
+  let baseWidth = '100vw'
+  let baseHeight = '100vh'
+
+  if (tbPos === 'top') {
+    baseTop = `${tbSize}px`
+    baseHeight = `calc(100vh - ${tbSize}px)`
+  } else if (tbPos === 'bottom') {
+    baseHeight = `calc(100vh - ${tbSize}px)`
+  } else if (tbPos === 'left') {
+    baseLeft = `${tbSize}px`
+    baseWidth = `calc(100vw - ${tbSize}px)`
+  } else if (tbPos === 'right') {
+    baseWidth = `calc(100vw - ${tbSize}px)`
+  }
+
   if (props.windowState.isMaximized || isMobile.value) {
     return {
-      top: '0px',
-      left: '0px',
-      width: '100vw',
-      height: 'calc(100vh - 48px)', // Subtract taskbar height
+      top: baseTop,
+      left: baseLeft,
+      width: baseWidth,
+      height: baseHeight,
       zIndex: props.windowState.zIndex
     }
   }
 
   if (props.windowState.snappedPosition) {
-    return {
-      top: '0px',
-      left: props.windowState.snappedPosition === 'left' ? '0px' : '50vw',
-      width: '50vw',
-      height: 'calc(100vh - 48px)',
-      zIndex: props.windowState.zIndex
+    if (props.windowState.snappedPosition === 'left') {
+      return {
+        top: baseTop,
+        left: baseLeft,
+        width: `calc(${baseWidth} / 2)`,
+        height: baseHeight,
+        zIndex: props.windowState.zIndex
+      }
+    } else {
+      return {
+        top: baseTop,
+        left: `calc(${baseLeft} + (${baseWidth} / 2))`,
+        width: `calc(${baseWidth} / 2)`,
+        height: baseHeight,
+        zIndex: props.windowState.zIndex
+      }
     }
   }
 
