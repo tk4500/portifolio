@@ -8,5 +8,5 @@ export default defineConfig({
     vue(),
     tailwindcss(),
   ],
-  base: process.env.NODE_ENV === 'production' ? '/portifolio/' : '/',
+  base: process.env.NODE_ENV === 'production' ? '/' : '/',
 })
