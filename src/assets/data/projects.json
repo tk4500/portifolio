@@ -8,7 +8,7 @@
       "github": "https://github.com/tk4500/ai-chess-game",
       "icon": "♟️",
       "screenshots": [
-        "screenshots/141404.png"
+        "screenshots/ai-chess/141404.png"
       ],
       "stack": [
         "icons/python-original.svg",
@@ -44,14 +44,14 @@
       "github": "https://github.com/tk4500/docker-pdf-winthor",
       "icon": "⚙️",
       "screenshots": [
-        "screenshots/004535.png",
-        "screenshots/004549.png",
-        "screenshots/004940.png",
-        "screenshots/005048.png",
-        "screenshots/005126.png",
-        "screenshots/005142.png",
-        "screenshots/005153.png",
-        "screenshots/005423.png"
+        "screenshots/winthor-importer/004535.png",
+        "screenshots/winthor-importer/004549.png",
+        "screenshots/winthor-importer/004940.png",
+        "screenshots/winthor-importer/005048.png",
+        "screenshots/winthor-importer/005126.png",
+        "screenshots/winthor-importer/005142.png",
+        "screenshots/winthor-importer/005153.png",
+        "screenshots/winthor-importer/005423.png"
       ],
       "stack": [
         "icons/fastapi-original.svg",
@@ -152,7 +152,7 @@
       "github": "https://github.com/tk4500/ai-chess-game",
       "icon": "♟️",
       "screenshots": [
-        "screenshots/141404.png"
+        "screenshots/ai-chess/141404.png"
       ],
       "stack": [
         "icons/python-original.svg",
@@ -188,14 +188,14 @@
       "github": "https://github.com/tk4500/docker-pdf-winthor",
       "icon": "⚙️",
       "screenshots": [
-        "screenshots/004535.png",
-        "screenshots/004549.png",
-        "screenshots/004940.png",
-        "screenshots/005048.png",
-        "screenshots/005126.png",
-        "screenshots/005142.png",
-        "screenshots/005153.png",
-        "screenshots/005423.png"
+        "screenshots/winthor-importer/004535.png",
+        "screenshots/winthor-importer/004549.png",
+        "screenshots/winthor-importer/004940.png",
+        "screenshots/winthor-importer/005048.png",
+        "screenshots/winthor-importer/005126.png",
+        "screenshots/winthor-importer/005142.png",
+        "screenshots/winthor-importer/005153.png",
+        "screenshots/winthor-importer/005423.png"
       ],
       "stack": [
         "icons/fastapi-original.svg",
