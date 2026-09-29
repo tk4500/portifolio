@@ -28,11 +28,20 @@ function updateTime() {
 }
 
 let timer: number
+
+const showTooltip = ref(true)
+
 onMounted(() => {
   updateTime()
   timer = window.setInterval(updateTime, 60000)
   window.addEventListener('click', closeDropdowns)
+  
+  // Auto-hide tooltip after 5 seconds to avoid annoyance
+  setTimeout(() => {
+    showTooltip.value = false
+  }, 5000)
 })
+
 
 onUnmounted(() => {
   clearInterval(timer)
@@ -131,17 +140,31 @@ const taskbarClass = computed(() => {
 
     <!-- Start Button & Active Windows -->
     <div class="flex items-center gap-2" :class="isHorizontal ? 'flex-row h-full' : 'flex-col w-full'" @click="openDropdownId = null">
-      <button
-        @click.stop="systemStore.toggleStartMenu()"
-        class="bg-white/10 hover:bg-white/20 rounded-md font-medium transition-colors flex items-center justify-center gap-2 relative"
-        :class="[
-          isHorizontal ? 'px-4 h-9' : 'w-9 h-9 min-h-[36px] min-w-[36px] mt-1',
-          systemStore.isStartMenuOpen ? 'bg-white/30' : ''
-        ]"
-      >
-        <span class="text-xl">🪟</span>
-        <span v-if="isHorizontal" class="hidden sm:inline">{{ t('taskbar.start') }}</span>
-      </button>
+      <div class="relative flex items-center justify-center">
+        <button
+          @click.stop="systemStore.toggleStartMenu()"
+          @mouseenter="showTooltip = false"
+          class="bg-white/10 hover:bg-white/20 rounded-md font-medium transition-colors flex items-center justify-center gap-2 relative"
+          :class="[
+            isHorizontal ? 'px-4 h-9' : 'w-9 h-9 min-h-[36px] min-w-[36px] mt-1',
+            systemStore.isStartMenuOpen ? 'bg-white/30' : ''
+          ]"
+        >
+          <span class="text-xl">🪟</span>
+          <span v-if="isHorizontal" class="hidden sm:inline">{{ t('taskbar.start') }}</span>
+        </button>
+        
+        <!-- Subtle Power User Hint -->
+        <Transition name="fade">
+          <div 
+            v-if="showTooltip && isHorizontal" 
+            class="absolute top-[-40px] left-0 bg-black/80 dark:bg-white/90 text-white dark:text-black text-xs px-3 py-1.5 rounded shadow-lg whitespace-nowrap backdrop-blur-md pointer-events-none"
+          >
+            Press <kbd class="font-mono bg-white/20 dark:bg-black/10 px-1 rounded mx-0.5">Win / ⌘</kbd> to open
+            <div class="absolute -bottom-1 left-4 w-2 h-2 bg-black/80 dark:bg-white/90 rotate-45"></div>
+          </div>
+        </Transition>
+      </div>
 
       <!-- Active Window Tabs (Grouped) -->
       <div
@@ -221,15 +244,25 @@ const taskbarClass = computed(() => {
     </div>
 
     <!-- System Tray -->
-    <div class="flex items-center gap-3 text-sm shrink-0" :class="isHorizontal ? 'flex-row pr-2' : 'flex-col pb-2'">
-      <span :class="isHorizontal ? '' : 'writing-vertical-rl'">{{ time }}</span>
-      <button
-        @click="toggleLanguage"
-        class="uppercase font-bold hover:bg-white/10 px-2 py-1 rounded"
-        :title="t('taskbar.language')"
-      >
-        {{ locale }}
-      </button>
+    <div class="flex items-center text-sm shrink-0 h-full" :class="isHorizontal ? 'flex-row' : 'flex-col w-full'">
+      <div class="flex items-center gap-3" :class="isHorizontal ? 'flex-row pr-2' : 'flex-col pb-2'">
+        <span :class="isHorizontal ? '' : 'writing-vertical-rl'">{{ time }}</span>
+        <button
+          @click="toggleLanguage"
+          class="uppercase font-bold hover:bg-white/10 px-2 py-1 rounded"
+          :title="t('taskbar.language')"
+        >
+          {{ locale }}
+        </button>
+      </div>
+      
+      <!-- Show Desktop Button (Windows Style) -->
+      <div 
+        @click.stop="windowsStore.toggleShowDesktop()"
+        class="hover:bg-white/20 transition-colors cursor-pointer border-[var(--window-border)]"
+        :class="isHorizontal ? 'h-full w-2 border-l ml-1' : 'w-full h-2 border-t mt-1'"
+        title="Show Desktop"
+      ></div>
     </div>
 
     <!-- Start Menu Overlay -->

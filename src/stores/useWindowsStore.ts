@@ -99,6 +99,23 @@ export const useWindowsStore = defineStore('windows', () => {
     }
   }
 
+  
+  function toggleShowDesktop() {
+    // If any active window is currently NOT minimized, minimize all of them.
+    // If ALL active windows are currently minimized, restore (unminimize) all of them.
+    const allMinimized = activeWindows.value.every(w => w.isMinimized)
+    
+    if (allMinimized) {
+      activeWindows.value.forEach(w => {
+        w.isMinimized = false
+      })
+    } else {
+      activeWindows.value.forEach(w => {
+        w.isMinimized = true
+      })
+    }
+  }
+
   function minimizeWindow(id: string) {
     const win = windows.value.find(w => w.id === id)
     if (win) {
@@ -170,6 +187,7 @@ export const useWindowsStore = defineStore('windows', () => {
     registerOrOpenWindow,
     closeWindow,
     minimizeWindow,
+    toggleShowDesktop,
     toggleMaximize,
     snapWindow,
     clearSnap,
