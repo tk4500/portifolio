@@ -124,7 +124,7 @@ const taskbarClass = computed(() => {
 
 <template>
   <div
-    class="glass bg-[var(--taskbar-bg)] text-white flex justify-between z-50 fixed select-none"
+    class="glass bg-[var(--taskbar-bg)] text-white flex justify-between z-50 fixed select-none font-sans tracking-normal"
     :class="taskbarClass"
     @click.stop
   >

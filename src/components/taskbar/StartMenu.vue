@@ -11,10 +11,10 @@ const { t } = useI18n()
 
 const menuClass = computed(() => {
   switch (systemStore.taskbarPosition) {
-    case 'top': return 'top-14 left-2 flex-col'
-    case 'bottom': return 'bottom-14 left-2 flex-col-reverse'
-    case 'left': return 'top-2 left-14 flex-row'
-    case 'right': return 'top-2 right-14 flex-row-reverse'
+    case 'top': return 'top-14 left-2'
+    case 'bottom': return 'bottom-14 left-2'
+    case 'left': return 'top-2 left-14'
+    case 'right': return 'top-2 right-14'
   }
 })
 
@@ -51,7 +51,7 @@ function launchApp(id: string, titleKey: string, icon: string) {
   <Transition name="fade-slide">
     <div
       v-if="systemStore.isStartMenuOpen"
-      class="fixed bg-white/95 dark:bg-black/90 backdrop-blur-md rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.3)] border border-[var(--window-border)] p-4 w-72 flex flex-col gap-4 text-[var(--window-title-text)] z-[100]"
+      class="fixed bg-white/95 dark:bg-black/90 backdrop-blur-md rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.3)] border border-[var(--window-border)] p-4 w-72 flex flex-col gap-4 text-[var(--window-title-text)] z-[100]" font-sans tracking-normal
       :class="menuClass"
       @click.stop
     >

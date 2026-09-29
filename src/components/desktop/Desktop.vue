@@ -4,7 +4,7 @@ import WindowWrapper from '../window/WindowWrapper.vue'
 import Taskbar from '../taskbar/Taskbar.vue'
 import { useWindowsStore } from '../../stores/useWindowsStore'
 import { useSystemStore } from '../../stores/useSystemStore'
-import { defineAsyncComponent, computed, onMounted } from 'vue'
+import { defineAsyncComponent, computed, onMounted, onUnmounted } from 'vue'
 
 const windowsStore = useWindowsStore()
 const systemStore = useSystemStore()
@@ -35,7 +35,17 @@ const desktopPadding = computed(() => {
 
 // Close start menu or dropdowns if user clicks anywhere on desktop
 
+
+function handleKeydown(e: KeyboardEvent) {
+  if (e.key === 'Meta' || e.key === 'OS' || e.key === 'Win') {
+    // Only toggle if they didn't press a combo like Meta+C
+    systemStore.toggleStartMenu()
+  }
+}
+
 onMounted(() => {
+  window.addEventListener('keydown', handleKeydown)
+
   if (windowsStore.windows.length === 0) {
     const aboutIcon = systemStore.desktopIcons.find(i => i.id === 'about')
     if (aboutIcon) {
@@ -49,6 +59,10 @@ onMounted(() => {
       })
     }
   }
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown)
 })
 
 function handleDesktopClick() {

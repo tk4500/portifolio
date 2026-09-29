@@ -206,7 +206,7 @@ onUnmounted(() => {
     >
       <div class="flex items-center gap-2 overflow-hidden">
         <AppIcon v-if="windowState.icon" :icon="windowState.icon" class="text-lg" />
-        <span class="font-medium text-sm text-[var(--window-title-text)] truncate">
+        <span class="font-medium text-sm text-[var(--window-title-text)] truncate font-sans">
           {{ t(windowState.titleKey) }}
         </span>
       </div>

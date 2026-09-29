@@ -33,43 +33,66 @@ watch(() => systemStore.taskbarPosition, (newPos) => {
   const paddingX = newPos === 'left' ? 60 : 20
   const paddingY = newPos === 'top' ? 60 : 20
 
-  // Snap the icon to the newly shifted grid
   let snappedX = Math.round((x.value - paddingX) / gridSize) * gridSize + paddingX
   let snappedY = Math.round((y.value - paddingY) / gridSize) * gridSize + paddingY
 
-  // Push out of bottom/right bounds
-  if (newPos === 'bottom' && snappedY > window.innerHeight - 150) snappedY -= gridSize
-  if (newPos === 'right' && snappedX > window.innerWidth - 120) snappedX -= gridSize
+  const maxX = newPos === 'right' ? window.innerWidth - 120 : window.innerWidth - 100
+  const maxY = newPos === 'bottom' ? window.innerHeight - 150 : window.innerHeight - 100
 
-  x.value = Math.max(paddingX, snappedX)
-  y.value = Math.max(paddingY, snappedY)
+  snappedX = Math.min(maxX, Math.max(paddingX, snappedX))
+  snappedY = Math.min(maxY, Math.max(paddingY, snappedY))
+
+  x.value = snappedX
+  y.value = snappedY
   systemStore.updateIconPosition(props.id, x.value, y.value)
 })
 
-// We distinguish between a drag and a click
-let startPos = { x: 0, y: 0 }
-function onMouseDown(e: MouseEvent) {
-  startPos = { x: e.clientX, y: e.clientY }
+// Touch + Mouse coordinate normalizer
+function getClientX(e: MouseEvent | TouchEvent) {
+  return 'touches' in e ? e.touches[0].clientX : (e as MouseEvent).clientX
+}
+function getClientY(e: MouseEvent | TouchEvent) {
+  return 'touches' in e ? e.touches[0].clientY : (e as MouseEvent).clientY
 }
 
-function onMouseUp(e: MouseEvent) {
-  const dx = Math.abs(e.clientX - startPos.x)
-  const dy = Math.abs(e.clientY - startPos.y)
+// We distinguish between a drag and a click
+let startPos = { x: 0, y: 0 }
+function onMouseDown(e: MouseEvent | TouchEvent) {
+  startPos = { x: getClientX(e), y: getClientY(e) }
+}
+
+function onMouseUp(e: MouseEvent | TouchEvent) {
+  // on touchend, touches is empty, so we use changedTouches
+  let ex = 0, ey = 0;
+  if ('changedTouches' in e && e.changedTouches.length > 0) {
+    ex = e.changedTouches[0].clientX
+    ey = e.changedTouches[0].clientY
+  } else if ('clientX' in e) {
+    ex = (e as MouseEvent).clientX
+    ey = (e as MouseEvent).clientY
+  }
+
+  const dx = Math.abs(ex - startPos.x)
+  const dy = Math.abs(ey - startPos.y)
   // If moved less than 5 pixels, consider it a click
   if (dx < 5 && dy < 5) {
     open()
   } else {
-    // Snap to grid on drop
     const gridSize = 100
     const paddingX = systemStore.taskbarPosition === 'left' ? 60 : 20
     const paddingY = systemStore.taskbarPosition === 'top' ? 60 : 20
 
-    // Calculate nearest grid slot relative to padding
-    const snappedX = Math.round((x.value - paddingX) / gridSize) * gridSize + paddingX
-    const snappedY = Math.round((y.value - paddingY) / gridSize) * gridSize + paddingY
+    let snappedX = Math.round((x.value - paddingX) / gridSize) * gridSize + paddingX
+    let snappedY = Math.round((y.value - paddingY) / gridSize) * gridSize + paddingY
 
-    x.value = Math.max(paddingX, snappedX)
-    y.value = Math.max(paddingY, snappedY)
+    const maxX = systemStore.taskbarPosition === 'right' ? window.innerWidth - 120 : window.innerWidth - 100
+    const maxY = systemStore.taskbarPosition === 'bottom' ? window.innerHeight - 150 : window.innerHeight - 100
+
+    snappedX = Math.min(maxX, Math.max(paddingX, snappedX))
+    snappedY = Math.min(maxY, Math.max(paddingY, snappedY))
+
+    x.value = snappedX
+    y.value = snappedY
     systemStore.updateIconPosition(props.id, x.value, y.value)
   }
 }
@@ -94,7 +117,8 @@ function open() {
     :style="style"
     @mousedown="onMouseDown"
     @mouseup="onMouseUp"
-    @touchstart.prevent="open"
+    @touchstart="onMouseDown"
+    @touchend="onMouseUp"
   >
     <div class="w-12 h-12 bg-white/10 dark:bg-white/8 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.15)] backdrop-blur-sm flex items-center justify-center text-2xl mb-2 group-hover:scale-110 group-hover:shadow-[0_4px_16px_rgba(0,0,0,0.25)] transition-all duration-200 pointer-events-none border border-white/10">
       <span v-if="icon" v-html="icon"></span>
