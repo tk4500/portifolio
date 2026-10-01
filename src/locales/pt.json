@@ -28,7 +28,8 @@
     "time": "Hora atual",
     "notifications": "Notificações",
     "activeWindows": "Janelas ativas",
-    "noActiveWindows": "Nenhuma janela aberta"
+    "noActiveWindows": "Nenhuma janela aberta",
+    "clickToStart": "Clique para abrir o menu Iniciar"
   },
   "startMenu": {
     "developer": "Desenvolvedor",
@@ -120,5 +121,13 @@
     "back": "Voltar",
     "next": "Próximo",
     "getStarted": "Começar"
+  },
+  "projectNames": {
+    "WinThor B2B Integration": "Integração WinThor B2B",
+    "Portfólio OS (Desktop Metaphor)": "Portfólio OS (Metáfora Desktop)",
+    "Desktop Metaphor Portfolio": "Portfólio Metáfora Desktop",
+    "Dev's Journey": "Jornada do Dev",
+    "Aula Maker": "Aula Maker",
+    "GeoTetraArmor (Fork)": "GeoTetraArmor (Fork)"
   }
 }

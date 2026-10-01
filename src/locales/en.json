@@ -28,7 +28,8 @@
     "time": "Current time",
     "notifications": "Notifications",
     "activeWindows": "Active windows",
-    "noActiveWindows": "No open windows"
+    "noActiveWindows": "No open windows",
+    "clickToStart": "Click to open the Start menu"
   },
   "startMenu": {
     "developer": "Developer",
@@ -120,5 +121,13 @@
     "back": "Back",
     "next": "Next",
     "getStarted": "Get Started"
+  },
+  "projectNames": {
+    "WinThor B2B Integration": "WinThor B2B Integration",
+    "Portfólio OS (Desktop Metaphor)": "Portfolio OS (Desktop Metaphor)",
+    "Desktop Metaphor Portfolio": "Desktop Metaphor Portfolio",
+    "Dev's Journey": "Dev's Journey",
+    "Aula Maker": "Aula Maker",
+    "GeoTetraArmor (Fork)": "GeoTetraArmor (Fork)"
   }
 }

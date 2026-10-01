@@ -13,6 +13,7 @@ const props = defineProps<{
   initialX: number
   initialY: number
   url?: string // Optional URL for live project links
+  skipTranslation?: boolean // Set true for already-localized project names
 }>()
 
 const windowsStore = useWindowsStore()
@@ -148,7 +149,7 @@ function open() {
       <Icon :icon="icon || 'icons/folder.svg'" :size="32" class="text-white" />
     </div>
     <span style="font-size: var(--text-metadata); font-weight: var(--text-metadata-weight); letter-spacing: var(--text-metadata-tracking); line-height: var(--text-metadata-leading);" class="text-center drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] select-none line-clamp-2 px-1 pointer-events-none">
-      {{ t(titleKey) }}
+      {{ skipTranslation ? titleKey : t(titleKey) }}
     </span>
   </div>
 </template>
