@@ -4,26 +4,50 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Custom variables for OS look */
+/* Semantic OS Color System */
 :root {
-  --desktop-bg: #0f0f14;
-  --window-bg: rgba(255, 255, 255, 0.97);
-  --window-border: rgba(0, 0, 0, 0.08);
-  --window-titlebar: #f5f5f7;
-  --window-title-text: #1a1a2e;
-  --taskbar-bg: rgba(15, 15, 20, 0.82);
-  --taskbar-text: #ffffff;
-  --accent: #e8590c;
-  --accent-hover: #d04e08;
-  --accent-subtle: rgba(232, 89, 12, 0.08);
+  /* Surface colors */
+  --desktop-bg: oklch(20% 0.02 260); /* Deep cool navy #0f0f14 */
+  --window-bg: oklch(98% 0 0 / 0.97);
+  --window-border: oklch(0% 0 0 / 0.08);
+  --window-titlebar: oklch(96% 0.01 260);
+  
+  /* Text colors */
+  --window-title-text: oklch(25% 0.04 260); /* Navy text */
+  --text-secondary: oklch(50% 0.02 260);
+  
+  /* Taskbar */
+  --taskbar-bg: oklch(18% 0.02 260 / 0.82);
+  --taskbar-text: oklch(100% 0 0);
+  
+  /* Brand Accent: Burnt Orange */
+  --accent-hue: 45;
+  --accent: oklch(52% 0.18 var(--accent-hue)); /* #c24106 equivalent, contrast safe on white */
+  --accent-hover: oklch(45% 0.18 var(--accent-hue));
+  --accent-subtle: oklch(52% 0.18 var(--accent-hue) / 0.08);
+  
+  /* Semantic */
+  --danger: oklch(55% 0.2 25);
+  --danger-hover: oklch(48% 0.2 25);
 }
 
 html.dark {
-  --window-bg: rgba(22, 22, 30, 0.96);
-  --window-border: rgba(255, 255, 255, 0.06);
-  --window-titlebar: #16161e;
-  --window-title-text: #e8e8ed;
-  --accent-subtle: rgba(232, 89, 12, 0.12);
+  /* Dark mode surfaces */
+  --window-bg: oklch(22% 0.03 260 / 0.96); /* #16161e */
+  --window-border: oklch(100% 0 0 / 0.06);
+  --window-titlebar: oklch(20% 0.03 260);
+  
+  /* Dark mode text */
+  --window-title-text: oklch(92% 0.01 260); /* #e8e8ed */
+  --text-secondary: oklch(75% 0.02 260);
+  
+  /* Dark mode accent needs higher lightness for contrast against dark bg */
+  --accent: oklch(75% 0.16 var(--accent-hue)); /* bright orange */
+  --accent-hover: oklch(82% 0.16 var(--accent-hue));
+  --accent-subtle: oklch(75% 0.16 var(--accent-hue) / 0.12);
+  
+  --danger: oklch(65% 0.2 25);
+  --danger-hover: oklch(72% 0.2 25);
 }
 
 /* Base styles */
@@ -57,6 +81,12 @@ html, body {
   opacity: 0.03;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   z-index: 9998;
+}
+
+@media (max-width: 768px) {
+  .grain-overlay::after {
+    display: none;
+  }
 }
 
 /* Hide scrollbar for taskbar */

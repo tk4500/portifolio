@@ -11,6 +11,7 @@ const props = defineProps<{
   icon?: string
   initialX: number
   initialY: number
+  url?: string // Optional URL for live project links
 }>()
 
 const windowsStore = useWindowsStore()
@@ -98,23 +99,45 @@ function onMouseUp(e: MouseEvent | TouchEvent) {
 }
 
 function open() {
-  windowsStore.registerOrOpenWindow({
-    appId: props.id,
-    titleKey: props.titleKey,
-    component: props.id, // Maps id to component name
-    width: 600,
-    height: 400,
-    icon: props.icon,
-    allowMultiple: props.id === 'archive' // Only allow multiple for projects folder for now
-  })
+  // If this icon has a URL, open it in an iframe window
+  if (props.url) {
+    windowsStore.registerOrOpenWindow({
+      appId: props.id,
+      titleKey: props.titleKey,
+      component: 'iframe',
+      width: 1000,
+      height: 700,
+      icon: props.icon,
+      allowMultiple: false,
+      props: {
+        url: props.url,
+        title: props.titleKey
+      }
+    })
+  } else {
+    // Regular app window
+    windowsStore.registerOrOpenWindow({
+      appId: props.id,
+      titleKey: props.titleKey,
+      component: props.id,
+      width: 600,
+      height: 400,
+      icon: props.icon,
+      allowMultiple: props.id === 'archive'
+    })
+  }
 }
 </script>
 
 <template>
   <div
     ref="iconRef"
-    class="flex flex-col items-center justify-center w-24 h-24 rounded hover:bg-white/10 cursor-pointer text-white group absolute transition-colors"
+    class="flex flex-col items-center justify-center w-24 h-24 rounded hover:bg-white/10 cursor-pointer text-white group absolute transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
     :style="style"
+    role="button"
+    tabindex="0"
+    @keydown.enter="open"
+    @keydown.space.prevent="open"
     @mousedown="onMouseDown"
     @mouseup="onMouseUp"
     @touchstart="onMouseDown"

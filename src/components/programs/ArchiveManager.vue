@@ -28,10 +28,10 @@ function openProject(project: any) {
   <div class="h-full bg-[var(--window-bg)] text-[var(--window-title-text)] flex flex-col">
     <!-- Toolbar -->
     <div class="bg-black/5 dark:bg-white/5 border-b border-[var(--window-border)] p-2 flex items-center text-sm gap-2 select-none">
-      <button class="px-2 py-1 hover:bg-black/10 dark:hover:bg-white/10 rounded border border-transparent hover:border-[var(--window-border)] transition-colors">
+      <button class="px-2 py-1 hover:bg-black/10 dark:hover:bg-white/10 rounded border border-transparent hover:border-[var(--window-border)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--accent)]" aria-label="Go up one directory">
         ↑ {{ t('programs.archive.up') }}
       </button>
-      <div class="px-3 py-1 bg-white dark:bg-black/20 border border-[var(--window-border)] rounded shadow-inner flex-1">
+      <div class="px-3 py-1 bg-white dark:bg-black/20 border border-[var(--window-border)] rounded shadow-inner flex-1" aria-label="Current directory path">
         C:\Projects\
       </div>
     </div>
@@ -41,7 +41,11 @@ function openProject(project: any) {
       <div
         v-for="project in projects"
         :key="project.id"
-        class="w-24 flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-[var(--accent-subtle)] cursor-pointer group transition-all"
+        class="w-24 flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-[var(--accent-subtle)] cursor-pointer group transition-all focus:outline-none focus:bg-[var(--accent-subtle)]"
+        role="button"
+        tabindex="0"
+        @keydown.enter="openProject(project)"
+        @keydown.space.prevent="openProject(project)"
         @click="openProject(project)"
       >
         <AppIcon :icon="project.icon" class="text-4xl group-hover:scale-110 transition-transform" />
@@ -53,7 +57,7 @@ function openProject(project: any) {
 
     <!-- Status bar -->
     <div class="bg-black/5 dark:bg-white/5 border-t border-[var(--window-border)] px-3 py-1 text-xs opacity-70">
-      {{ projects.length }} {{ t('programs.archive.items') }}
+      {{ t('programs.archive.items', projects.length) }}
     </div>
   </div>
 </template>

@@ -1,22 +1,31 @@
 {
   "desktop": {
     "icons": {
+      "settings": "Configurações",
       "about": "Sobre Mim",
       "contact": "Contato",
       "projects": "Projetos",
-      "settings": "Configurações",
-      "stack": "Habilidades"
-    }
+      "stack": "Stack"
+    },
+    "quickLinks": "Acesso Rápido",
+    "resume": "Currículo"
   },
   "taskbar": {
     "start": "Iniciar",
-    "language": "Idioma"
+    "language": "Idioma",
+    "clickToStart": "Clique aqui para começar!"
   },
   "startMenu": {
     "developer": "Desenvolvedor",
     "portfolioSystem": "Sistema de Portfólio",
     "apps": "Aplicativos",
-    "closeAll": "Fechar Todos os Programas"
+    "quickActions": "Ações Rápidas",
+    "emailMe": "Enviar E-mail",
+    "whatsapp": "WhatsApp",
+    "resume": "Currículo",
+    "help": "Ajuda e Tour",
+    "closeAll": "Fechar Todos os Programas",
+    "confirmCloseAll": "Confirmar Fechamento"
   },
   "programs": {
     "about": {
@@ -35,9 +44,8 @@
     },
     "settings": {
       "title": "Configurações do Sistema",
-      "taskbarPosition": "Posição da Barra de Tarefas",
-      "backgroundAppearance": "Aparência do Fundo",
       "theme": "Tema",
+      "themeDescription": "Escolha seu esquema de cores preferido",
       "themes": {
         "light": "Claro",
         "dark": "Escuro",
@@ -62,18 +70,40 @@
     },
     "archive": {
       "up": "Subir",
-      "items": "itens"
+      "items": "0 itens | 1 item | {n} itens"
     },
     "projectViewer": {
       "openLiveSite": "Abrir Site Ao Vivo",
       "viewSource": "Ver Código (GitHub)",
       "screenshots": "Capturas de Tela",
-      "noScreenshots": "Nenhuma captura de tela disponível para este projeto.",
+      "noScreenshots": "Nenhuma captura de tela disponível. Visite o site ou o repositório para ver em ação.",
       "techStack": "Tecnologias Utilizadas"
     },
     "stack": {
       "description": "Tecnologias, frameworks e ferramentas que utilizo.",
       "usage": "Nível de Uso"
     }
+  },
+  "onboarding": {
+    "welcome": {
+      "title": "Bem-vindo ao Meu Portfólio",
+      "description": "Este é um portfólio interativo construído como um sistema operacional. Clique em qualquer aplicativo para explorar meu trabalho, ou use o Menu Iniciar para navegar.",
+      "cta": "Começar"
+    },
+    "tour": {
+      "step1": {
+        "title": "Menu Iniciar",
+        "description": "Clique no botão Iniciar para ver todos os aplicativos. Você pode abrir projetos, ver minha stack tecnológica ou entrar em contato."
+      },
+      "step2": {
+        "title": "Gerenciamento de Janelas",
+        "description": "Janelas abertas aparecem na barra de tarefas. Clique para focar, ou feche quando terminar. Arraste janelas para reorganizar."
+      }
+    },
+    "skip": "Pular",
+    "skipHint": "Pressione ESC ou clique fora para pular",
+    "back": "Voltar",
+    "next": "Próximo",
+    "getStarted": "Começar"
   }
 }

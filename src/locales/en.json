@@ -1,22 +1,31 @@
 {
   "desktop": {
     "icons": {
+      "settings": "Settings",
       "about": "About Me",
       "contact": "Contact",
       "projects": "Projects",
-      "settings": "Settings",
-      "stack": "Tech Stack"
-    }
+      "stack": "Stack"
+    },
+    "quickLinks": "Quick Links",
+    "resume": "Resume"
   },
   "taskbar": {
     "start": "Start",
-    "language": "Language"
+    "language": "Language",
+    "clickToStart": "Click here to start!"
   },
   "startMenu": {
     "developer": "Developer",
     "portfolioSystem": "Portfolio System",
     "apps": "Apps",
-    "closeAll": "Close All Programs"
+    "quickActions": "Quick Actions",
+    "emailMe": "Email Me",
+    "whatsapp": "WhatsApp",
+    "resume": "Resume",
+    "help": "Help & Tour",
+    "closeAll": "Close All Programs",
+    "confirmCloseAll": "Confirm Close All"
   },
   "programs": {
     "about": {
@@ -35,9 +44,8 @@
     },
     "settings": {
       "title": "System Settings",
-      "taskbarPosition": "Taskbar Position",
-      "backgroundAppearance": "Background Appearance",
       "theme": "Theme",
+      "themeDescription": "Choose your preferred color scheme",
       "themes": {
         "light": "Light",
         "dark": "Dark",
@@ -62,18 +70,40 @@
     },
     "archive": {
       "up": "Up",
-      "items": "items"
+      "items": "0 items | 1 item | {n} items"
     },
     "projectViewer": {
       "openLiveSite": "Open Live Site",
       "viewSource": "View Source (GitHub)",
       "screenshots": "Screenshots",
-      "noScreenshots": "No screenshots available for this project.",
+      "noScreenshots": "No screenshots available. Visit the live site or repository to see it in action.",
       "techStack": "Technologies Used"
     },
     "stack": {
       "description": "Technologies, frameworks, and tools I use.",
       "usage": "Usage Level"
     }
+  },
+  "onboarding": {
+    "welcome": {
+      "title": "Welcome to My Portfolio",
+      "description": "This is an interactive portfolio built as a desktop OS. Click any app to explore my work, or use the Start Menu to navigate.",
+      "cta": "Get Started"
+    },
+    "tour": {
+      "step1": {
+        "title": "Start Menu",
+        "description": "Click the Start button to see all apps. You can launch projects, view my tech stack, or get in touch."
+      },
+      "step2": {
+        "title": "Window Management",
+        "description": "Open windows appear in the taskbar. Click to focus, or close when you're done. Drag windows to rearrange."
+      }
+    },
+    "skip": "Skip",
+    "skipHint": "Press ESC or click outside to skip",
+    "back": "Back",
+    "next": "Next",
+    "getStarted": "Get Started"
   }
 }

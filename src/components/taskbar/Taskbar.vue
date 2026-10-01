@@ -2,17 +2,62 @@
 import { useWindowsStore } from '../../stores/useWindowsStore'
 import { useSystemStore } from '../../stores/useSystemStore'
 import { useI18n } from 'vue-i18n'
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed, watch, nextTick } from 'vue'
+import { useWindowSize } from '@vueuse/core'
 import StartMenu from './StartMenu.vue'
 import AppIcon from '../desktop/AppIcon.vue'
 
 const windowsStore = useWindowsStore()
 const systemStore = useSystemStore()
 const { t, locale } = useI18n()
+const { width: screenWidth } = useWindowSize()
+const isMobile = computed(() => screenWidth.value < 768)
+
 const time = ref('')
 
 const openDropdownId = ref<string | null>(null)
 const dropdownStyle = ref<Record<string, string>>({})
+const dropdownRef = ref<HTMLElement | null>(null)
+
+// Native focus trap for Dropdown
+function handleDropdownKeydown(e: KeyboardEvent) {
+  if (e.key === 'Tab' && dropdownRef.value) {
+    const focusableEls = dropdownRef.value.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
+    if (focusableEls.length === 0) return
+    const firstEl = focusableEls[0] as HTMLElement
+    const lastEl = focusableEls[focusableEls.length - 1] as HTMLElement
+
+    if (e.shiftKey) {
+      if (document.activeElement === firstEl) {
+        lastEl.focus()
+        e.preventDefault()
+      }
+    } else {
+      if (document.activeElement === lastEl) {
+        firstEl.focus()
+        e.preventDefault()
+      }
+    }
+  } else if (e.key === 'Escape') {
+    closeDropdowns()
+  }
+}
+
+watch(openDropdownId, (newVal) => {
+  if (newVal) {
+    window.addEventListener('keydown', handleDropdownKeydown)
+    setTimeout(() => {
+      if (dropdownRef.value) {
+        const focusableEls = dropdownRef.value.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
+        if (focusableEls.length > 0) {
+          (focusableEls[0] as HTMLElement).focus()
+        }
+      }
+    }, 50)
+  } else {
+    window.removeEventListener('keydown', handleDropdownKeydown)
+  }
+})
 
 function closeDropdowns() {
   openDropdownId.value = null
@@ -28,24 +73,45 @@ function updateTime() {
 }
 
 let timer: number
+let initialTimer: number
 
 const showTooltip = ref(true)
 
+const canScrollLeft = ref(false)
+const canScrollRight = ref(false)
+const canScrollTop = ref(false)
+const canScrollBottom = ref(false)
+
+const scrollContainerRef = ref<HTMLElement | null>(null)
+
+function checkScroll() {
+  if (!scrollContainerRef.value) return
+  const el = scrollContainerRef.value
+  canScrollLeft.value = el.scrollLeft > 0
+  canScrollRight.value = Math.ceil(el.scrollLeft + el.clientWidth) < el.scrollWidth
+  canScrollTop.value = el.scrollTop > 0
+  canScrollBottom.value = Math.ceil(el.scrollTop + el.clientHeight) < el.scrollHeight
+}
+
 onMounted(() => {
   updateTime()
-  timer = window.setInterval(updateTime, 60000)
-  window.addEventListener('click', closeDropdowns)
+  // Align to the next minute rollover
+  const now = new Date()
+  const delayToNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds()
+  initialTimer = window.setTimeout(() => {
+    updateTime()
+    timer = window.setInterval(updateTime, 60000)
+  }, delayToNextMinute)
   
-  // Auto-hide tooltip after 5 seconds to avoid annoyance
-  setTimeout(() => {
-    showTooltip.value = false
-  }, 5000)
+  window.addEventListener('click', closeDropdowns)
+  window.addEventListener('resize', checkScroll)
 })
 
-
 onUnmounted(() => {
+  clearTimeout(initialTimer)
   clearInterval(timer)
   window.removeEventListener('click', closeDropdowns)
+  window.removeEventListener('resize', checkScroll)
 })
 
 const isHorizontal = computed(() => ['top', 'bottom'].includes(systemStore.taskbarPosition))
@@ -58,6 +124,18 @@ const groupedWindows = computed(() => {
     groups[win.appId].push(win)
   })
   return Object.values(groups)
+// Vue imports are grouped at the top
+// ...
+})
+
+watch(groupedWindows, () => {
+  nextTick(checkScroll)
+}, { deep: true })
+
+watch(() => systemStore.isStartMenuOpen, (isOpen) => {
+  if (isOpen) {
+    showTooltip.value = false
+  }
 })
 
 function handleGroupClick(group: typeof windowsStore.activeWindows, event: MouseEvent | TouchEvent) {
@@ -122,6 +200,9 @@ function isGroupActive(group: typeof windowsStore.activeWindows) {
 }
 
 const taskbarClass = computed(() => {
+  if (isMobile.value) {
+    return 'bottom-0 left-0 h-14 w-full flex-row px-2 shadow-[0_-1px_10px_rgba(0,0,0,0.2)]'
+  }
   switch (systemStore.taskbarPosition) {
     case 'top': return 'top-0 left-0 h-12 w-full flex-row px-2 shadow-[0_1px_10px_rgba(0,0,0,0.2)]'
     case 'bottom': return 'bottom-0 left-0 h-12 w-full flex-row px-2 shadow-[0_-1px_10px_rgba(0,0,0,0.2)]'
@@ -144,21 +225,39 @@ const taskbarClass = computed(() => {
         <button
           @click.stop="systemStore.toggleStartMenu()"
           @mouseenter="showTooltip = false"
-          class="bg-white/10 hover:bg-white/20 rounded-md font-medium transition-colors flex items-center justify-center gap-2 relative"
+          class="bg-white/10 hover:bg-white/20 rounded-md font-medium transition-colors flex items-center justify-center gap-2 relative focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
           :class="[
             isHorizontal ? 'px-4 h-9' : 'w-9 h-9 min-h-[36px] min-w-[36px] mt-1',
-            systemStore.isStartMenuOpen ? 'bg-white/30' : ''
+            systemStore.isStartMenuOpen ? 'bg-white/30' : '',
+            { 'animate-pulse shadow-[0_0_15px_var(--accent)] bg-[var(--accent)]/20 hover:bg-[var(--accent)]/30 border border-[var(--accent)]/50': windowsStore.activeWindows.length === 0 && !systemStore.isStartMenuOpen && !isMobile }
           ]"
+          :aria-expanded="systemStore.isStartMenuOpen"
+          :aria-label="t('taskbar.start')"
         >
-          <span class="text-xl">🪟</span>
+          <span class="text-xl relative">
+            🪟
+            <!-- Notification Dot when empty -->
+            <span v-if="windowsStore.activeWindows.length === 0 && !systemStore.isStartMenuOpen" class="absolute -top-1 -right-1 flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--accent)] opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-[var(--accent)]"></span>
+            </span>
+          </span>
           <span v-if="isHorizontal" class="hidden sm:inline">{{ t('taskbar.start') }}</span>
         </button>
         
         <!-- Subtle Power User Hint -->
         <Transition name="fade">
           <div 
-            v-if="showTooltip && isHorizontal" 
-            class="absolute top-[-40px] left-0 bg-black/80 dark:bg-white/90 text-white dark:text-black text-xs px-3 py-1.5 rounded shadow-lg whitespace-nowrap backdrop-blur-md pointer-events-none"
+            v-if="windowsStore.activeWindows.length === 0 && !systemStore.isStartMenuOpen && isHorizontal && !isMobile" 
+            class="absolute top-[-44px] left-0 bg-[var(--accent)] text-white text-xs px-3 py-1.5 rounded shadow-lg whitespace-nowrap backdrop-blur-md font-medium animate-pulse"
+          >
+            {{ t('taskbar.clickToStart') || 'Click here to start!' }}
+            <div class="absolute -bottom-1 left-4 w-2 h-2 bg-[var(--accent)] rotate-45"></div>
+          </div>
+          <div 
+            v-else-if="showTooltip && isHorizontal && !isMobile" 
+            @click="showTooltip = false"
+            class="absolute top-[-40px] left-0 bg-black/80 dark:bg-white/90 text-white dark:text-black text-xs px-3 py-1.5 rounded shadow-lg whitespace-nowrap backdrop-blur-md cursor-pointer"
           >
             Press <kbd class="font-mono bg-white/20 dark:bg-black/10 px-1 rounded mx-0.5">Win / ⌘</kbd> to open
             <div class="absolute -bottom-1 left-4 w-2 h-2 bg-black/80 dark:bg-white/90 rotate-45"></div>
@@ -168,9 +267,17 @@ const taskbarClass = computed(() => {
 
       <!-- Active Window Tabs (Grouped) -->
       <div
-        class="flex items-center gap-1 overflow-x-auto hide-scrollbar"
+        ref="scrollContainerRef"
+        @scroll="checkScroll"
+        class="flex items-center gap-1 overflow-x-auto hide-scrollbar relative"
         :class="isHorizontal ? 'flex-row px-2 max-w-[60vw]' : 'flex-col py-2 max-h-[60vh] overflow-y-auto'"
       >
+        <!-- Fade masks for overflow -->
+        <div v-if="isHorizontal" class="absolute left-0 top-0 bottom-0 w-4 bg-gradient-to-r from-[var(--taskbar-bg)] to-transparent pointer-events-none z-10 transition-opacity duration-300" :class="canScrollLeft ? 'opacity-100' : 'opacity-0'"></div>
+        <div v-if="isHorizontal" class="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[var(--taskbar-bg)] to-transparent pointer-events-none z-10 transition-opacity duration-300" :class="canScrollRight ? 'opacity-100' : 'opacity-0'"></div>
+        <div v-if="!isHorizontal" class="absolute left-0 top-0 right-0 h-4 bg-gradient-to-b from-[var(--taskbar-bg)] to-transparent pointer-events-none z-10 transition-opacity duration-300" :class="canScrollTop ? 'opacity-100' : 'opacity-0'"></div>
+        <div v-if="!isHorizontal" class="absolute left-0 bottom-0 right-0 h-8 bg-gradient-to-t from-[var(--taskbar-bg)] to-transparent pointer-events-none z-10 transition-opacity duration-300" :class="canScrollBottom ? 'opacity-100' : 'opacity-0'"></div>
+
         <div
           v-for="group in groupedWindows"
           :key="group[0].appId"
@@ -179,13 +286,16 @@ const taskbarClass = computed(() => {
         >
           <button
             @click.stop="handleGroupClick(group, $event)"
-            class="rounded-md text-sm transition-colors border overflow-hidden flex items-center relative pr-7 w-full"
+            class="rounded-md text-sm transition-colors border overflow-hidden flex items-center relative pr-7 w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
             :class="[
               isGroupActive(group)
                 ? 'bg-white/20 border-white/20 shadow-inner'
                 : 'bg-transparent hover:bg-white/10 border-transparent',
               isHorizontal ? 'pl-3 h-9 max-w-[150px]' : 'w-9 h-9 min-h-[36px] min-w-[36px] max-w-[36px] justify-center !pr-0 !pl-0'
             ]"
+            :aria-label="group.length > 1 ? t(group[0].titleKey) + ' (' + group.length + ' windows)' : t(group[0].titleKey)"
+            :aria-expanded="openDropdownId === group[0].appId"
+            :aria-haspopup="group.length > 1 ? 'menu' : false"
             :title="t(group[0].titleKey)"
           >
             <AppIcon v-if="group[0].icon" :icon="group[0].icon" :class="isHorizontal ? 'mr-1 text-lg' : 'text-lg'" />
@@ -204,7 +314,8 @@ const taskbarClass = computed(() => {
           <button
             v-if="isHorizontal"
             @click.stop="group.forEach(w => windowsStore.closeWindow(w.id))"
-            class="absolute right-1 top-1/2 -translate-y-1/2 w-5 h-5 rounded hover:bg-red-500 hover:text-white flex items-center justify-center opacity-0 group-hover/taskbar:opacity-100 transition-opacity"
+            class="absolute right-1 top-1/2 -translate-y-1/2 w-5 h-5 rounded hover:bg-[var(--danger)] hover:text-white flex items-center justify-center opacity-100 sm:opacity-0 group-hover/taskbar:opacity-100 transition-opacity focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--danger)] focus:opacity-100"
+            aria-label="Close all instances"
             title="Close"
           >
             <svg width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2L10 10M10 2L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -214,14 +325,20 @@ const taskbarClass = computed(() => {
           <Teleport to="body">
             <div
               v-if="group.length > 1 && openDropdownId === group[0].appId"
-              class="fixed bg-white/95 dark:bg-black/90 backdrop-blur-md rounded-lg shadow-xl border border-[var(--window-border)] p-1 min-w-[150px] z-[100] text-[var(--window-title-text)] flex flex-col gap-1"
+              ref="dropdownRef"
+              class="fixed bg-white/95 dark:bg-black/90 backdrop-blur-md rounded-lg shadow-xl border border-[var(--window-border)] p-1 min-w-[150px] z-[100] text-[var(--window-title-text)] flex flex-col gap-1 max-h-64 overflow-y-auto"
               :style="dropdownStyle"
+              role="menu"
               @click.stop
             >
                <div
                  v-for="(win, idx) in group"
                  :key="win.id"
                  class="flex items-center justify-between px-2 py-1.5 hover:bg-black/10 dark:hover:bg-white/10 rounded cursor-pointer group/item"
+                 role="menuitem"
+                 tabindex="0"
+                 @keydown.enter="handleSubItemClick(win.id)"
+                 @keydown.space.prevent="handleSubItemClick(win.id)"
                  @click.stop="handleSubItemClick(win.id)"
                >
                  <div class="flex items-center gap-2 truncate pointer-events-none">
@@ -232,7 +349,8 @@ const taskbarClass = computed(() => {
                  <!-- Close single window in dropdown -->
                  <button
                    @click.stop="windowsStore.closeWindow(win.id)"
-                   class="w-5 h-5 rounded hover:bg-red-500 hover:text-white flex items-center justify-center opacity-0 group-hover/item:opacity-100 transition-opacity"
+                   class="w-5 h-5 rounded hover:bg-[var(--danger)] hover:text-white flex items-center justify-center opacity-100 sm:opacity-0 group-hover/item:opacity-100 transition-opacity focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--danger)] focus:opacity-100"
+                   aria-label="Close instance"
                  >
                    <svg width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2L10 10M10 2L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
                  </button>
@@ -249,7 +367,7 @@ const taskbarClass = computed(() => {
         <span :class="isHorizontal ? '' : 'writing-vertical-rl'">{{ time }}</span>
         <button
           @click="toggleLanguage"
-          class="uppercase font-bold hover:bg-white/10 px-2 py-1 rounded"
+          class="uppercase font-bold hover:bg-white/10 px-2 py-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
           :title="t('taskbar.language')"
         >
           {{ locale }}
@@ -259,9 +377,13 @@ const taskbarClass = computed(() => {
       <!-- Show Desktop Button (Windows Style) -->
       <div 
         @click.stop="windowsStore.toggleShowDesktop()"
-        class="hover:bg-white/20 transition-colors cursor-pointer border-[var(--window-border)]"
+        class="hover:bg-white/20 transition-colors cursor-pointer border-[var(--window-border)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
         :class="isHorizontal ? 'h-full w-2 border-l ml-1' : 'w-full h-2 border-t mt-1'"
         title="Show Desktop"
+        role="button"
+        tabindex="0"
+        @keydown.enter="windowsStore.toggleShowDesktop()"
+        @keydown.space.prevent="windowsStore.toggleShowDesktop()"
       ></div>
     </div>
 

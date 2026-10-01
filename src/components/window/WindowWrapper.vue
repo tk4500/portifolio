@@ -5,6 +5,7 @@ import { useSystemStore } from '../../stores/useSystemStore'
 import { useWindowsStore, type WindowState } from '../../stores/useWindowsStore'
 import { useI18n } from 'vue-i18n'
 import AppIcon from '../desktop/AppIcon.vue'
+import { watch } from 'vue'
 
 const props = defineProps<{
   windowState: WindowState
@@ -13,8 +14,18 @@ const props = defineProps<{
 const windowsStore = useWindowsStore()
 const systemStore = useSystemStore()
 const { t } = useI18n()
-const { width: screenWidth } = useWindowSize()
+const { width: screenWidth, height: screenHeight } = useWindowSize()
 const isMobile = computed(() => screenWidth.value < 768)
+
+// Watch for screen resizes to keep windows in bounds
+watch([screenWidth, screenHeight], ([newW, newH]) => {
+  if (props.windowState.isMaximized || props.windowState.snappedPosition || isMobile.value) return
+  let boundedX = Math.max(0, Math.min(props.windowState.x, newW - 40))
+  let boundedY = Math.max(0, Math.min(props.windowState.y, newH - 40))
+  if (boundedX !== props.windowState.x || boundedY !== props.windowState.y) {
+    windowsStore.updateWindowPosition(props.windowState.id, boundedX, boundedY)
+  }
+})
 
 // Titlebar ref for drag handle
 const titleBarRef = ref<HTMLElement | null>(null)
@@ -22,6 +33,7 @@ const snapPreview = ref<'left' | 'right' | 'top' | null>(null)
 
 // Resizing state
 const isResizing = ref(false)
+const isDragging = ref(false)
 let resizeStart = { x: 0, y: 0, w: 0, h: 0 }
 let resizeDirection = ''
 
@@ -32,34 +44,50 @@ useDraggable(titleBarRef, {
   initialValue,
   onStart: () => {
     if (isMobile.value) return false // prevent drag on mobile
+    isDragging.value = true
     windowsStore.focusWindow(props.windowState.id)
-    // Removed the clearing of maximize/snap here, moved it to onMove
-    // so clicking the title bar doesn't instantly resize it, only dragging does
-  },
-  onMove: (position, event) => {
-    // If we drag a maximized or snapped window, un-maximize/un-snap it
-    // and reposition it around the mouse pointer
+    
+    // Jump the window directly to the mouse cursor if we drag while maximized/snapped
     if (props.windowState.isMaximized || props.windowState.snappedPosition) {
-      if (props.windowState.snappedPosition) {
-        windowsStore.clearSnap(props.windowState.id)
-      }
+      if (props.windowState.snappedPosition) windowsStore.clearSnap(props.windowState.id)
       if (props.windowState.isMaximized) {
-         // Using direct mutation here instead of toggleMaximize to avoid re-focusing loop glitch during drag
-         windowsStore.windows.find(w => w.id === props.windowState.id)!.isMaximized = false
+        const win = windowsStore.windows.find(w => w.id === props.windowState.id)
+        if (win) win.isMaximized = false
       }
-      // Update coordinates so it sticks to mouse instead of jumping back to old position
-      windowsStore.updateWindowPosition(props.windowState.id, event.clientX - props.windowState.width / 2, event.clientY - 20)
-    } else {
-      windowsStore.updateWindowPosition(props.windowState.id, position.x, position.y)
+    }
+  },
+  onMove: (position) => {
+    // Apply visual translation via CSS transform for smooth 60fps updates
+    if (titleBarRef.value && titleBarRef.value.parentElement) {
+      const el = titleBarRef.value.parentElement
+      const boundedX = Math.max(0, Math.min(position.x, screenWidth.value - 100))
+      const boundedY = Math.max(0, Math.min(position.y, screenHeight.value - 100))
+      const dx = boundedX - props.windowState.x
+      const dy = boundedY - props.windowState.y
+      el.style.transform = `translate(${dx}px, ${dy}px)`
     }
 
-    // Snap logic based on mouse coordinates
-    if (event.clientX <= 10) snapPreview.value = 'left'
-    else if (event.clientX >= screenWidth.value - 10) snapPreview.value = 'right'
-    else if (event.clientY <= 10) snapPreview.value = 'top'
+    // Snap preview based on cursor position
+    const cursorX = position.x
+    const cursorY = position.y
+    if (cursorX <= 10) snapPreview.value = 'left'
+    else if (cursorX >= screenWidth.value - 10) snapPreview.value = 'right'
+    else if (cursorY <= 10) snapPreview.value = 'top'
     else snapPreview.value = null
   },
-  onEnd: () => {
+  onEnd: (position) => {
+    isDragging.value = false
+    
+    // Clear the CSS transform
+    if (titleBarRef.value && titleBarRef.value.parentElement) {
+      titleBarRef.value.parentElement.style.transform = ''
+    }
+
+    // Commit final bounded position to store (once, no jitter)
+    const boundedX = Math.max(0, Math.min(position.x, screenWidth.value - 100))
+    const boundedY = Math.max(0, Math.min(position.y, screenHeight.value - 100))
+    windowsStore.updateWindowPosition(props.windowState.id, boundedX, boundedY)
+
     if (snapPreview.value === 'top') {
       windowsStore.toggleMaximize(props.windowState.id)
     } else if (snapPreview.value === 'left' || snapPreview.value === 'right') {
@@ -118,6 +146,21 @@ function stopResize() {
   window.removeEventListener('touchmove', handleResize as EventListener)
   window.removeEventListener('mouseup', stopResize)
   window.removeEventListener('touchend', stopResize)
+}
+
+// Cleanup resize on window blur (interrupted gesture)
+function handleWindowBlur() {
+  if (isResizing.value) {
+    stopResize()
+  }
+  if (isDragging.value) {
+    isDragging.value = false
+    snapPreview.value = null
+    // Clear any transform left behind
+    if (titleBarRef.value && titleBarRef.value.parentElement) {
+      titleBarRef.value.parentElement.style.transform = ''
+    }
+  }
 }
 
 // Keep position locked if maximized/snapped, otherwise use store position
@@ -204,22 +247,34 @@ const isFocused = computed(() => {
 
 function handleKeydown(e: KeyboardEvent) {
   if (e.key === 'Escape' && isFocused.value) {
-    close()
+    // Prevent closing the window if the user is pressing Escape inside a form input/select
+    const activeEl = document.activeElement
+    const isInputActive = activeEl && ['INPUT', 'TEXTAREA', 'SELECT'].includes(activeEl.tagName)
+    if (!isInputActive) {
+      close()
+    }
   }
 }
 
 onMounted(() => {
   window.addEventListener('keydown', handleKeydown)
+  window.addEventListener('blur', handleWindowBlur)
 })
 
 onUnmounted(() => {
   window.removeEventListener('keydown', handleKeydown)
+  window.removeEventListener('blur', handleWindowBlur)
+  // Cleanup any active resize listeners
+  if (isResizing.value) {
+    stopResize()
+  }
 })
 
 </script>
 
 <template>
   <div
+    :id="`window-${windowState.id}`"
     v-show="!windowState.isMinimized"
     class="fixed flex flex-col bg-[var(--window-bg)] rounded-xl shadow-2xl overflow-hidden border transition-all duration-200"
     :class="[
@@ -227,14 +282,17 @@ onUnmounted(() => {
       windowState.isMaximized || windowState.snappedPosition || isMobile ? 'rounded-none' : ''
     ]"
     :style="computedStyle"
-    @mousedown="focus"
+    :aria-hidden="windowState.isMinimized"
+    tabindex="-1"
+    @mousedown.capture="focus"
   >
     <!-- Title Bar -->
     <div
       ref="titleBarRef"
-      class="h-10 bg-[var(--window-titlebar)] border-b border-[var(--window-border)] flex items-center justify-between px-3 select-none transition-opacity duration-200"
+      class="h-10 bg-[var(--window-titlebar)] border-b border-[var(--window-border)] flex items-center justify-between px-3 select-none transition-opacity duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-inset"
       :class="isFocused ? 'opacity-100' : 'opacity-70'"
       @dblclick="toggleMaximize"
+      tabindex="0"
     >
       <div class="flex items-center gap-2 overflow-hidden">
         <AppIcon v-if="windowState.icon" :icon="windowState.icon" class="text-lg" />
@@ -245,24 +303,24 @@ onUnmounted(() => {
 
       <!-- Window Controls -->
       <div class="flex gap-2">
-              <button @click.stop="minimize" class="w-7 h-7 flex items-center justify-center rounded hover:bg-black/10 text-[var(--window-title-text)] transition-colors">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="5" width="10" height="2" fill="currentColor"/></svg>
-              </button>
-              <button @click.stop="toggleMaximize" class="w-7 h-7 flex items-center justify-center rounded hover:bg-black/10 text-[var(--window-title-text)] transition-colors">
-                <svg v-if="!windowState.isMaximized" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1.5" y="1.5" width="9" height="9" stroke="currentColor" stroke-width="1.5"/></svg>
-                <svg v-else width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1.5" y="3.5" width="7" height="7" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 3.5V1.5H10.5V8.5H8.5" stroke="currentColor" stroke-width="1.5"/></svg>
-              </button>
-              <button @click.stop="close" class="w-7 h-7 flex items-center justify-center rounded hover:bg-red-500 hover:text-white text-[var(--window-title-text)] transition-colors">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2L10 10M10 2L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-              </button>
-            </div>
+        <button @click.stop="minimize" aria-label="Minimize window" class="w-7 h-7 flex items-center justify-center rounded hover:bg-black/10 text-[var(--window-title-text)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="5" width="10" height="2" fill="currentColor"/></svg>
+        </button>
+        <button @click.stop="toggleMaximize" aria-label="Maximize window" class="w-7 h-7 flex items-center justify-center rounded hover:bg-black/10 text-[var(--window-title-text)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">
+          <svg v-if="!windowState.isMaximized" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1.5" y="1.5" width="9" height="9" stroke="currentColor" stroke-width="1.5"/></svg>
+          <svg v-else width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1.5" y="3.5" width="7" height="7" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 3.5V1.5H10.5V8.5H8.5" stroke="currentColor" stroke-width="1.5"/></svg>
+        </button>
+        <button @click.stop="close" aria-label="Close window" class="w-7 h-7 flex items-center justify-center rounded hover:bg-[var(--danger)] hover:text-white text-[var(--window-title-text)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--danger)]">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2L10 10M10 2L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+      </div>
     </div>
 
     <!-- Content Area -->
     <div class="flex-1 overflow-auto bg-[var(--window-bg)] relative">
       <slot></slot>
       <!-- Overlay to block iframe pointer events while dragging or resizing -->
-      <div v-if="isFocused === false || isResizing" class="absolute inset-0 bg-transparent z-10"></div>
+      <div v-if="isDragging || isResizing" class="absolute inset-0 bg-transparent z-10"></div>
     </div>
 
     <!-- Resize Handles -->

@@ -24,6 +24,21 @@ export const useWindowsStore = defineStore('windows', () => {
   const windows = ref<WindowState[]>([])
   const highestZIndex = ref(10)
 
+  // Prevent infinite z-index growth overlapping with system UI (z-100)
+  function normalizeZIndexes() {
+    if (highestZIndex.value >= 90) {
+      const sortedWindows = [...windows.value]
+        .filter(w => w.isOpen)
+        .sort((a, b) => a.zIndex - b.zIndex)
+      
+      let baseZ = 10
+      sortedWindows.forEach(w => {
+        w.zIndex = baseZ++
+      })
+      highestZIndex.value = baseZ
+    }
+  }
+
   // Configuration for initial window spawn positions
   let nextSpawnX = 50
   let nextSpawnY = 50
@@ -62,6 +77,7 @@ export const useWindowsStore = defineStore('windows', () => {
 
     // Create new window
     highestZIndex.value++
+    normalizeZIndexes()
     windows.value.push({
       ...newWindow,
       id: targetId as string,
@@ -155,10 +171,17 @@ export const useWindowsStore = defineStore('windows', () => {
     if (win) {
       if (win.zIndex !== highestZIndex.value) {
         highestZIndex.value++
+        normalizeZIndexes()
         win.zIndex = highestZIndex.value
       }
       // Always ensure it unminimizes when focused
       win.isMinimized = false
+
+      // Shift programmatic focus to the window wrapper so screen readers follow focus
+      setTimeout(() => {
+        const el = document.getElementById(`window-${id}`)
+        if (el) el.focus()
+      }, 50)
     }
   }
 

@@ -15,7 +15,7 @@ const categories = computed(() => {
 <template>
   <div class="h-full bg-[var(--window-bg)] text-[var(--window-title-text)] overflow-y-auto">
     <!-- Header banner — neutral dark surface with warm accent glow -->
-    <div class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white p-8 relative overflow-hidden">
+    <div class="bg-[var(--desktop-bg)] text-white p-8 relative overflow-hidden">
       <div class="absolute -bottom-16 -left-16 w-48 h-48 bg-[var(--accent)] opacity-[0.06] rounded-full blur-3xl pointer-events-none"></div>
       <div class="flex items-center gap-5 max-w-6xl mx-auto w-full relative z-10">
         <div class="text-5xl bg-white/8 p-4 rounded-2xl backdrop-blur-sm border border-white/[0.06]">
@@ -37,7 +37,8 @@ const categories = computed(() => {
           <div
             v-for="item in category.items"
             :key="item.id"
-            class="bg-black/[0.03] dark:bg-white/[0.03] border border-[var(--window-border)] rounded-xl p-3 hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-[var(--accent)]/20 transition-all flex flex-col justify-between group"
+            class="border border-[var(--window-border)] rounded-xl p-3 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-[var(--window-border)] transition-all flex flex-col justify-between group focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+            tabindex="0"
           >
             <div class="flex items-center gap-3 mb-3">
               <div class="w-8 h-8 flex-shrink-0 bg-white/60 dark:bg-white/[0.06] p-1.5 rounded-lg flex items-center justify-center">

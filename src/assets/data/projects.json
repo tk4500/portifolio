@@ -89,21 +89,6 @@
       ]
     },
     {
-      "id": "nextrole",
-      "name": "NextRole",
-      "description": "A Chrome extension designed to parse job descriptions and generate highly customized resumes using the Gemini API.",
-      "url": "https://chromewebstore.google.com/detail/ffbangkcbcikejabbidnalhhkiglfoaf",
-      "github": "https://github.com/tk4500/resume-ai-extension",
-      "icon": "🧩",
-      "screenshots": [],
-      "stack": [
-        "icons/javascript-original.svg",
-        "icons/html5-original.svg",
-        "icons/css3-original.svg",
-        "icons/gemini.svg"
-      ]
-    },
-    {
       "id": "devs_journey",
       "name": "Dev's Journey",
       "description": "My Computer Science Final Paper (TCC). A complete full-stack application demonstrating advanced software architecture and modern web development skills.",
@@ -253,21 +238,6 @@
         "icons/sqlalchemy-original.svg",
         "icons/gemini.svg",
         "icons/axios-plain.svg"
-      ]
-    },
-    {
-      "id": "nextrole",
-      "name": "NextRole",
-      "description": "Extensão para Chrome desenvolvida para analisar descrições de vagas e gerar currículos altamente personalizados utilizando a API do Gemini.",
-      "url": "https://chromewebstore.google.com/detail/ffbangkcbcikejabbidnalhhkiglfoaf",
-      "github": "https://github.com/tk4500/resume-ai-extension",
-      "icon": "🧩",
-      "screenshots": [],
-      "stack": [
-        "icons/javascript-original.svg",
-        "icons/html5-original.svg",
-        "icons/css3-original.svg",
-        "icons/gemini.svg"
       ]
     },
     {
