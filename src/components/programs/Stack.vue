@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import stackDataRaw from '../../assets/data/stack.json'
-import AppIcon from '../desktop/AppIcon.vue'
+import Icon from '../ui/Icon.vue'
 
 const { t, locale } = useI18n()
 
@@ -42,7 +42,7 @@ const categories = computed(() => {
           >
             <div class="flex items-center gap-3 mb-3">
               <div class="w-8 h-8 flex-shrink-0 bg-white/60 dark:bg-white/[0.06] p-1.5 rounded-lg flex items-center justify-center">
-                <AppIcon :icon="item.icon" :fallback="item.name.charAt(0)" />
+                <Icon :icon="item.icon" :size="32" />
               </div>
               <span class="font-medium text-sm truncate" :title="item.name">{{ item.name }}</span>
             </div>

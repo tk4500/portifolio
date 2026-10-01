@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Icon from '../ui/Icon.vue'
 import { ref, watch } from 'vue'
 import { useWindowsStore } from '../../stores/useWindowsStore'
 import { useSystemStore } from '../../stores/useSystemStore'
@@ -143,9 +144,8 @@ function open() {
     @touchstart="onMouseDown"
     @touchend="onMouseUp"
   >
-    <div class="w-12 h-12 bg-white/10 dark:bg-white/8 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.15)] backdrop-blur-sm flex items-center justify-center text-2xl mb-2 group-hover:scale-110 group-hover:shadow-[0_4px_16px_rgba(0,0,0,0.25)] transition-all duration-200 pointer-events-none border border-white/10">
-      <span v-if="icon" v-html="icon"></span>
-      <span v-else>📁</span>
+    <div class="w-12 h-12 bg-white/10 dark:bg-white/8 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.15)] backdrop-blur-sm flex items-center justify-center mb-2 group-hover:scale-110 group-hover:shadow-[0_4px_16px_rgba(0,0,0,0.25)] transition-all duration-200 pointer-events-none border border-white/10">
+      <Icon :icon="icon || 'icons/folder.svg'" :size="32" class="text-white" />
     </div>
     <span class="text-xs font-medium text-center drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] select-none line-clamp-2 px-1 pointer-events-none">
       {{ t(titleKey) }}

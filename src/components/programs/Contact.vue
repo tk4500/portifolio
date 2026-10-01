@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import contactDataRaw from '../../assets/data/contact.json'
-import AppIcon from '../desktop/AppIcon.vue'
+import Icon from '../ui/Icon.vue'
 
 const { t, locale } = useI18n()
 const links = computed(() => (contactDataRaw as any)[locale.value] || (contactDataRaw as any)['en'])
@@ -22,7 +22,7 @@ const links = computed(() => (contactDataRaw as any)[locale.value] || (contactDa
         class="flex items-center gap-4 p-4 rounded-xl transition-all border border-transparent hover:bg-black/[0.02] dark:hover:bg-white/[0.02] hover:border-[var(--window-border)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:translate-y-[-1px] group focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
       >
         <div class="w-10 h-10 rounded-lg bg-black/[0.04] dark:bg-white/[0.06] flex items-center justify-center group-hover:scale-110 transition-transform">
-          <AppIcon :icon="link.icon" class="text-2xl" />
+          <Icon :icon="link.icon" :size="32" />
         </div>
         <span class="font-medium text-sm">{{ link.label }}</span>
       </a>

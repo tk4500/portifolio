@@ -6,7 +6,7 @@
       "description": "A high-performance, dark-themed operations dashboard and backend pipeline designed to seamlessly copy, customize, and mirror messages between Telegram channels and groups. Features FloodWait protection, a checkpointing system, and real-time telemetry.",
       "url": "",
       "github": "https://github.com/tk4500/TelegramMirror",
-      "icon": "📱",
+      "icon": "icons/mobile.svg",
       "screenshots": [
         "screenshots/telegram-mirror/dashboard.png",
         "screenshots/telegram-mirror/clonagem.png",
@@ -29,7 +29,7 @@
       "description": "A premium Chess platform built with Python (FastAPI) and JavaScript (React/HTM) focused on AI Battles. Play against state-of-the-art LLMs or pit different models against each other in a highly immersive and controlled environment, featuring session persistence, Stockfish evaluation bar, and a stunning Neo-Glassmorphism design.",
       "url": "",
       "github": "https://github.com/tk4500/ai-chess-game",
-      "icon": "♟️",
+      "icon": "icons/chess.svg",
       "screenshots": [
         "screenshots/ai-chess/141404.png"
       ],
@@ -49,7 +49,7 @@
       "description": "A dynamic, interactive portfolio website mimicking a classic desktop OS environment. Built with Vue 3 and Tailwind CSS, featuring draggable windows, a dynamic taskbar, and fully JSON-driven content with bilingual support (EN/PT).",
       "url": "https://portifolio.tarcisio.site/",
       "github": "https://github.com/tk4500/portifolio",
-      "icon": "🪟",
+      "icon": "icons/windows.svg",
       "screenshots": [],
       "stack": [
         "icons/vuejs-original.svg",
@@ -65,7 +65,7 @@
       "description": "An automated application integrating FastAPI and React with the WinThor ERP system to process B2B orders from PDF files. Built using Docker and deployed on Oracle Cloud infrastructure.",
       "url": "",
       "github": "https://github.com/tk4500/docker-pdf-winthor",
-      "icon": "⚙️",
+      "icon": "icons/settings.svg",
       "screenshots": [
         "screenshots/winthor-importer/004535.png",
         "screenshots/winthor-importer/004549.png",
@@ -94,7 +94,7 @@
       "description": "My Computer Science Final Paper (TCC). A complete full-stack application demonstrating advanced software architecture and modern web development skills.",
       "url": "https://devsjourney-97162.web.app/",
       "github": "https://github.com/tk4500/devsjourney-97162",
-      "icon": "🚀",
+      "icon": "icons/target.svg",
       "screenshots": [],
       "stack": [
         "icons/angular-original.svg",
@@ -112,7 +112,7 @@
       "description": "A static BYOK (Bring Your Own Key) web application that utilizes the Gemini API to help educators plan and structure their lessons efficiently.",
       "url": "https://aula.tarcisio.site/",
       "github": "https://github.com/tk4500/aula-maker",
-      "icon": "📝",
+      "icon": "icons/document.svg",
       "screenshots": [],
       "stack": [
         "icons/html5-original.svg",
@@ -128,7 +128,7 @@
       "description": "A collection of custom Lua plugins for the Firecast VTT. Includes a Universal AI integration (freelance project), NPC managers, log extractors, and data interpreters.",
       "url": "",
       "github": "https://github.com/tk4500/genericAi",
-      "icon": "🎲",
+      "icon": "icons/cube.svg",
       "screenshots": [],
       "stack": [
         "icons/lua-original.svg",
@@ -142,7 +142,7 @@
       "description": "An open-source modification and fork for Minecraft, focused on enhancing the integration between the Tetra mod and other in-game progression systems.",
       "url": "https://modrinth.com/mod/geotetraarmor-fork",
       "github": "https://github.com/tk4500/GeoTetraArmor",
-      "icon": "⛏️",
+      "icon": "icons/tools.svg",
       "screenshots": [],
       "stack": [
         "icons/java-original.svg",
@@ -158,7 +158,7 @@
       "description": "Um dashboard de operações de alta performance e pipeline backend projetado para copiar, customizar e espelhar mensagens perfeitamente entre canais e grupos do Telegram. Conta com proteção FloodWait, sistema de checkpoints e telemetria em tempo real.",
       "url": "",
       "github": "https://github.com/tk4500/TelegramMirror",
-      "icon": "📱",
+      "icon": "icons/mobile.svg",
       "screenshots": [
         "screenshots/telegram-mirror/dashboard.png",
         "screenshots/telegram-mirror/clonagem.png",
@@ -181,7 +181,7 @@
       "description": "Uma plataforma premium de Xadrez desenvolvida em Python (FastAPI) e JavaScript (React/HTM) focada em Rinhas de Inteligências Artificiais. Jogue contra LLMs de ponta ou coloque diferentes modelos para jogar entre si em um ambiente altamente imersivo e controlado, com persistência de sessões, barra de avaliação da Stockfish e um design deslumbrante (Neo-Glassmorphism).",
       "url": "",
       "github": "https://github.com/tk4500/ai-chess-game",
-      "icon": "♟️",
+      "icon": "icons/chess.svg",
       "screenshots": [
         "screenshots/ai-chess/141404.png"
       ],
@@ -201,7 +201,7 @@
       "description": "Um site de portfólio dinâmico e interativo que imita um ambiente clássico de sistema operacional desktop. Construído com Vue 3 e Tailwind CSS, possui janelas arrastáveis, uma barra de tarefas dinâmica e conteúdo totalmente alimentado por JSON com suporte bilíngue (EN/PT).",
       "url": "https://portifolio.tarcisio.site/",
       "github": "https://github.com/tk4500/portifolio",
-      "icon": "🪟",
+      "icon": "icons/windows.svg",
       "screenshots": [],
       "stack": [
         "icons/vuejs-original.svg",
@@ -217,7 +217,7 @@
       "description": "Uma aplicação automatizada integrando FastAPI e React com o ERP WinThor para processar pedidos B2B a partir de arquivos PDF. Construída com Docker e implantada na Oracle Cloud.",
       "url": "",
       "github": "https://github.com/tk4500/docker-pdf-winthor",
-      "icon": "⚙️",
+      "icon": "icons/settings.svg",
       "screenshots": [
         "screenshots/winthor-importer/004535.png",
         "screenshots/winthor-importer/004549.png",
@@ -246,7 +246,7 @@
       "description": "Meu Trabalho de Conclusão de Curso (TCC). Uma aplicação full-stack completa que demonstra habilidades avançadas de arquitetura de software e desenvolvimento web moderno.",
       "url": "https://devsjourney-97162.web.app/",
       "github": "https://github.com/tk4500/devsjourney-97162",
-      "icon": "🚀",
+      "icon": "icons/target.svg",
       "screenshots": [],
       "stack": [
         "icons/angular-original.svg",
@@ -264,7 +264,7 @@
       "description": "Aplicação web estática no modelo BYOK (Bring Your Own Key) que utiliza a API do Gemini para ajudar educadores a planejar e estruturar suas aulas com eficiência.",
       "url": "https://aula.tarcisio.site/",
       "github": "https://github.com/tk4500/aula-maker",
-      "icon": "📝",
+      "icon": "icons/document.svg",
       "screenshots": [],
       "stack": [
         "icons/html5-original.svg",
@@ -280,7 +280,7 @@
       "description": "Uma coleção de plugins customizados em Lua para o VTT Firecast. Inclui uma integração de IA Universal (projeto freelance), gerenciadores de NPCs, extratores de logs e interpretadores.",
       "url": "",
       "github": "https://github.com/tk4500/genericAi",
-      "icon": "🎲",
+      "icon": "icons/cube.svg",
       "screenshots": [],
       "stack": [
         "icons/lua-original.svg",
@@ -294,7 +294,7 @@
       "description": "Um fork e modificação open-source para Minecraft, focado em aprimorar a integração entre o mod Tetra e outros sistemas de progressão do jogo.",
       "url": "https://modrinth.com/mod/geotetraarmor-fork",
       "github": "https://github.com/tk4500/GeoTetraArmor",
-      "icon": "⛏️",
+      "icon": "icons/tools.svg",
       "screenshots": [],
       "stack": [
         "icons/java-original.svg",

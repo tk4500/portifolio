@@ -4,7 +4,7 @@ import { useWindowsStore } from '../../stores/useWindowsStore'
 import { useI18n } from 'vue-i18n'
 import { computed, ref, watch } from 'vue'
 import { useWindowSize } from '@vueuse/core'
-import AppIcon from '../desktop/AppIcon.vue'
+import Icon from '../ui/Icon.vue'
 import contactDataRaw from '../../assets/data/contact.json'
 import aboutDataRaw from '../../assets/data/about.json'
 
@@ -33,11 +33,11 @@ const menuClass = computed(() => {
 })
 
 const apps = [
-  { id: 'about', titleKey: 'desktop.icons.about', icon: '👤' },
-  { id: 'archive', titleKey: 'desktop.icons.projects', icon: '📁' },
-  { id: 'stack', titleKey: 'desktop.icons.stack', icon: '🛠️' },
-  { id: 'contact', titleKey: 'desktop.icons.contact', icon: '📬' },
-  { id: 'settings', titleKey: 'desktop.icons.settings', icon: '⚙️' },
+  { id: 'about', titleKey: 'desktop.icons.about', icon: 'icons/user.svg' },
+  { id: 'archive', titleKey: 'desktop.icons.projects', icon: 'icons/folder.svg' },
+  { id: 'stack', titleKey: 'desktop.icons.stack', icon: 'icons/tools.svg' },
+  { id: 'contact', titleKey: 'desktop.icons.contact', icon: 'icons/mail.svg' },
+  { id: 'settings', titleKey: 'desktop.icons.settings', icon: 'icons/settings.svg' },
 ]
 
 const quickActions = computed(() => {
@@ -49,9 +49,9 @@ const quickActions = computed(() => {
   const resumePath = about?.profile?.resume || 'Profile.pdf'
   
   return [
-    { label: 'startMenu.emailMe', icon: '📧', href: emailContact?.url || 'mailto:tarcisioluizpereirabogo@gmail.com' },
-    { label: 'startMenu.whatsapp', icon: '💬', href: whatsappContact?.url || 'https://wa.me/5548999442746', external: true },
-    { label: 'startMenu.resume', icon: '📄', href: `/${resumePath}`, external: true }
+    { label: 'startMenu.emailMe', icon: 'icons/mail.svg', href: emailContact?.url || 'mailto:tarcisioluizpereirabogo@gmail.com' },
+    { label: 'startMenu.whatsapp', icon: 'icons/whatsapp.webp', href: whatsappContact?.url || 'https://wa.me/5548999442746', external: true },
+    { label: 'startMenu.resume', icon: 'icons/document.svg', href: `/${resumePath}`, external: true }
   ]
 })
 
@@ -131,8 +131,8 @@ watch(() => systemStore.isStartMenuOpen, (isOpen) => {
       @click.stop
     >
       <div class="flex gap-4 border-b border-[var(--window-border)] pb-4" :class="isMobile ? 'flex-col items-center text-center mt-2' : 'items-center'">
-        <div class="w-12 h-12 bg-[var(--accent-subtle)] rounded-xl flex items-center justify-center text-2xl border border-[var(--accent)]/10 shrink-0">
-          👨‍💻
+        <div class="w-12 h-12 bg-[var(--accent-subtle)] rounded-xl flex items-center justify-center border border-[var(--accent)]/10 shrink-0">
+          <Icon icon="icons/user.svg" :size="28" class="text-[var(--accent)]" />
         </div>
         <div>
           <h2 class="font-semibold text-base tracking-tight">{{ t('startMenu.developer') }}</h2>
@@ -150,7 +150,7 @@ watch(() => systemStore.isStartMenuOpen, (isOpen) => {
             class="flex rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
             :class="isMobile ? 'flex-col items-center justify-center p-3 hover:bg-black/5 dark:hover:bg-white/5 active:bg-black/10 dark:active:bg-white/10 text-center' : 'items-center gap-3 px-3 py-2 hover:bg-black/10 dark:hover:bg-white/10 text-left'"
           >
-            <AppIcon :icon="app.icon" :class="isMobile ? 'text-3xl mb-1.5' : 'text-xl'" />
+            <Icon :icon="app.icon" :size="isMobile ? 32 : 20" :class="isMobile ? 'mb-1.5' : ''" />
             <span class="font-medium" :class="isMobile ? 'text-[11px] leading-tight opacity-80' : 'text-sm'">{{ t(app.titleKey) }}</span>
           </button>
         </div>
@@ -169,7 +169,7 @@ watch(() => systemStore.isStartMenuOpen, (isOpen) => {
           class="flex rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] no-underline"
           :class="isMobile ? 'flex-col items-center justify-center p-3 hover:bg-black/5 dark:hover:bg-white/5 active:bg-black/10 dark:active:bg-white/10 text-center' : 'items-center gap-3 px-3 py-2 hover:bg-black/10 dark:hover:bg-white/10 text-left'"
         >
-          <span :class="isMobile ? 'text-3xl mb-1.5' : 'text-xl'">{{ action.icon }}</span>
+          <Icon :icon="action.icon" :size="isMobile ? 32 : 20" :class="isMobile ? 'mb-1.5' : ''" />
           <span class="font-medium" :class="isMobile ? 'text-[11px] leading-tight opacity-80' : 'text-sm'">{{ t(action.label) }}</span>
         </a>
         <button
@@ -177,7 +177,7 @@ watch(() => systemStore.isStartMenuOpen, (isOpen) => {
           class="w-full flex rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
           :class="isMobile ? 'flex-col items-center justify-center p-3 hover:bg-black/5 dark:hover:bg-white/5 active:bg-black/10 dark:active:bg-white/10 text-center' : 'items-center gap-3 px-3 py-2 hover:bg-black/10 dark:hover:bg-white/10 text-left'"
         >
-          <span :class="isMobile ? 'text-3xl mb-1.5' : 'text-xl'">❓</span>
+          <Icon icon="icons/help.svg" :size="isMobile ? 32 : 20" :class="isMobile ? 'mb-1.5' : ''" />
           <span class="font-medium" :class="isMobile ? 'text-[11px] leading-tight opacity-80' : 'text-sm'">{{ t('startMenu.help') }}</span>
         </button>
       </div>
@@ -192,7 +192,7 @@ watch(() => systemStore.isStartMenuOpen, (isOpen) => {
               isMobile ? 'flex-col items-center justify-center p-3 text-center active:bg-[var(--danger)] active:text-white' : 'items-center px-3 py-2 text-left'
             ]"
           >
-            <span :class="isMobile ? 'text-3xl mb-1' : 'text-xl'">🔌</span>
+            <Icon icon="icons/windows.svg" :size="isMobile ? 32 : 20" :class="isMobile ? 'mb-1' : ''" class="text-[var(--danger)]" />
             <span class="font-medium" :class="isMobile ? 'text-[11px] leading-tight opacity-80' : 'text-sm'">{{ confirmCloseAll ? t('startMenu.confirmCloseAll') : t('startMenu.closeAll') }}</span>
           </button>
       </div>

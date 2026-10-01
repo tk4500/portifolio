@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWindowsStore } from '../../stores/useWindowsStore'
 import projectsDataRaw from '../../assets/data/projects.json'
-import AppIcon from '../desktop/AppIcon.vue'
+import Icon from '../ui/Icon.vue'
 
 const { t, locale } = useI18n()
 const windowsStore = useWindowsStore()
@@ -48,7 +48,7 @@ function openProject(project: any) {
         @keydown.space.prevent="openProject(project)"
         @click="openProject(project)"
       >
-        <AppIcon :icon="project.icon" class="text-4xl group-hover:scale-110 transition-transform" />
+        <Icon :icon="project.icon" :size="48" class="group-hover:scale-110 transition-transform" />
         <span class="text-xs text-center leading-tight line-clamp-2 mt-1">
           {{ project.name }}
         </span>

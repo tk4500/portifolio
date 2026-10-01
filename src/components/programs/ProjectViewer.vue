@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWindowsStore } from '../../stores/useWindowsStore'
 import projectsDataRaw from '../../assets/data/projects.json'
-import AppIcon from '../desktop/AppIcon.vue'
+import Icon from '../ui/Icon.vue'
 
 const props = defineProps<{
   project: {
@@ -48,7 +48,7 @@ function openLiveSite() {
       <div class="absolute -top-20 -right-20 w-60 h-60 bg-[var(--accent)] opacity-[0.06] rounded-full blur-3xl pointer-events-none"></div>
       <div class="flex items-center gap-5 max-w-3xl mx-auto relative z-10 flex-col sm:flex-row text-center sm:text-left">
         <div class="text-4xl sm:text-5xl bg-white/8 p-3 sm:p-4 rounded-2xl backdrop-blur-sm border border-white/[0.06] flex-shrink-0">
-          <AppIcon :icon="currentProject.icon" fallback="🚀" />
+          <Icon :icon="currentProject.icon" :size="48" />
         </div>
         <div class="min-w-0">
           <h1 class="text-xl sm:text-2xl font-semibold tracking-tight break-words">{{ currentProject.name }}</h1>
@@ -64,7 +64,7 @@ function openLiveSite() {
       <div v-if="currentProject.stack && currentProject.stack.length > 0" class="flex flex-wrap gap-3">
         <h2 class="w-full text-xs font-semibold tracking-wide opacity-40">{{ t('programs.projectViewer.techStack') }}</h2>
         <div v-for="(techIcon, idx) in currentProject.stack" :key="idx" class="w-10 h-10 bg-black/[0.04] dark:bg-white/[0.04] p-2 rounded-lg border border-[var(--window-border)] flex items-center justify-center hover:shadow-md hover:scale-105 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]" tabindex="0">
-          <AppIcon :icon="techIcon" fallback="🧩" class="text-xl" />
+          <Icon :icon="techIcon" :size="24" />
         </div>
       </div>
 

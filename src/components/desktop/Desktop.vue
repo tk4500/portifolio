@@ -3,15 +3,21 @@ import WindowWrapper from '../window/WindowWrapper.vue'
 import Taskbar from '../taskbar/Taskbar.vue'
 import WelcomeTour from '../onboarding/WelcomeTour.vue'
 import DesktopIcon from './DesktopIcon.vue'
+import MobileOS from '../mobile/MobileOS.vue'
 import { useWindowsStore } from '../../stores/useWindowsStore'
 import { useSystemStore } from '../../stores/useSystemStore'
 import { defineAsyncComponent, onMounted, onUnmounted, watch, ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useWindowSize } from '@vueuse/core'
 import projectsDataRaw from '../../assets/data/projects.json'
 
 const windowsStore = useWindowsStore()
 const systemStore = useSystemStore()
 const { t, locale } = useI18n()
+const { width: screenWidth } = useWindowSize()
+
+// Responsive detection
+const isMobile = computed(() => screenWidth.value < 768)
 
 // Onboarding state
 const showWelcomeTour = ref(false)
@@ -223,7 +229,12 @@ function handleReplayTour() {
 </script>
 
 <template>
+  <!-- Mobile OS Experience (< 768px) -->
+  <MobileOS v-if="isMobile" />
+  
+  <!-- Desktop OS Experience (>= 768px) -->
   <div
+    v-else
     class="h-screen w-screen bg-[var(--desktop-bg)] relative overflow-hidden grain-overlay"
     :style="{ background: systemStore.backgroundColor }"
     @click="handleDesktopClick"

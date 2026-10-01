@@ -4,7 +4,7 @@ import { useDraggable, useWindowSize } from '@vueuse/core'
 import { useSystemStore } from '../../stores/useSystemStore'
 import { useWindowsStore, type WindowState } from '../../stores/useWindowsStore'
 import { useI18n } from 'vue-i18n'
-import AppIcon from '../desktop/AppIcon.vue'
+import Icon from '../ui/Icon.vue'
 import { watch } from 'vue'
 
 const props = defineProps<{
@@ -295,7 +295,7 @@ onUnmounted(() => {
       tabindex="0"
     >
       <div class="flex items-center gap-2 overflow-hidden">
-        <AppIcon v-if="windowState.icon" :icon="windowState.icon" class="text-lg" />
+        <Icon v-if="windowState.icon" :icon="windowState.icon" :size="18" />
         <span class="font-medium text-sm text-[var(--window-title-text)] truncate font-sans">
           {{ t(windowState.titleKey) }}
         </span>
