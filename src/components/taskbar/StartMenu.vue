@@ -5,7 +5,6 @@ import { useI18n } from 'vue-i18n'
 import { computed, ref, watch } from 'vue'
 import { useWindowSize } from '@vueuse/core'
 import Icon from '../ui/Icon.vue'
-import contactDataRaw from '../../assets/data/contact.json'
 import aboutDataRaw from '../../assets/data/about.json'
 
 const systemStore = useSystemStore()
@@ -40,19 +39,14 @@ const apps = [
   { id: 'settings', titleKey: 'desktop.icons.settings', icon: 'icons/settings.svg' },
 ]
 
-const quickActions = computed(() => {
-  const contacts = (contactDataRaw as any)[locale.value] || (contactDataRaw as any)['en']
+// Profile data from about.json
+const profileData = computed(() => {
   const about = (aboutDataRaw as any)[locale.value] || (aboutDataRaw as any)['en']
-  
-  const emailContact = contacts.find((c: any) => c.id === 'email')
-  const whatsappContact = contacts.find((c: any) => c.id === 'whatsapp')
-  const resumePath = about?.profile?.resume || 'Profile.pdf'
-  
-  return [
-    { label: 'startMenu.emailMe', icon: 'icons/mail.svg', href: emailContact?.url || 'mailto:tarcisioluizpereirabogo@gmail.com' },
-    { label: 'startMenu.whatsapp', icon: 'icons/whatsapp.webp', href: whatsappContact?.url || 'https://wa.me/5548999442746', external: true },
-    { label: 'startMenu.resume', icon: 'icons/document.svg', href: `/${resumePath}`, external: true }
-  ]
+  return {
+    name: about?.profile?.name || 'User',
+    firstName: about?.profile?.name?.split(' ')[0] || 'User',
+    avatar: about?.profile?.avatar || 'pfp.jpeg'
+  }
 })
 
 function launchApp(id: string, titleKey: string, icon: string) {
@@ -131,11 +125,11 @@ watch(() => systemStore.isStartMenuOpen, (isOpen) => {
       @click.stop
     >
       <div class="flex gap-4 border-b border-[var(--window-border)] pb-4" :class="isMobile ? 'flex-col items-center text-center mt-2' : 'items-center'">
-        <div class="w-12 h-12 bg-[var(--accent-subtle)] rounded-xl flex items-center justify-center border border-[var(--accent)]/10 shrink-0">
-          <Icon icon="icons/user.svg" :size="32" class="text-[var(--accent)]" />
+        <div class="w-12 h-12 bg-[var(--accent-subtle)] rounded-full flex items-center justify-center border border-[var(--accent)]/10 shrink-0 overflow-hidden">
+          <img :src="profileData.avatar" :alt="profileData.name" class="w-full h-full object-cover" />
         </div>
         <div>
-          <h2 style="font-size: var(--text-heading); font-weight: var(--text-heading-weight); letter-spacing: var(--text-heading-tracking); line-height: var(--text-heading-leading);" class="tracking-tight">{{ t('startMenu.developer') }}</h2>
+          <h2 style="font-size: var(--text-heading); font-weight: var(--text-heading-weight); letter-spacing: var(--text-heading-tracking); line-height: var(--text-heading-leading);" class="tracking-tight">{{ profileData.firstName }}</h2>
           <p class="text-xs opacity-60">{{ t('startMenu.portfolioSystem') }}</p>
         </div>
       </div>
@@ -154,32 +148,6 @@ watch(() => systemStore.isStartMenuOpen, (isOpen) => {
             <span style="font-size: var(--text-label); font-weight: var(--text-label-weight); letter-spacing: var(--text-label-tracking); line-height: var(--text-label-leading);" :class="isMobile ? 'text-[11px] leading-tight opacity-80' : ''">{{ t(app.titleKey) }}</span>
           </button>
         </div>
-      </div>
-
-      <!-- Quick Actions (Direct Links) -->
-      <div class="border-t border-[var(--window-border)] pt-3 mt-2 space-y-1">
-        <h4 style="font-size: var(--text-metadata); font-weight: var(--text-metadata-weight); letter-spacing: var(--text-metadata-tracking); line-height: var(--text-metadata-leading);" class="opacity-40 tracking-wide mb-2 px-2" :class="{ 'hidden': isMobile }">{{ t('startMenu.quickActions') || 'Quick Actions' }}</h4>
-        <a
-          v-for="action in quickActions"
-          :key="action.label"
-          :href="action.href"
-          :target="action.external ? '_blank' : undefined"
-          :rel="action.external ? 'noopener noreferrer' : undefined"
-          @click="systemStore.closeStartMenu()"
-          class="flex rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] no-underline"
-          :class="isMobile ? 'flex-col items-center justify-center p-3 hover:bg-black/5 dark:hover:bg-white/5 active:bg-black/10 dark:active:bg-white/10 text-center' : 'items-center gap-3 px-3 py-2 hover:bg-black/10 dark:hover:bg-white/10 text-left'"
-        >
-          <Icon :icon="action.icon" :size="32" :class="isMobile ? 'mb-1.5' : ''" />
-          <span style="font-size: var(--text-label); font-weight: var(--text-label-weight); letter-spacing: var(--text-label-tracking); line-height: var(--text-label-leading);" :class="isMobile ? 'text-[11px] leading-tight opacity-80' : ''">{{ t(action.label) }}</span>
-        </a>
-        <button
-          @click="$emit('replay-tour')"
-          class="w-full flex rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
-          :class="isMobile ? 'flex-col items-center justify-center p-3 hover:bg-black/5 dark:hover:bg-white/5 active:bg-black/10 dark:active:bg-white/10 text-center' : 'items-center gap-3 px-3 py-2 hover:bg-black/10 dark:hover:bg-white/10 text-left'"
-        >
-          <Icon icon="icons/help.svg" :size="32" :class="isMobile ? 'mb-1.5' : ''" />
-          <span style="font-size: var(--text-label); font-weight: var(--text-label-weight); letter-spacing: var(--text-label-tracking); line-height: var(--text-label-leading);" :class="isMobile ? 'text-[11px] leading-tight opacity-80' : ''">{{ t('startMenu.help') }}</span>
-        </button>
       </div>
 
       <!-- Power Options -->

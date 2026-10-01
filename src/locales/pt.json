@@ -1,6 +1,15 @@
 {
+  "onboarding": {
+    "welcomeHint": "Clique nos ícones para explorar, arraste janelas para reorganizar. Bem-vindo!",
+    "gotIt": "Entendi"
+  },
   "mobile": {
-    "menu": "Menu"
+    "menu": "Menu",
+    "apps": "Aplicativos",
+    "recent": "Recentes",
+    "no_recent": "Nenhum aplicativo recente",
+    "coming_soon": "Em Breve",
+    "close": "Fechar"
   },
   "desktop": {
     "icons": {
@@ -14,9 +23,12 @@
     "resume": "Currículo"
   },
   "taskbar": {
-    "start": "Iniciar",
-    "language": "Idioma",
-    "clickToStart": "Clique aqui para começar!"
+    "start": "Iniciar — Abrir menu para ver todos os apps",
+    "minimize": "Mostrar Área de Trabalho — Minimizar todas as janelas",
+    "time": "Hora atual",
+    "notifications": "Notificações",
+    "activeWindows": "Janelas ativas",
+    "noActiveWindows": "Nenhuma janela aberta"
   },
   "startMenu": {
     "developer": "Desenvolvedor",

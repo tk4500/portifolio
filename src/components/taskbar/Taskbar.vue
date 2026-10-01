@@ -63,10 +63,6 @@ function closeDropdowns() {
   openDropdownId.value = null
 }
 
-function toggleLanguage() {
-  locale.value = locale.value === 'en' ? 'pt' : 'en'
-}
-
 function updateTime() {
   const now = new Date()
   time.value = now.toLocaleTimeString(locale.value, { hour: '2-digit', minute: '2-digit' })
@@ -365,26 +361,7 @@ const taskbarClass = computed(() => {
     <div class="flex items-center text-sm shrink-0 h-full" :class="isHorizontal ? 'flex-row' : 'flex-col w-full'">
       <div class="flex items-center gap-3" :class="isHorizontal ? 'flex-row pr-2' : 'flex-col pb-2'">
         <span :class="isHorizontal ? '' : 'writing-vertical-rl'">{{ time }}</span>
-        <button
-          @click="toggleLanguage"
-          class="uppercase font-bold hover:bg-white/10 px-2 py-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
-          :title="t('taskbar.language')"
-        >
-          {{ locale }}
-        </button>
       </div>
-      
-      <!-- Show Desktop Button (Windows Style) -->
-      <div 
-        @click.stop="windowsStore.toggleShowDesktop()"
-        class="hover:bg-white/20 transition-colors cursor-pointer border-[var(--window-border)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
-        :class="isHorizontal ? 'h-full w-2 border-l ml-1' : 'w-full h-2 border-t mt-1'"
-        title="Show Desktop"
-        role="button"
-        tabindex="0"
-        @keydown.enter="windowsStore.toggleShowDesktop()"
-        @keydown.space.prevent="windowsStore.toggleShowDesktop()"
-      ></div>
     </div>
 
     <!-- Start Menu Overlay -->

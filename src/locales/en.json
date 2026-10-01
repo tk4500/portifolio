@@ -1,6 +1,15 @@
 {
+  "onboarding": {
+    "welcomeHint": "Click icons to explore, drag windows to rearrange. Welcome!",
+    "gotIt": "Got it"
+  },
   "mobile": {
-    "menu": "Menu"
+    "menu": "Menu",
+    "apps": "Apps",
+    "recent": "Recent",
+    "no_recent": "No recent apps",
+    "coming_soon": "Coming Soon",
+    "close": "Close"
   },
   "desktop": {
     "icons": {
@@ -14,9 +23,12 @@
     "resume": "Resume"
   },
   "taskbar": {
-    "start": "Start",
-    "language": "Language",
-    "clickToStart": "Click here to start!"
+    "start": "Start — Open menu to view all apps",
+    "minimize": "Show Desktop — Minimize all windows",
+    "time": "Current time",
+    "notifications": "Notifications",
+    "activeWindows": "Active windows",
+    "noActiveWindows": "No open windows"
   },
   "startMenu": {
     "developer": "Developer",

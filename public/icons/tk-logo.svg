@@ -1,0 +1,17 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Personal logo mark: Geometric TK monogram -->
+  <defs>
+    <linearGradient id="tkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:oklch(52% 0.18 45);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:oklch(58% 0.16 65);stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- T shape (vertical + horizontal bar) -->
+  <rect x="20" y="8" width="8" height="32" rx="2" fill="url(#tkGradient)"/>
+  <rect x="12" y="8" width="24" height="8" rx="2" fill="url(#tkGradient)"/>
+  
+  <!-- K shape (vertical + diagonal arms) -->
+  <rect x="20" y="8" width="8" height="32" rx="2" fill="url(#tkGradient)"/>
+  <path d="M28 20L36 12L40 16L32 24L40 32L36 36L28 28Z" fill="url(#tkGradient)"/>
+</svg>
