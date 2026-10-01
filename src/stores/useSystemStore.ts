@@ -42,11 +42,11 @@ export const useSystemStore = defineStore('system', () => {
 
   // Track desktop icons positions
   const desktopIcons = ref<DesktopIconState[]>([
-    { id: 'about', titleKey: 'desktop.icons.about', icon: '👤', x: 20, y: 20 },
-    { id: 'contact', titleKey: 'desktop.icons.contact', icon: '📬', x: 20, y: 120 },
-    { id: 'archive', titleKey: 'desktop.icons.projects', icon: '📁', x: 20, y: 220 },
-    { id: 'stack', titleKey: 'desktop.icons.stack', icon: '🛠️', x: 20, y: 320 },
-    { id: 'settings', titleKey: 'desktop.icons.settings', icon: '⚙️', x: 20, y: 420 }
+    { id: 'about', titleKey: 'desktop.icons.about', icon: 'icons/user.svg', x: 20, y: 20 },
+    { id: 'contact', titleKey: 'desktop.icons.contact', icon: 'icons/mail.svg', x: 20, y: 120 },
+    { id: 'archive', titleKey: 'desktop.icons.projects', icon: 'icons/folder.svg', x: 20, y: 220 },
+    { id: 'stack', titleKey: 'desktop.icons.stack', icon: 'icons/tools.svg', x: 20, y: 320 },
+    { id: 'settings', titleKey: 'desktop.icons.settings', icon: 'icons/settings.svg', x: 20, y: 420 }
   ])
 
   function setTaskbarPosition(position: 'bottom' | 'top' | 'left' | 'right') {

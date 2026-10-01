@@ -23,8 +23,8 @@ const activeTab = ref((aboutDataRaw as any)['en'].tabs[0].id)
         </div>
 
         <div class="flex-1 text-center sm:text-left flex flex-col items-center sm:items-start w-full min-w-0">
-          <h1 class="text-lg sm:text-xl md:text-2xl font-semibold tracking-tight break-words whitespace-normal w-full">{{ profile.name }}</h1>
-          <p class="opacity-70 mt-1 sm:mt-2 w-full text-xs md:text-sm whitespace-normal break-words leading-relaxed max-w-[65ch]">{{ profile.bio }}</p>
+          <h1 style="font-size: var(--text-display); font-weight: var(--text-display-weight); letter-spacing: var(--text-display-tracking); line-height: var(--text-display-leading);" class="tracking-tight break-words whitespace-normal w-full">{{ profile.name }}</h1>
+          <p style="font-size: var(--text-body); line-height: var(--text-body-leading);" class="opacity-70 mt-1 sm:mt-2 w-full whitespace-normal break-words max-w-[65ch]">{{ profile.bio }}</p>
 
           <!-- Resume Download Button -->
           <a
@@ -46,18 +46,19 @@ const activeTab = ref((aboutDataRaw as any)['en'].tabs[0].id)
           v-for="tab in tabs"
           :key="tab.id"
           @click="activeTab = tab.id"
-          class="px-4 md:px-6 py-3 font-medium text-sm transition-colors relative whitespace-nowrap flex-shrink-0 focus:outline-none focus-visible:bg-[var(--accent-subtle)]"
-          :class="activeTab === tab.id ? 'text-[var(--accent)]' : 'opacity-50 hover:opacity-80'"
+          class="px-4 md:px-6 py-3 font-medium text-sm transition-colors relative whitespace-nowrap flex-shrink-0 focus:outline-none"
+          :class="activeTab === tab.id ? '' : 'opacity-50 hover:opacity-80'"
+          :style="activeTab === tab.id ? 'color: var(--secondary);' : ''"
         >
           {{ tab.title }}
-          <div v-if="activeTab === tab.id" class="absolute bottom-0 left-0 w-full h-0.5 bg-[var(--accent)] rounded-full"></div>
+          <div v-if="activeTab === tab.id" class="absolute bottom-0 left-0 w-full h-0.5 rounded-full" style="background: var(--secondary);"></div>
         </button>
       </div>
 
       <!-- Tab Content -->
       <div class="p-4 sm:p-6">
         <div v-for="tab in tabs" :key="tab.id" v-show="activeTab === tab.id" class="space-y-4 sm:space-y-5 max-w-3xl mx-auto">
-          <div v-for="(item, idx) in tab.items" :key="idx" class="border-l-2 border-black/10 dark:border-white/10 pl-4 py-1 relative hover:border-[var(--accent)] transition-colors">
+          <div v-for="(item, idx) in tab.items" :key="idx" class="border-l-2 pl-4 py-1 relative hover:border-[var(--secondary)] transition-colors" style="border-color: var(--secondary-subtle);">>
             <div class="absolute w-2.5 h-2.5 bg-[var(--accent)] rounded-full -left-[7px] top-2.5"></div>
             <div class="flex justify-between items-start mb-1 sm:flex-row flex-col sm:items-center gap-1 sm:gap-4">
               <h2 class="text-sm md:text-base font-semibold break-words tracking-tight">{{ item.title || item.role || item.degree }}</h2>

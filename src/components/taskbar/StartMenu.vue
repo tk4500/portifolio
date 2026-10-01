@@ -132,16 +132,16 @@ watch(() => systemStore.isStartMenuOpen, (isOpen) => {
     >
       <div class="flex gap-4 border-b border-[var(--window-border)] pb-4" :class="isMobile ? 'flex-col items-center text-center mt-2' : 'items-center'">
         <div class="w-12 h-12 bg-[var(--accent-subtle)] rounded-xl flex items-center justify-center border border-[var(--accent)]/10 shrink-0">
-          <Icon icon="icons/user.svg" :size="28" class="text-[var(--accent)]" />
+          <Icon icon="icons/user.svg" :size="32" class="text-[var(--accent)]" />
         </div>
         <div>
-          <h2 class="font-semibold text-base tracking-tight">{{ t('startMenu.developer') }}</h2>
+          <h2 style="font-size: var(--text-heading); font-weight: var(--text-heading-weight); letter-spacing: var(--text-heading-tracking); line-height: var(--text-heading-leading);" class="tracking-tight">{{ t('startMenu.developer') }}</h2>
           <p class="text-xs opacity-60">{{ t('startMenu.portfolioSystem') }}</p>
         </div>
       </div>
 
       <div class="flex-1 overflow-y-auto">
-        <h4 class="text-xs font-medium opacity-40 tracking-wide mb-2 px-2" :class="{ 'hidden': isMobile }">{{ t('startMenu.apps') }}</h4>
+        <h4 style="font-size: var(--text-metadata); font-weight: var(--text-metadata-weight); letter-spacing: var(--text-metadata-tracking); line-height: var(--text-metadata-leading);" class="opacity-40 tracking-wide mb-2 px-2" :class="{ 'hidden': isMobile }">{{ t('startMenu.apps') }}</h4>
         <div class="grid" :class="isMobile ? 'grid-cols-3 sm:grid-cols-4 gap-4 py-2' : 'grid-cols-1 gap-1'">
           <button
             v-for="app in apps"
@@ -150,15 +150,15 @@ watch(() => systemStore.isStartMenuOpen, (isOpen) => {
             class="flex rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
             :class="isMobile ? 'flex-col items-center justify-center p-3 hover:bg-black/5 dark:hover:bg-white/5 active:bg-black/10 dark:active:bg-white/10 text-center' : 'items-center gap-3 px-3 py-2 hover:bg-black/10 dark:hover:bg-white/10 text-left'"
           >
-            <Icon :icon="app.icon" :size="isMobile ? 32 : 20" :class="isMobile ? 'mb-1.5' : ''" />
-            <span class="font-medium" :class="isMobile ? 'text-[11px] leading-tight opacity-80' : 'text-sm'">{{ t(app.titleKey) }}</span>
+            <Icon :icon="app.icon" :size="32" :class="isMobile ? 'mb-1.5' : ''" />
+            <span style="font-size: var(--text-label); font-weight: var(--text-label-weight); letter-spacing: var(--text-label-tracking); line-height: var(--text-label-leading);" :class="isMobile ? 'text-[11px] leading-tight opacity-80' : ''">{{ t(app.titleKey) }}</span>
           </button>
         </div>
       </div>
 
       <!-- Quick Actions (Direct Links) -->
       <div class="border-t border-[var(--window-border)] pt-3 mt-2 space-y-1">
-        <h4 class="text-xs font-medium opacity-40 tracking-wide mb-2 px-2" :class="{ 'hidden': isMobile }">{{ t('startMenu.quickActions') || 'Quick Actions' }}</h4>
+        <h4 style="font-size: var(--text-metadata); font-weight: var(--text-metadata-weight); letter-spacing: var(--text-metadata-tracking); line-height: var(--text-metadata-leading);" class="opacity-40 tracking-wide mb-2 px-2" :class="{ 'hidden': isMobile }">{{ t('startMenu.quickActions') || 'Quick Actions' }}</h4>
         <a
           v-for="action in quickActions"
           :key="action.label"
@@ -169,16 +169,16 @@ watch(() => systemStore.isStartMenuOpen, (isOpen) => {
           class="flex rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] no-underline"
           :class="isMobile ? 'flex-col items-center justify-center p-3 hover:bg-black/5 dark:hover:bg-white/5 active:bg-black/10 dark:active:bg-white/10 text-center' : 'items-center gap-3 px-3 py-2 hover:bg-black/10 dark:hover:bg-white/10 text-left'"
         >
-          <Icon :icon="action.icon" :size="isMobile ? 32 : 20" :class="isMobile ? 'mb-1.5' : ''" />
-          <span class="font-medium" :class="isMobile ? 'text-[11px] leading-tight opacity-80' : 'text-sm'">{{ t(action.label) }}</span>
+          <Icon :icon="action.icon" :size="32" :class="isMobile ? 'mb-1.5' : ''" />
+          <span style="font-size: var(--text-label); font-weight: var(--text-label-weight); letter-spacing: var(--text-label-tracking); line-height: var(--text-label-leading);" :class="isMobile ? 'text-[11px] leading-tight opacity-80' : ''">{{ t(action.label) }}</span>
         </a>
         <button
           @click="$emit('replay-tour')"
           class="w-full flex rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
           :class="isMobile ? 'flex-col items-center justify-center p-3 hover:bg-black/5 dark:hover:bg-white/5 active:bg-black/10 dark:active:bg-white/10 text-center' : 'items-center gap-3 px-3 py-2 hover:bg-black/10 dark:hover:bg-white/10 text-left'"
         >
-          <Icon icon="icons/help.svg" :size="isMobile ? 32 : 20" :class="isMobile ? 'mb-1.5' : ''" />
-          <span class="font-medium" :class="isMobile ? 'text-[11px] leading-tight opacity-80' : 'text-sm'">{{ t('startMenu.help') }}</span>
+          <Icon icon="icons/help.svg" :size="32" :class="isMobile ? 'mb-1.5' : ''" />
+          <span style="font-size: var(--text-label); font-weight: var(--text-label-weight); letter-spacing: var(--text-label-tracking); line-height: var(--text-label-leading);" :class="isMobile ? 'text-[11px] leading-tight opacity-80' : ''">{{ t('startMenu.help') }}</span>
         </button>
       </div>
 
@@ -192,8 +192,8 @@ watch(() => systemStore.isStartMenuOpen, (isOpen) => {
               isMobile ? 'flex-col items-center justify-center p-3 text-center active:bg-[var(--danger)] active:text-white' : 'items-center px-3 py-2 text-left'
             ]"
           >
-            <Icon icon="icons/windows.svg" :size="isMobile ? 32 : 20" :class="isMobile ? 'mb-1' : ''" class="text-[var(--danger)]" />
-            <span class="font-medium" :class="isMobile ? 'text-[11px] leading-tight opacity-80' : 'text-sm'">{{ confirmCloseAll ? t('startMenu.confirmCloseAll') : t('startMenu.closeAll') }}</span>
+            <Icon icon="icons/windows.svg" :size="32" :class="isMobile ? 'mb-1' : ''" class="text-[var(--danger)]" />
+            <span style="font-size: var(--text-label); font-weight: var(--text-label-weight); letter-spacing: var(--text-label-tracking); line-height: var(--text-label-leading);" :class="isMobile ? 'text-[11px] leading-tight opacity-80' : ''">{{ confirmCloseAll ? t('startMenu.confirmCloseAll') : t('startMenu.closeAll') }}</span>
           </button>
       </div>
     </div>

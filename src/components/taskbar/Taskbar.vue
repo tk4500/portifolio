@@ -298,7 +298,7 @@ const taskbarClass = computed(() => {
             :aria-haspopup="group.length > 1 ? 'menu' : false"
             :title="t(group[0].titleKey)"
           >
-            <Icon v-if="group[0].icon" :icon="group[0].icon" :size="18" :class="isHorizontal ? 'mr-1' : ''" />
+            <Icon v-if="group[0].icon" :icon="group[0].icon" :size="20" :class="isHorizontal ? 'mr-1' : ''" />
             <span v-if="isHorizontal" class="truncate">{{ t(group[0].titleKey) }}</span>
 
             <!-- Multi-instance indicator -->
@@ -342,7 +342,7 @@ const taskbarClass = computed(() => {
                  @click.stop="handleSubItemClick(win.id)"
                >
                  <div class="flex items-center gap-2 truncate pointer-events-none">
-                   <Icon :icon="win.icon || 'icons/windows.svg'" :size="16" />
+                   <Icon :icon="win.icon || 'icons/windows.svg'" :size="20" />
                    <span class="text-xs font-medium truncate">{{ t(win.titleKey) }} {{ idx + 1 }}</span>
                  </div>
 

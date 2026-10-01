@@ -38,8 +38,8 @@ const desktopIcons = computed(() => {
   
   // Add core apps
   return [
-    { id: 'about', titleKey: 'desktop.icons.about', icon: '👤', initialX: 20, initialY: 20 },
-    { id: 'archive', titleKey: 'desktop.icons.projects', icon: '📁', initialX: 20, initialY: 130 },
+    { id: 'about', titleKey: 'desktop.icons.about', icon: 'icons/user.svg', initialX: 20, initialY: 20 },
+    { id: 'archive', titleKey: 'desktop.icons.projects', icon: 'icons/folder.svg', initialX: 20, initialY: 130 },
     ...liveProjects.map((p: any, i: number) => ({ ...p, initialY: 240 + (i * 110) }))
   ]
 })
@@ -62,10 +62,10 @@ const programs: Record<string, any> = {
   about: defineAsyncComponent({
     loader: () => import('../programs/AboutMe.vue'),
     loadingComponent: {
-      template: '<div class="flex items-center justify-center h-full"><div class="animate-pulse text-2xl">💭</div></div>'
+      template: '<div class="flex items-center justify-center h-full"><div class="flex flex-col items-center gap-3"><svg class="animate-spin h-8 w-8 text-[var(--accent)]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><p class="text-sm opacity-60">Loading...</p></div></div>'
     },
     errorComponent: {
-      template: '<div class="flex flex-col items-center justify-center h-full gap-3 p-6 text-center"><div class="text-4xl">⚠️</div><p class="text-sm font-medium">About Me Failed to Load</p><p class="text-xs opacity-60">Network issue or missing file</p><button @click="$emit(\'retry\')" class="px-3 py-1.5 text-sm bg-[var(--accent)] text-white rounded hover:bg-[var(--accent)]/90 transition-colors">Retry</button></div>'
+      template: '<div class="flex flex-col items-center justify-center h-full gap-3 p-6 text-center"><svg class="h-12 w-12 text-[var(--danger)]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg><p class="text-sm font-medium">Failed to Load</p><p class="text-xs opacity-60">Network issue or missing file</p><button @click="$emit(\'retry\')" class="mt-2 px-3 py-1.5 text-sm bg-[var(--accent)] text-white rounded hover:bg-[var(--accent)]/90 transition-colors">Retry</button></div>'
     },
     delay: 200,
     timeout: 10000
@@ -76,7 +76,7 @@ const programs: Record<string, any> = {
       template: '<div class="flex items-center justify-center h-full"><div class="animate-pulse text-2xl">💭</div></div>'
     },
     errorComponent: {
-      template: '<div class="flex flex-col items-center justify-center h-full gap-3 p-6 text-center"><div class="text-4xl">⚠️</div><p class="text-sm font-medium">Contact Failed to Load</p><p class="text-xs opacity-60">Network issue or missing file</p><button @click="$emit(\'retry\')" class="px-3 py-1.5 text-sm bg-[var(--accent)] text-white rounded hover:bg-[var(--accent)]/90 transition-colors">Retry</button></div>'
+      template: '<div class="flex flex-col items-center justify-center h-full gap-3 p-6 text-center"><svg class="h-12 w-12 text-[var(--danger)]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg><p class="text-sm font-medium">Contact Failed to Load</p><p class="text-xs opacity-60">Network issue or missing file</p><button @click="$emit(\'retry\')" class="px-3 py-1.5 text-sm bg-[var(--accent)] text-white rounded hover:bg-[var(--accent)]/90 transition-colors">Retry</button></div>'
     },
     delay: 200,
     timeout: 10000
@@ -87,7 +87,7 @@ const programs: Record<string, any> = {
       template: '<div class="flex items-center justify-center h-full"><div class="animate-pulse text-2xl">💭</div></div>'
     },
     errorComponent: {
-      template: '<div class="flex flex-col items-center justify-center h-full gap-3 p-6 text-center"><div class="text-4xl">⚠️</div><p class="text-sm font-medium">Viewer Failed to Load</p><p class="text-xs opacity-60">Network issue or missing file</p><button @click="$emit(\'retry\')" class="px-3 py-1.5 text-sm bg-[var(--accent)] text-white rounded hover:bg-[var(--accent)]/90 transition-colors">Retry</button></div>'
+      template: '<div class="flex flex-col items-center justify-center h-full gap-3 p-6 text-center"><svg class="h-12 w-12 text-[var(--danger)]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg><p class="text-sm font-medium">Viewer Failed to Load</p><p class="text-xs opacity-60">Network issue or missing file</p><button @click="$emit(\'retry\')" class="px-3 py-1.5 text-sm bg-[var(--accent)] text-white rounded hover:bg-[var(--accent)]/90 transition-colors">Retry</button></div>'
     },
     delay: 200,
     timeout: 10000
@@ -95,10 +95,10 @@ const programs: Record<string, any> = {
   archive: defineAsyncComponent({
     loader: () => import('../programs/ArchiveManager.vue'),
     loadingComponent: {
-      template: '<div class="flex items-center justify-center h-full"><div class="animate-pulse text-2xl">📁</div></div>'
+      template: '<div class="flex items-center justify-center h-full"><div class="animate-pulse text-2xl">icons/folder.svg</div></div>'
     },
     errorComponent: {
-      template: '<div class="flex flex-col items-center justify-center h-full gap-3 p-6 text-center"><div class="text-4xl">⚠️</div><p class="text-sm font-medium">Projects Failed to Load</p><p class="text-xs opacity-60">Network issue or missing file</p><button @click="$emit(\'retry\')" class="px-3 py-1.5 text-sm bg-[var(--accent)] text-white rounded hover:bg-[var(--accent)]/90 transition-colors">Retry</button></div>'
+      template: '<div class="flex flex-col items-center justify-center h-full gap-3 p-6 text-center"><svg class="h-12 w-12 text-[var(--danger)]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg><p class="text-sm font-medium">Projects Failed to Load</p><p class="text-xs opacity-60">Network issue or missing file</p><button @click="$emit(\'retry\')" class="px-3 py-1.5 text-sm bg-[var(--accent)] text-white rounded hover:bg-[var(--accent)]/90 transition-colors">Retry</button></div>'
     },
     delay: 200,
     timeout: 10000
@@ -106,21 +106,21 @@ const programs: Record<string, any> = {
   projectViewer: defineAsyncComponent({
     loader: () => import('../programs/ProjectViewer.vue'),
     loadingComponent: {
-      template: '<div class="flex items-center justify-center h-full"><div class="animate-pulse text-2xl">📄</div></div>'
+      template: '<div class="flex items-center justify-center h-full"><div class="animate-pulse text-2xl">icons/document.svg</div></div>'
     },
     delay: 200
   }),
   settings: defineAsyncComponent({
     loader: () => import('../programs/Settings.vue'),
     loadingComponent: {
-      template: '<div class="flex items-center justify-center h-full"><div class="animate-pulse text-2xl">⚙️</div></div>'
+      template: '<div class="flex items-center justify-center h-full"><div class="animate-pulse text-2xl">icons/settings.svg</div></div>'
     },
     delay: 200
   }),
   stack: defineAsyncComponent({
     loader: () => import('../programs/Stack.vue'),
     loadingComponent: {
-      template: '<div class="flex items-center justify-center h-full"><div class="animate-pulse text-2xl">🛠️</div></div>'
+      template: '<div class="flex items-center justify-center h-full"><div class="animate-pulse text-2xl">icons/tools.svg</div></div>'
     },
     delay: 200
   })
@@ -189,7 +189,7 @@ onMounted(() => {
         component: 'about',
         width: 600,
         height: 500,
-        icon: '👤'
+        icon: 'icons/user.svg'
       })
     }
   }

@@ -1,8 +1,43 @@
-@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap');
 
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* Typography Scale — 5-tier role system */
+/* Base: 16px body text (1rem) */
+/* Ratio: 1.25 (Major Third) for clear hierarchy */
+:root {
+  /* Display: Hero content, project titles */
+  --text-display: 2rem; /* 32px */
+  --text-display-weight: 700;
+  --text-display-tracking: -0.02em;
+  --text-display-leading: 1.1;
+  
+  /* Heading: Section titles, card headings */
+  --text-heading: 1.25rem; /* 20px */
+  --text-heading-weight: 600;
+  --text-heading-tracking: -0.01em;
+  --text-heading-leading: 1.3;
+  
+  /* Body: Primary reading text */
+  --text-body: 1rem; /* 16px */
+  --text-body-weight: 400;
+  --text-body-tracking: 0;
+  --text-body-leading: 1.5;
+  
+  /* Label: Navigation, buttons, form labels */
+  --text-label: 0.875rem; /* 14px */
+  --text-label-weight: 500;
+  --text-label-tracking: 0;
+  --text-label-leading: 1.4;
+  
+  /* Metadata: Captions, timestamps, auxiliary info */
+  --text-metadata: 0.75rem; /* 12px */
+  --text-metadata-weight: 400;
+  --text-metadata-tracking: 0.01em;
+  --text-metadata-leading: 1.4;
+}
 
 /* Semantic OS Color System */
 :root {
@@ -26,9 +61,28 @@
   --accent-hover: oklch(45% 0.18 var(--accent-hue));
   --accent-subtle: oklch(52% 0.18 var(--accent-hue) / 0.08);
   
-  /* Semantic */
-  --danger: oklch(55% 0.2 25);
+  /* Secondary Accent: Warm Amber (projects, achievements) */
+  --secondary-hue: 65;
+  --secondary: oklch(58% 0.16 var(--secondary-hue));
+  --secondary-hover: oklch(50% 0.16 var(--secondary-hue));
+  --secondary-subtle: oklch(58% 0.16 var(--secondary-hue) / 0.1);
+  
+  /* Tertiary Accent: Deep Cyan (tech stack, tools) */
+  --tertiary-hue: 200;
+  --tertiary: oklch(55% 0.12 var(--tertiary-hue));
+  --tertiary-hover: oklch(48% 0.12 var(--tertiary-hue));
+  --tertiary-subtle: oklch(55% 0.12 var(--tertiary-hue) / 0.1);
+  
+  /* Semantic states */
+  --success: oklch(58% 0.16 145); /* Green */
+  --success-subtle: oklch(58% 0.16 145 / 0.1);
+  --warning: oklch(62% 0.18 80); /* Yellow-orange */
+  --warning-subtle: oklch(62% 0.18 80 / 0.1);
+  --danger: oklch(55% 0.2 25); /* Red */
   --danger-hover: oklch(48% 0.2 25);
+  --danger-subtle: oklch(55% 0.2 25 / 0.1);
+  --info: oklch(58% 0.14 240); /* Blue */
+  --info-subtle: oklch(58% 0.14 240 / 0.1);
 }
 
 html.dark {
@@ -46,8 +100,26 @@ html.dark {
   --accent-hover: oklch(82% 0.16 var(--accent-hue));
   --accent-subtle: oklch(75% 0.16 var(--accent-hue) / 0.12);
   
+  /* Dark mode secondary */
+  --secondary: oklch(72% 0.14 var(--secondary-hue));
+  --secondary-hover: oklch(78% 0.14 var(--secondary-hue));
+  --secondary-subtle: oklch(72% 0.14 var(--secondary-hue) / 0.12);
+  
+  /* Dark mode tertiary */
+  --tertiary: oklch(68% 0.10 var(--tertiary-hue));
+  --tertiary-hover: oklch(75% 0.10 var(--tertiary-hue));
+  --tertiary-subtle: oklch(68% 0.10 var(--tertiary-hue) / 0.12);
+  
+  /* Dark mode semantic states */
+  --success: oklch(68% 0.14 145);
+  --success-subtle: oklch(68% 0.14 145 / 0.12);
+  --warning: oklch(72% 0.16 80);
+  --warning-subtle: oklch(72% 0.16 80 / 0.12);
   --danger: oklch(65% 0.2 25);
   --danger-hover: oklch(72% 0.2 25);
+  --danger-subtle: oklch(65% 0.2 25 / 0.12);
+  --info: oklch(68% 0.12 240);
+  --info-subtle: oklch(68% 0.12 240 / 0.12);
 }
 
 /* Base styles */
@@ -58,10 +130,15 @@ html, body {
   width: 100vw;
   overflow: hidden;
   font-family: 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: var(--text-body);
+  font-weight: var(--text-body-weight);
+  line-height: var(--text-body-leading);
+  letter-spacing: var(--text-body-tracking);
   user-select: none;
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 /* Glassmorphism with proper edge refraction */

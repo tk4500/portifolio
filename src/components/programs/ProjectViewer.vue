@@ -51,8 +51,8 @@ function openLiveSite() {
           <Icon :icon="currentProject.icon" :size="48" />
         </div>
         <div class="min-w-0">
-          <h1 class="text-xl sm:text-2xl font-semibold tracking-tight break-words">{{ currentProject.name }}</h1>
-          <p class="mt-1 sm:mt-2 text-white/60 max-w-xl text-xs sm:text-sm leading-relaxed">{{ currentProject.description }}</p>
+          <h1 style="font-size: var(--text-display); font-weight: var(--text-display-weight); letter-spacing: var(--text-display-tracking); line-height: var(--text-display-leading);" class="tracking-tight break-words">{{ currentProject.name }}</h1>
+          <p style="font-size: var(--text-body); line-height: var(--text-body-leading);" class="mt-1 sm:mt-2 text-white/60 max-w-xl leading-relaxed">{{ currentProject.description }}</p>
         </div>
       </div>
     </div>
@@ -64,7 +64,7 @@ function openLiveSite() {
       <div v-if="currentProject.stack && currentProject.stack.length > 0" class="flex flex-wrap gap-3">
         <h2 class="w-full text-xs font-semibold tracking-wide opacity-40">{{ t('programs.projectViewer.techStack') }}</h2>
         <div v-for="(techIcon, idx) in currentProject.stack" :key="idx" class="w-10 h-10 bg-black/[0.04] dark:bg-white/[0.04] p-2 rounded-lg border border-[var(--window-border)] flex items-center justify-center hover:shadow-md hover:scale-105 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]" tabindex="0">
-          <Icon :icon="techIcon" :size="24" />
+          <Icon :icon="techIcon" :size="20" />
         </div>
       </div>
 

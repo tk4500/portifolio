@@ -1,4 +1,7 @@
 {
+  "mobile": {
+    "menu": "Menu"
+  },
   "desktop": {
     "icons": {
       "settings": "Configurações",

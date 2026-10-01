@@ -295,8 +295,8 @@ onUnmounted(() => {
       tabindex="0"
     >
       <div class="flex items-center gap-2 overflow-hidden">
-        <Icon v-if="windowState.icon" :icon="windowState.icon" :size="18" />
-        <span class="font-medium text-sm text-[var(--window-title-text)] truncate font-sans">
+        <Icon v-if="windowState.icon" :icon="windowState.icon" :size="20" />
+        <span style="font-size: var(--text-label); font-weight: var(--text-label-weight); letter-spacing: var(--text-label-tracking); line-height: var(--text-label-leading);" class="text-[var(--window-title-text)] truncate font-sans">
           {{ t(windowState.titleKey) }}
         </span>
       </div>

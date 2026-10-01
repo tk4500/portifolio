@@ -160,9 +160,9 @@ const currentAppTitle = computed(() => {
               class="flex flex-col items-center gap-2 p-2 rounded-2xl active:bg-white/10 transition-colors touch-manipulation"
             >
               <div class="w-16 h-16 bg-white/10 dark:bg-white/8 rounded-[1.25rem] shadow-lg flex items-center justify-center border border-white/10 active:scale-95 transition-transform">
-                <Icon :icon="app.icon" :size="40" class="text-white" />
+                <Icon :icon="app.icon" :size="48" class="text-white" />
               </div>
-              <span class="text-xs font-medium text-center text-white drop-shadow-lg line-clamp-2 w-full">
+              <span style="font-size: var(--text-metadata); font-weight: var(--text-metadata-weight); letter-spacing: var(--text-metadata-tracking); line-height: var(--text-metadata-leading);" class="text-center text-white drop-shadow-lg line-clamp-2 w-full">
                 {{ typeof app.name === 'string' ? app.name : t(app.name) }}
               </span>
             </button>
@@ -175,32 +175,33 @@ const currentAppTitle = computed(() => {
             @click="openApp({ id: 'about', name: t('desktop.icons.about'), icon: 'icons/user.svg', type: 'app' })"
             class="flex flex-col items-center gap-1 p-2 rounded-xl active:bg-black/10 dark:active:bg-white/10 transition-colors touch-manipulation"
           >
-            <Icon icon="icons/user.svg" :size="24" />
-            <span class="text-xs text-[var(--window-title-text)]">{{ t('desktop.icons.about') }}</span>
+            <Icon icon="icons/user.svg" :size="32" />
+            <span style="font-size: var(--text-metadata); font-weight: var(--text-metadata-weight); letter-spacing: var(--text-metadata-tracking); line-height: var(--text-metadata-leading);" class="text-[var(--window-title-text)]">{{ t('desktop.icons.about') }}</span>
           </button>
           
           <button
             @click="openApp({ id: 'archive', name: t('desktop.icons.projects'), icon: 'icons/folder.svg', type: 'app' })"
             class="flex flex-col items-center gap-1 p-2 rounded-xl active:bg-black/10 dark:active:bg-white/10 transition-colors touch-manipulation"
           >
-            <Icon icon="icons/folder.svg" :size="24" />
-            <span class="text-xs text-[var(--window-title-text)]">{{ t('desktop.icons.projects') }}</span>
+            <Icon icon="icons/folder.svg" :size="32" />
+            <span style="font-size: var(--text-metadata); font-weight: var(--text-metadata-weight); letter-spacing: var(--text-metadata-tracking); line-height: var(--text-metadata-leading);" class="text-[var(--window-title-text)]">{{ t('desktop.icons.projects') }}</span>
           </button>
           
           <button
             @click="openApp({ id: 'contact', name: t('desktop.icons.contact'), icon: 'icons/mail.svg', type: 'app' })"
             class="flex flex-col items-center gap-1 p-2 rounded-xl active:bg-black/10 dark:active:bg-white/10 transition-colors touch-manipulation"
           >
-            <Icon icon="icons/mail.svg" :size="24" />
-            <span class="text-xs text-[var(--window-title-text)]">{{ t('desktop.icons.contact') }}</span>
+            <Icon icon="icons/mail.svg" :size="32" />
+            <span style="font-size: var(--text-metadata); font-weight: var(--text-metadata-weight); letter-spacing: var(--text-metadata-tracking); line-height: var(--text-metadata-leading);" class="text-[var(--window-title-text)]">{{ t('desktop.icons.contact') }}</span>
           </button>
           
           <button
             @click="systemStore.toggleStartMenu"
             class="flex flex-col items-center gap-1 p-2 rounded-xl active:bg-black/10 dark:active:bg-white/10 transition-colors touch-manipulation"
+            :aria-label="t('startMenu.apps')"
           >
-            <Icon icon="icons/settings.svg" :size="24" />
-            <span class="text-xs text-[var(--window-title-text)]">{{ t('startMenu.apps') }}</span>
+            <Icon icon="icons/grid.svg" :size="32" />
+            <span style="font-size: var(--text-metadata); font-weight: var(--text-metadata-weight); letter-spacing: var(--text-metadata-tracking); line-height: var(--text-metadata-leading);" class="text-[var(--window-title-text)]">{{ t('mobile.menu') }}</span>
           </button>
         </div>
       </div>

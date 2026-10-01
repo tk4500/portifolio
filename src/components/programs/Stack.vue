@@ -37,11 +37,11 @@ const categories = computed(() => {
           <div
             v-for="item in category.items"
             :key="item.id"
-            class="border border-[var(--window-border)] rounded-xl p-3 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-[var(--window-border)] transition-all flex flex-col justify-between group focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+            class="border rounded-xl p-3 hover:-translate-y-0.5 hover:shadow-lg transition-all flex flex-col justify-between group focus:outline-none focus-visible:ring-2" style="border-color: var(--tertiary-subtle); background: var(--tertiary-subtle);"
             tabindex="0"
           >
             <div class="flex items-center gap-3 mb-3">
-              <div class="w-8 h-8 flex-shrink-0 bg-white/60 dark:bg-white/[0.06] p-1.5 rounded-lg flex items-center justify-center">
+              <div class="w-8 h-8 flex-shrink-0 p-1.5 rounded-lg flex items-center justify-center" style="background: var(--tertiary); color: white;">
                 <Icon :icon="item.icon" :size="32" />
               </div>
               <span class="font-medium text-sm truncate" :title="item.name">{{ item.name }}</span>
@@ -53,9 +53,9 @@ const categories = computed(() => {
                 <span>{{ t('programs.stack.usage') || 'Usage' }}</span>
                 <span>{{ item.level }}%</span>
               </div>
-              <div class="w-full bg-black/[0.06] dark:bg-white/[0.06] rounded-full h-1 overflow-hidden">
+              <div class="w-full rounded-full h-1 overflow-hidden" style="background: var(--tertiary-subtle);">
                 <div
-                  class="bg-[var(--accent)] h-1 rounded-full transition-all duration-1000 ease-out"
+                  class="h-1 rounded-full transition-all duration-1000 ease-out" style="background: var(--tertiary);"
                   :style="`width: ${item.level}%`"
                 ></div>
               </div>
