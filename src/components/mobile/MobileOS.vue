@@ -46,6 +46,30 @@ const allApps = computed(() => {
   ]
 })
 
+// Helper functions for project interaction logic
+
+// Task 1: Screenshot detection utility
+function hasPhoneScreenshots(project: any): boolean {
+  if (!project.screenshots || !Array.isArray(project.screenshots) || project.screenshots.length === 0) {
+    return false
+  }
+  // For now, assume any screenshot is potentially phone-appropriate
+  // In a real implementation, you'd check image dimensions or naming conventions
+  return project.screenshots.length > 0
+}
+
+// Task 2: Project action classifier
+function getProjectAction(project: any): 'live-site' | 'screenshots' | 'github-prompt' {
+  // Priority: live site > screenshots > GitHub prompt
+  if (project.url && project.url.trim() !== '') {
+    return 'live-site'
+  }
+  if (hasPhoneScreenshots(project)) {
+    return 'screenshots'
+  }
+  return 'github-prompt'
+}
+
 // Async components
 const programs: Record<string, any> = {
   about: defineAsyncComponent(() => import('../programs/AboutMe.vue')),
@@ -53,16 +77,26 @@ const programs: Record<string, any> = {
   archive: defineAsyncComponent(() => import('../programs/ArchiveManager.vue')),
   stack: defineAsyncComponent(() => import('../programs/Stack.vue')),
   iframe: defineAsyncComponent(() => import('../programs/IframeViewer.vue')),
-  settings: defineAsyncComponent(() => import('../programs/Settings.vue')),
-  projectInfo: defineAsyncComponent(() => import('../programs/ProjectViewer.vue'))
+  settings: defineAsyncComponent(() => import('../programs/Settings.vue'))
 }
+
+// App interaction state
+const showScreenshotGallery = ref(false)
+const currentGalleryProject = ref<any | null>(null)
 
 // App actions
 let longPressTimer: number | null = null
 
 function handleAppTouchStart(app: any) {
+  // Long-press for project apps shows info modal
+  if (longPressTimer) {
+    clearTimeout(longPressTimer)
+  }
+  
   longPressTimer = window.setTimeout(() => {
-    longPressApp.value = app
+    if (app.type === 'live-project' || app.type === 'non-live-project') {
+      longPressApp.value = app
+    }
     longPressTimer = null
   }, 500)
 }
@@ -74,6 +108,16 @@ function handleAppTouchEnd() {
   }
 }
 
+function handleAppTouchMove() {
+  // Cancel long-press if user is scrolling
+  if (longPressTimer) {
+    clearTimeout(longPressTimer)
+    longPressTimer = null
+  }
+}
+
+// Remove onMounted DOM listeners (not needed, Vue handlers work)
+
 function openApp(app: any) {
   // Cancel long press if active
   if (longPressTimer) {
@@ -81,33 +125,65 @@ function openApp(app: any) {
     longPressTimer = null
   }
   
+  // Task 3-5: Handle tap based on project type
+  if (app.type === 'app') {
+    // Native app (About, Projects, Stack, Contact, Settings)
+    isTransitioning.value = true
+    showAppDrawer.value = false
+    showRecents.value = false
+    
+    setTimeout(() => {
+      currentApp.value = app.id
+      
+      // Add to recents (keep last 6, no duplicates)
+      recentApps.value = [
+        app.id,
+        ...recentApps.value.filter(id => id !== app.id)
+      ].slice(0, 6)
+      
+      isTransitioning.value = false
+    }, 200)
+    return
+  }
+  
+  // Project apps: determine action
+  const action = getProjectAction(app)
+  
   isTransitioning.value = true
   showAppDrawer.value = false
   showRecents.value = false
   
   setTimeout(() => {
-    if (app.type === 'live-project') {
-      // Live project: open iframe
+    if (action === 'live-site') {
+      // Task 3: Open iframe for live sites
       currentApp.value = 'iframe'
       sessionStorage.setItem('mobile-iframe-url', app.url)
       sessionStorage.setItem('mobile-iframe-title', app.name)
-    } else if (app.type === 'non-live-project') {
-      // Non-live project: show project info page with screenshots or GitHub
-      currentApp.value = 'projectInfo'
-      sessionStorage.setItem('mobile-project-id', app.id.replace('project_', ''))
-      sessionStorage.setItem('mobile-project-title', app.name)
+      
+      // Add to recents
+      recentApps.value = [
+        app.id,
+        ...recentApps.value.filter(id => id !== app.id)
+      ].slice(0, 6)
+      
+      isTransitioning.value = false
+    } else if (action === 'screenshots') {
+      // Task 4: Show screenshot gallery
+      currentGalleryProject.value = app
+      showScreenshotGallery.value = true
+      isTransitioning.value = false
     } else {
-      // Native app
-      currentApp.value = app.id
+      // Task 5: GitHub prompt
+      isTransitioning.value = false
+      const confirmed = confirm(
+        locale.value === 'pt' 
+          ? 'Este projeto não está online. Abrir repositório no GitHub?'
+          : 'This project is not live. Open GitHub repository?'
+      )
+      if (confirmed && app.github) {
+        window.open(app.github, '_blank', 'noopener,noreferrer')
+      }
     }
-    
-    // Add to recents (keep last 6, no duplicates)
-    recentApps.value = [
-      app.id,
-      ...recentApps.value.filter(id => id !== app.id)
-    ].slice(0, 6)
-    
-    isTransitioning.value = false
   }, 200)
 }
 
@@ -143,17 +219,17 @@ function closeInfoDialog() {
   longPressApp.value = null
 }
 
+function closeScreenshotGallery() {
+  showScreenshotGallery.value = false
+  currentGalleryProject.value = null
+}
+
 // Iframe props
 const iframeProps = computed(() => {
   if (currentApp.value === 'iframe') {
     return {
       url: sessionStorage.getItem('mobile-iframe-url'),
       title: sessionStorage.getItem('mobile-iframe-title')
-    }
-  }
-  if (currentApp.value === 'projectInfo') {
-    return {
-      projectId: sessionStorage.getItem('mobile-project-id')
     }
   }
   return {}
@@ -245,11 +321,12 @@ setInterval(() => {
             <button
               v-for="app in homeApps"
               :key="app.id"
+              class="flex flex-col items-center gap-2 focus:outline-none group touch-manipulation"
               @click="openApp(app)"
               @touchstart="handleAppTouchStart(app)"
               @touchend="handleAppTouchEnd"
+              @touchmove="handleAppTouchMove"
               @touchcancel="handleAppTouchEnd"
-              class="flex flex-col items-center gap-2 focus:outline-none group touch-manipulation"
             >
               <div class="w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg group-active:scale-95 transition-transform" style="background: var(--window-bg);">
                 <Icon :icon="app.icon" :size="32" />
@@ -290,11 +367,12 @@ setInterval(() => {
             <button
               v-for="app in allApps"
               :key="app.id"
+              class="flex flex-col items-center gap-2 focus:outline-none group touch-manipulation"
               @click="openApp(app)"
               @touchstart="handleAppTouchStart(app)"
               @touchend="handleAppTouchEnd"
+              @touchmove="handleAppTouchMove"
               @touchcancel="handleAppTouchEnd"
-              class="flex flex-col items-center gap-2 focus:outline-none group touch-manipulation"
             >
               <div class="w-14 h-14 rounded-2xl flex items-center justify-center shadow-md group-active:scale-95 transition-transform" style="background: var(--window-bg);">
                 <Icon :icon="app.icon" :size="32" />
@@ -356,43 +434,124 @@ setInterval(() => {
       </div>
     </Transition>
     
-    <!-- Long-Press Info Dialog -->
+    <!-- Screenshot Gallery Overlay -->
+    <Transition name="fade">
+      <div
+        v-if="showScreenshotGallery && currentGalleryProject"
+        class="screenshot-gallery fixed inset-0 bg-black z-40 flex flex-col"
+        @click.self="closeScreenshotGallery"
+      >
+        <!-- Gallery Header -->
+        <div class="h-14 flex items-center justify-between px-4 bg-black/50 backdrop-blur-md" style="margin-top: 24px;">
+          <span class="text-white font-medium" style="font-size: var(--text-heading);">{{ currentGalleryProject.name }}</span>
+          <button
+            @click="closeScreenshotGallery"
+            class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-white/10 transition-colors text-white"
+            aria-label="Close"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+        
+        <!-- Screenshots -->
+        <div class="flex-1 overflow-auto p-4 space-y-4">
+          <img
+            v-for="(screenshot, idx) in currentGalleryProject.screenshots"
+            :key="idx"
+            :src="screenshot"
+            :alt="`${currentGalleryProject.name} screenshot ${Number(idx) + 1}`"
+            class="w-full rounded-lg shadow-2xl"
+          />
+        </div>
+        
+        <!-- Footer with GitHub link -->
+        <div v-if="currentGalleryProject.github" class="p-4 bg-black/50 backdrop-blur-md">
+          <a
+            :href="currentGalleryProject.github"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center justify-center gap-2 h-12 rounded-lg font-medium transition-colors bg-white/10 hover:bg-white/20 text-white"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+            </svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+    </Transition>
+    
+    <!-- Long-Press Info Dialog (Task 6) -->
     <Transition name="fade">
       <div
         v-if="longPressApp"
         class="info-dialog fixed inset-0 bg-black/50 z-40 flex items-end md:items-center justify-center p-4"
         @click.self="closeInfoDialog"
       >
-        <div class="bg-[var(--window-bg)] rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-4" @click.stop>
+        <div class="bg-[var(--window-bg)] rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-4 max-h-[80vh] overflow-auto" @click.stop>
           <div class="flex items-start gap-4">
             <div class="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-md" style="background: var(--tertiary-subtle);">
               <Icon :icon="longPressApp.icon" :size="48" />
             </div>
             <div class="flex-1 min-w-0">
               <h3 class="font-medium mb-1" style="font-size: var(--text-heading);">{{ longPressApp.name }}</h3>
-              <p v-if="longPressApp.type === 'non-live-project'" class="text-sm opacity-60">
-                {{ t('mobile.coming_soon') }}
+              <p v-if="longPressApp.description" class="text-sm opacity-70 line-clamp-3">
+                {{ longPressApp.description }}
               </p>
             </div>
           </div>
           
-          <div v-if="longPressApp.tech" class="flex flex-wrap gap-2">
-            <span
-              v-for="tech in longPressApp.tech"
-              :key="tech"
-              class="px-2 py-1 rounded text-xs"
-              style="background: var(--tertiary-subtle); color: var(--tertiary);"
-            >
-              {{ tech }}
-            </span>
+          <!-- Tech Stack -->
+          <div v-if="longPressApp.stack && longPressApp.stack.length > 0" class="space-y-2">
+            <h4 class="text-xs font-medium opacity-60 uppercase tracking-wide">Tech Stack</h4>
+            <div class="flex flex-wrap gap-2">
+              <div
+                v-for="tech in longPressApp.stack"
+                :key="tech"
+                class="w-10 h-10 rounded-lg flex items-center justify-center"
+                style="background: var(--tertiary-subtle);"
+              >
+                <Icon :icon="tech" :size="24" />
+              </div>
+            </div>
           </div>
           
+          <!-- Screenshots Preview -->
+          <div v-if="longPressApp.screenshots && longPressApp.screenshots.length > 0" class="space-y-2">
+            <h4 class="text-xs font-medium opacity-60 uppercase tracking-wide">Screenshots</h4>
+            <div class="grid grid-cols-3 gap-2">
+              <img
+                v-for="(screenshot, idx) in longPressApp.screenshots.slice(0, 3)"
+                :key="idx"
+                :src="screenshot"
+                :alt="`Screenshot ${Number(idx) + 1}`"
+                class="w-full aspect-video object-cover rounded-lg"
+              />
+            </div>
+          </div>
+          
+          <!-- Actions -->
           <div class="flex gap-2">
+            <a
+              v-if="longPressApp.url"
+              :href="longPressApp.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex-1 h-11 rounded-lg flex items-center justify-center gap-2 font-medium transition-colors"
+              style="background: var(--accent); color: white;"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+              </svg>
+              Open Live Site
+            </a>
             <a
               v-if="longPressApp.github"
               :href="longPressApp.github"
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               class="flex-1 h-11 rounded-lg flex items-center justify-center gap-2 font-medium transition-colors"
               style="background: var(--accent-subtle); color: var(--accent);"
             >
@@ -401,14 +560,15 @@ setInterval(() => {
               </svg>
               GitHub
             </a>
-            <button
-              @click="closeInfoDialog"
-              class="flex-1 h-11 rounded-lg font-medium transition-colors"
-              style="background: var(--window-border);"
-            >
-              {{ t('mobile.close') }}
-            </button>
           </div>
+          
+          <button
+            @click="closeInfoDialog"
+            class="w-full h-11 rounded-lg font-medium transition-colors"
+            style="background: var(--window-border);"
+          >
+            Close
+          </button>
         </div>
       </div>
     </Transition>

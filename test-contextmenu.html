@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Context Menu Test</title>
+</head>
+<body>
+  <h1>Right-click Test</h1>
+  
+  <button id="test1" style="padding: 20px; margin: 10px; background: blue; color: white;">
+    Test 1: Plain button with @contextmenu.prevent
+  </button>
+  
+  <button id="test2" style="padding: 20px; margin: 10px; background: green; color: white;">
+    Test 2: Button with addEventListener
+  </button>
+  
+  <script type="module">
+    // Test 1: Vue-style with manual prevent
+    document.getElementById('test1').addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      console.log('TEST 1: Context menu triggered via addEventListener');
+      alert('Custom menu from Test 1!');
+    });
+    
+    // Test 2: Pure JS
+    document.getElementById('test2').oncontextmenu = (e) => {
+      e.preventDefault();
+      console.log('TEST 2: Context menu triggered via oncontextmenu');
+      alert('Custom menu from Test 2!');
+      return false;
+    };
+  </script>
+</body>
+</html>
