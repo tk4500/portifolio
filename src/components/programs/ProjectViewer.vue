@@ -51,8 +51,8 @@ function openLiveSite() {
           <Icon :icon="currentProject.icon" :size="48" />
         </div>
         <div class="min-w-0">
-          <h1 style="font-size: var(--text-display); font-weight: var(--text-display-weight); letter-spacing: var(--text-display-tracking); line-height: var(--text-display-leading);" class="tracking-tight break-words">{{ currentProject.name }}</h1>
-          <p style="font-size: var(--text-body); line-height: var(--text-body-leading);" class="mt-1 sm:mt-2 text-white/60 max-w-xl leading-relaxed">{{ currentProject.description }}</p>
+          <h1 style="font-size: var(--text-display); font-weight: var(--text-display-weight); letter-spacing: var(--text-display-tracking); line-height: var(--text-display-leading);" class="tracking-tight break-words overflow-wrap-anywhere hyphens-auto">{{ currentProject.name || 'Untitled Project' }}</h1>
+          <p style="font-size: var(--text-body); line-height: var(--text-body-leading);" class="mt-1 sm:mt-2 text-white/60 max-w-xl leading-relaxed break-words">{{ currentProject.description || '' }}</p>
         </div>
       </div>
     </div>
@@ -99,6 +99,8 @@ function openLiveSite() {
           class="rounded-xl shadow-sm border border-[var(--window-border)] w-full hover:shadow-lg hover:scale-[1.02] transition-all cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
           :alt="`${currentProject.name} screenshot ${Number(idx) + 1}`"
           tabindex="0"
+          @error="(e) => (e.target as HTMLImageElement).style.display = 'none'"
+          loading="lazy"
         />
       </div>
       </div>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="journey-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#EF4444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F87171;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Path/journey -->
+  <path d="M12 48Q20 40 28 38T44 38Q52 40 52 48" stroke="url(#journey-grad)" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- Milestones -->
+  <circle cx="16" cy="46" r="4" fill="url(#journey-grad)" stroke="#ffffff" stroke-width="2"/>
+  <circle cx="32" cy="38" r="5" fill="url(#journey-grad)" stroke="#ffffff" stroke-width="2"/>
+  <circle cx="48" cy="46" r="4" fill="url(#journey-grad)" stroke="#ffffff" stroke-width="2"/>
+  <!-- Flag at end -->
+  <path d="M48 28v-12M48 16h8l-4 4 4 4h-8" fill="url(#journey-grad)" stroke="#ffffff" stroke-width="1"/>
+</svg>

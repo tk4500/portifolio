@@ -35,6 +35,7 @@ const desktopIcons = computed(() => {
       icon: p.icon,
       url: p.url,
       skipTranslation: true, // Don't translate, already localized
+      projectData: p, // Pass full project data for right-click modal
       initialX: 20,
       initialY: 20 + (index * 110) // Stack vertically
     }))
@@ -124,6 +125,13 @@ let metaKeyHeld = false
 let otherKeyPressed = false
 
 function handleKeydown(e: KeyboardEvent) {
+  // Ctrl+Shift+T: Reopen last closed window
+  if (e.ctrlKey && e.shiftKey && e.key === 'T') {
+    e.preventDefault()
+    windowsStore.reopenLastClosed()
+    return
+  }
+  
   if (e.key === 'Meta' || e.key === 'OS' || e.key === 'Win') {
     metaKeyHeld = true
     otherKeyPressed = false
@@ -216,7 +224,7 @@ function handleReplayTour() {
   <!-- Desktop OS Experience (>= 768px) -->
   <div
     v-else
-    class="h-screen w-screen bg-[var(--desktop-bg)] relative overflow-hidden grain-overlay"
+    class="h-screen w-screen bg-[var(--desktop-bg)] relative overflow-auto grain-overlay"
     :style="{ background: systemStore.backgroundColor }"
     @click="handleDesktopClick"
   >
@@ -234,6 +242,7 @@ function handleReplayTour() {
       :initial-y="icon.initialY"
       :url="icon.url"
       :skip-translation="icon.skipTranslation"
+      :project-data="icon.projectData"
     />
 
     <!-- Active Windows -->

@@ -18,11 +18,15 @@ export interface WindowState {
   height: number;
   icon?: string;
   allowMultiple?: boolean;
+  skipTranslation?: boolean;
 }
 
 export const useWindowsStore = defineStore('windows', () => {
   const windows = ref<WindowState[]>([])
   const highestZIndex = ref(10)
+  
+  // Closed window history (max 5 most recent)
+  const closedWindows = ref<Array<WindowState & { closedAt: number }>>([])
 
   // Prevent infinite z-index growth overlapping with system UI (z-100)
   function normalizeZIndexes() {
@@ -101,6 +105,16 @@ export const useWindowsStore = defineStore('windows', () => {
   }
 
   function closeWindow(id: string) {
+    // Find and save to history before removing
+    const window = windows.value.find(w => w.id === id)
+    if (window) {
+      closedWindows.value.unshift({ ...window, closedAt: Date.now() })
+      // Keep only last 5 closed windows
+      if (closedWindows.value.length > 5) {
+        closedWindows.value = closedWindows.value.slice(0, 5)
+      }
+    }
+    
     // Remove the window from the array
     windows.value = windows.value.filter(w => w.id !== id)
 
@@ -204,11 +218,32 @@ export const useWindowsStore = defineStore('windows', () => {
      }
   }
 
+  function reopenLastClosed() {
+    const lastClosed = closedWindows.value.shift()
+    if (lastClosed) {
+      // Remove closedAt timestamp and restore window
+      const { closedAt, ...windowState } = lastClosed
+      // Generate new unique ID to avoid conflicts
+      const restoredId = `${windowState.appId}_${Date.now()}`
+      windows.value.push({
+        ...windowState,
+        id: restoredId,
+        isOpen: true,
+        isMinimized: false,
+        zIndex: ++highestZIndex.value
+      })
+      normalizeZIndexes()
+      focusWindow(restoredId)
+    }
+  }
+
   return {
     windows,
     activeWindows,
+    closedWindows,
     registerOrOpenWindow,
     closeWindow,
+    reopenLastClosed,
     minimizeWindow,
     toggleShowDesktop,
     toggleMaximize,

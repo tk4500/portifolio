@@ -13,6 +13,24 @@ const showAppDrawer = ref(false)
 const showRecents = ref(false)
 const currentApp = ref<string | null>(null)
 const isTransitioning = ref(false)
+
+// Badge legend (first-time tooltip)
+const showBadgeLegend = ref(!localStorage.getItem('badge_legend_seen'))
+
+function dismissBadgeLegend() {
+  showBadgeLegend.value = false
+  localStorage.setItem('badge_legend_seen', 'true')
+}
+
+// Bottom sheet for confirmations (replaces confirm())
+const bottomSheet = ref<{
+  show: boolean
+  title: string
+  message: string
+  confirmText: string
+  cancelText: string
+  onConfirm: () => void
+} | null>(null)
 const longPressApp = ref<any | null>(null)
 const recentApps = ref<string[]>([])
 
@@ -173,15 +191,22 @@ function openApp(app: any) {
       showScreenshotGallery.value = true
       isTransitioning.value = false
     } else {
-      // Task 5: GitHub prompt
+      // Task 5: GitHub prompt with bottom sheet
       isTransitioning.value = false
-      const confirmed = confirm(
-        locale.value === 'pt' 
-          ? 'Este projeto não está online. Abrir repositório no GitHub?'
-          : 'This project is not live. Open GitHub repository?'
-      )
-      if (confirmed && app.github) {
-        window.open(app.github, '_blank', 'noopener,noreferrer')
+      bottomSheet.value = {
+        show: true,
+        title: app.name,
+        message: locale.value === 'pt' 
+          ? 'Este projeto não está online. Deseja abrir o repositório no GitHub?'
+          : 'This project is not live. Open GitHub repository?',
+        confirmText: locale.value === 'pt' ? 'Abrir GitHub' : 'Open GitHub',
+        cancelText: locale.value === 'pt' ? 'Cancelar' : 'Cancel',
+        onConfirm: () => {
+          if (app.github) {
+            window.open(app.github, '_blank', 'noopener,noreferrer')
+          }
+          bottomSheet.value = null
+        }
       }
     }
   }, 200)
@@ -328,8 +353,14 @@ setInterval(() => {
               @touchmove="handleAppTouchMove"
               @touchcancel="handleAppTouchEnd"
             >
-              <div class="w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg group-active:scale-95 transition-transform" style="background: var(--window-bg);">
+              <div class="w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg group-active:scale-95 transition-transform relative" style="background: var(--window-bg);">
                 <Icon :icon="app.icon" :size="32" />
+                <!-- Type badge for projects -->
+                <div v-if="app.type === 'live-project' || app.type === 'non-live-project'" class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-sm flex items-center justify-center text-xs shadow-md">
+                  <span v-if="getProjectAction(app) === 'live-site'" class="text-[10px]">🌐</span>
+                  <span v-else-if="getProjectAction(app) === 'screenshots'" class="text-[10px]">📸</span>
+                  <span v-else class="text-[10px]">🔗</span>
+                </div>
               </div>
               <span class="text-xs text-center line-clamp-2 text-white dark:text-slate-200" style="font-size: var(--text-metadata);">
                 {{ app.name }}
@@ -374,8 +405,14 @@ setInterval(() => {
               @touchmove="handleAppTouchMove"
               @touchcancel="handleAppTouchEnd"
             >
-              <div class="w-14 h-14 rounded-2xl flex items-center justify-center shadow-md group-active:scale-95 transition-transform" style="background: var(--window-bg);">
+              <div class="w-14 h-14 rounded-2xl flex items-center justify-center shadow-md group-active:scale-95 transition-transform relative" style="background: var(--window-bg);">
                 <Icon :icon="app.icon" :size="32" />
+                <!-- Type badge for projects in drawer -->
+                <div v-if="app.type === 'live-project' || app.type === 'non-live-project'" class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-sm flex items-center justify-center text-xs shadow-md">
+                  <span v-if="getProjectAction(app) === 'live-site'" class="text-[10px]">🌐</span>
+                  <span v-else-if="getProjectAction(app) === 'screenshots'" class="text-[10px]">📸</span>
+                  <span v-else class="text-[10px]">🔗</span>
+                </div>
               </div>
               <span class="text-xs text-center line-clamp-2" style="font-size: var(--text-metadata);">
                 {{ app.name }}
@@ -624,6 +661,58 @@ setInterval(() => {
         </svg>
       </button>
     </div>
+
+    <!-- Badge Legend (First-time tooltip) -->
+    <Transition name="fade">
+      <div
+        v-if="showBadgeLegend && showAppDrawer"
+        class="fixed inset-x-4 bottom-24 bg-[var(--accent)] text-white p-4 rounded-lg shadow-xl z-50 backdrop-blur-md"
+        @click="dismissBadgeLegend"
+      >
+        <div class="flex items-start gap-3">
+          <div class="flex-1">
+            <p class="text-sm font-medium mb-2">Project Badges</p>
+            <div class="text-xs space-y-1 opacity-90">
+              <div>🌐 = Live site (opens in browser)</div>
+              <div>📸 = Screenshots (view gallery)</div>
+              <div>🔗 = GitHub only (source code)</div>
+            </div>
+          </div>
+          <button class="text-white/80 hover:text-white text-xl leading-none">×</button>
+        </div>
+      </div>
+    </Transition>
+
+    <!-- Bottom Sheet (replaces confirm()) -->
+    <Transition name="fade">
+      <div
+        v-if="bottomSheet"
+        class="fixed inset-0 bg-black/50 z-50 flex items-end"
+        @click="bottomSheet = null"
+      >
+        <div
+          class="w-full bg-white dark:bg-[var(--window-bg)] rounded-t-2xl p-6 shadow-2xl"
+          @click.stop
+        >
+          <h3 class="text-lg font-semibold text-[var(--window-title-text)] mb-2">{{ bottomSheet.title }}</h3>
+          <p class="text-sm text-[var(--window-title-text)] opacity-70 mb-6">{{ bottomSheet.message }}</p>
+          <div class="flex gap-3">
+            <button
+              @click="bottomSheet = null"
+              class="flex-1 px-4 py-3 bg-black/5 dark:bg-white/5 text-[var(--window-title-text)] rounded-lg font-medium text-sm"
+            >
+              {{ bottomSheet.cancelText }}
+            </button>
+            <button
+              @click="bottomSheet.onConfirm()"
+              class="flex-1 px-4 py-3 bg-[var(--accent)] text-white rounded-lg font-medium text-sm"
+            >
+              {{ bottomSheet.confirmText }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -638,6 +727,16 @@ setInterval(() => {
 .slide-enter-active,
 .slide-leave-active {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 
 .slide-enter-from {

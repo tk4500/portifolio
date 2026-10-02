@@ -15,6 +15,10 @@ const isMobile = computed(() => screenWidth.value < 768)
 
 const time = ref('')
 
+// Context menu for taskbar
+const showContextMenu = ref(false)
+const contextMenuStyle = ref<Record<string, string>>({})
+
 const openDropdownId = ref<string | null>(null)
 const dropdownStyle = ref<Record<string, string>>({})
 const dropdownRef = ref<HTMLElement | null>(null)
@@ -61,6 +65,21 @@ watch(openDropdownId, (newVal) => {
 
 function closeDropdowns() {
   openDropdownId.value = null
+  showContextMenu.value = false
+}
+
+function handleTaskbarContextMenu(e: MouseEvent) {
+  e.preventDefault()
+  showContextMenu.value = true
+  contextMenuStyle.value = {
+    top: `${e.clientY}px`,
+    left: `${e.clientX}px`
+  }
+}
+
+function reopenLastClosed() {
+  windowsStore.reopenLastClosed()
+  showContextMenu.value = false
 }
 
 function updateTime() {
@@ -212,7 +231,8 @@ const taskbarClass = computed(() => {
   <div
     class="glass bg-[var(--taskbar-bg)] text-white flex justify-between z-50 fixed select-none font-sans tracking-normal"
     :class="taskbarClass"
-    @click.stop
+    @click.stop="closeDropdowns"
+    @contextmenu="handleTaskbarContextMenu"
   >
 
     <!-- Start Button & Active Windows -->
@@ -366,5 +386,26 @@ const taskbarClass = computed(() => {
 
     <!-- Start Menu Overlay -->
     <StartMenu />
+
+    <!-- Taskbar Context Menu -->
+    <Teleport to="body">
+      <div
+        v-if="showContextMenu"
+        class="fixed bg-white/95 dark:bg-black/90 backdrop-blur-md rounded-lg shadow-xl border border-[var(--window-border)] p-1 min-w-[200px] z-[100] text-[var(--window-title-text)]"
+        :style="contextMenuStyle"
+        @click.stop
+      >
+        <button
+          @click="reopenLastClosed"
+          :disabled="windowsStore.closedWindows.length === 0"
+          class="w-full flex items-center gap-3 px-3 py-2 hover:bg-black/10 dark:hover:bg-white/10 rounded text-sm transition-colors disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+          :class="windowsStore.closedWindows.length === 0 ? 'cursor-not-allowed' : 'cursor-pointer'"
+        >
+          <span>↶</span>
+          <span>Reopen Last Closed</span>
+          <kbd class="ml-auto text-xs opacity-60 font-mono bg-black/5 dark:bg-white/5 px-1.5 py-0.5 rounded">Ctrl+Shift+T</kbd>
+        </button>
+      </div>
+    </Teleport>
   </div>
 </template>

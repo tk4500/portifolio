@@ -14,6 +14,7 @@ const props = defineProps<{
   initialY: number
   url?: string // Optional URL for live project links
   skipTranslation?: boolean // Set true for already-localized project names
+  projectData?: any // Full project metadata for right-click modal
 }>()
 
 const windowsStore = useWindowsStore()
@@ -129,6 +130,27 @@ function open() {
     })
   }
 }
+
+function openProjectDetails(e: MouseEvent) {
+  e.preventDefault()
+  e.stopPropagation()
+  
+  if (props.projectData) {
+    windowsStore.registerOrOpenWindow({
+      appId: `project_viewer_${props.projectData.id}`,
+      titleKey: props.projectData.name,
+      component: 'projectViewer',
+      width: 700,
+      height: 600,
+      icon: props.icon,
+      allowMultiple: false,
+      skipTranslation: true,
+      props: {
+        project: props.projectData
+      }
+    })
+  }
+}
 </script>
 
 <template>
@@ -136,6 +158,7 @@ function open() {
     ref="iconRef"
     class="flex flex-col items-center justify-center w-24 h-24 rounded hover:bg-white/10 cursor-pointer text-white group absolute transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
     :style="style"
+    :title="projectData?.description"
     role="button"
     tabindex="0"
     @keydown.enter="open"
@@ -144,6 +167,7 @@ function open() {
     @mouseup="onMouseUp"
     @touchstart="onMouseDown"
     @touchend="onMouseUp"
+    @contextmenu="projectData ? openProjectDetails : undefined"
   >
     <div class="w-12 h-12 bg-white/10 dark:bg-white/8 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.15)] backdrop-blur-sm flex items-center justify-center mb-2 group-hover:scale-110 group-hover:shadow-[0_4px_16px_rgba(0,0,0,0.25)] transition-all duration-200 pointer-events-none border border-white/10">
       <Icon :icon="icon || 'icons/folder.svg'" :size="32" class="text-white" />

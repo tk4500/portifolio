@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="chess-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B5CF6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#C084FC;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Chess king -->
+  <path d="M30 16h4v4h-4zM28 20h8l-2 8h-4l-2-8z" fill="url(#chess-grad)"/>
+  <path d="M26 28h12l2 12H24l2-12z" fill="url(#chess-grad)"/>
+  <rect x="22" y="40" width="20" height="6" rx="1" fill="url(#chess-grad)"/>
+  <!-- AI circuit pattern -->
+  <circle cx="16" cy="20" r="2" fill="#C084FC"/>
+  <circle cx="48" cy="20" r="2" fill="#C084FC"/>
+  <circle cx="16" cy="44" r="2" fill="#C084FC"/>
+  <circle cx="48" cy="44" r="2" fill="#C084FC"/>
+  <path d="M16 20v24M48 20v24M16 32h12M48 32h-12" stroke="#C084FC" stroke-width="1" opacity="0.6"/>
+</svg>

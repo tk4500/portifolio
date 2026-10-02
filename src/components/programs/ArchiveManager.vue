@@ -35,6 +35,12 @@ function openProject(project: any) {
 
     <!-- File Grid -->
     <div class="flex-1 p-4 overflow-y-auto flex flex-wrap content-start gap-4">
+      <!-- Empty state -->
+      <div v-if="projects.length === 0" class="w-full flex flex-col items-center justify-center py-16 opacity-40">
+        <div class="text-6xl mb-4">📂</div>
+        <p class="text-sm">{{ t('programs.archive.empty') }}</p>
+      </div>
+      <!-- Project grid -->
       <div
         v-for="project in projects"
         :key="project.id"
@@ -46,7 +52,7 @@ function openProject(project: any) {
         @click="openProject(project)"
       >
         <Icon :icon="project.icon" :size="48" class="group-hover:scale-110 transition-transform" />
-        <span class="text-xs text-center leading-tight line-clamp-2 mt-1">
+        <span class="text-xs text-center leading-tight line-clamp-2 mt-1 break-words">
           {{ project.name }}
         </span>
       </div>

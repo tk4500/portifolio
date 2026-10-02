@@ -86,7 +86,8 @@
     },
     "archive": {
       "up": "Subir",
-      "items": "0 itens | 1 item | {n} itens"
+      "items": "0 itens | 1 item | {n} itens",
+      "empty": "Nenhum projeto disponível"
     },
     "projectViewer": {
       "openLiveSite": "Abrir Site Ao Vivo",
