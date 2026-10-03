@@ -2,6 +2,7 @@
 import WindowWrapper from '../window/WindowWrapper.vue'
 import Taskbar from '../taskbar/Taskbar.vue'
 import WelcomeTour from '../onboarding/WelcomeTour.vue'
+import ShortcutsHelp from './ShortcutsHelp.vue'
 import DesktopIcon from './DesktopIcon.vue'
 import MobileOS from '../mobile/MobileOS.vue'
 import LoadingSpinner from '../ui/LoadingSpinner.vue'
@@ -124,14 +125,137 @@ const programs: Record<string, any> = {
 let metaKeyHeld = false
 let otherKeyPressed = false
 
+// Alt+Tab overlay state
+const showAltTabOverlay = ref(false)
+const altTabIndex = ref(0)
+const altTabWindows = ref<any[]>([])
+
+// Toast for discovered shortcuts
+const shortcutToast = ref<{ show: boolean; text: string } | null>(null)
+const showShortcutsHelp = ref(false)
+
+// Discovery tooltip for first-time users (shows once after 10 seconds)
+const showDiscoveryTooltip = ref(false)
+
+function showShortcutToast(text: string) {
+  shortcutToast.value = { show: true, text }
+  setTimeout(() => {
+    shortcutToast.value = null
+  }, 2000)
+}
+
+onMounted(() => {
+  // Show discovery tooltip after 10 seconds if user hasn't seen it
+  const hasSeenDiscovery = localStorage.getItem('shortcuts-discovery-seen')
+  if (!hasSeenDiscovery) {
+    setTimeout(() => {
+      showDiscoveryTooltip.value = true
+      setTimeout(() => {
+        showDiscoveryTooltip.value = false
+        localStorage.setItem('shortcuts-discovery-seen', 'true')
+      }, 8000) // Show for 8 seconds
+    }, 10000) // Show after 10 seconds
+  }
+})
+
 function handleKeydown(e: KeyboardEvent) {
+  // Escape: Close shortcuts help or Alt+Tab switcher
+  if (e.key === 'Escape') {
+    if (showShortcutsHelp.value) {
+      showShortcutsHelp.value = false
+      return
+    }
+    if (showAltTabOverlay.value) {
+      showAltTabOverlay.value = false
+      altTabIndex.value = 0
+      return
+    }
+  }
+
+  // ?: Show keyboard shortcuts help
+  if (e.key === '?' && !['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as HTMLElement)?.tagName || '')) {
+    e.preventDefault()
+    showShortcutsHelp.value = true
+    showShortcutToast('💡 Keyboard shortcuts')
+    return
+  }
+  
   // Ctrl+Shift+T: Reopen last closed window
   if (e.ctrlKey && e.shiftKey && e.key === 'T') {
     e.preventDefault()
     windowsStore.reopenLastClosed()
     return
   }
+
+  // Alt+Tab: Window switcher
+  if (e.altKey && e.key === 'Tab') {
+    e.preventDefault()
+    
+    const visibleWindows = windowsStore.activeWindows.filter(w => !w.isMinimized)
+    if (visibleWindows.length === 0) return
+    
+    // Sort by z-index (most recent first)
+    altTabWindows.value = [...visibleWindows].sort((a, b) => b.zIndex - a.zIndex)
+    
+    if (!showAltTabOverlay.value) {
+      showAltTabOverlay.value = true
+      altTabIndex.value = 0
+    }
+    
+    // Cycle forward (or backward with Shift)
+    if (e.shiftKey) {
+      altTabIndex.value = (altTabIndex.value - 1 + altTabWindows.value.length) % altTabWindows.value.length
+    } else {
+      altTabIndex.value = (altTabIndex.value + 1) % altTabWindows.value.length
+    }
+    return
+  }
   
+  // Ctrl+W: Close active window
+  if (e.ctrlKey && e.key === 'w') {
+    e.preventDefault()
+    const visibleWindows = windowsStore.activeWindows.filter(w => !w.isMinimized)
+    if (visibleWindows.length === 0) return
+    
+    const topWindow = visibleWindows.reduce((prev, curr) => (prev.zIndex > curr.zIndex ? prev : curr))
+    windowsStore.closeWindow(topWindow.id)
+    showShortcutToast('Window closed • Ctrl+Shift+T to undo')
+    return
+  }
+  
+  // Win+D: Show desktop (minimize all)
+  if ((e.metaKey || e.key === 'Meta' || e.key === 'OS') && e.key.toLowerCase() === 'd') {
+    e.preventDefault()
+    const hasVisibleWindows = windowsStore.activeWindows.some(w => !w.isMinimized)
+    windowsStore.activeWindows.forEach(w => {
+      if (hasVisibleWindows) {
+        windowsStore.minimizeWindow(w.id)
+      } else {
+        const win = windowsStore.windows.find(win => win.id === w.id)
+        if (win) win.isMinimized = false
+      }
+    })
+    showShortcutToast(hasVisibleWindows ? 'Show Desktop' : 'Restore Windows')
+    return
+  }
+  
+  // Win+[1-9]: Focus nth window
+  if ((e.metaKey || e.key === 'Meta' || e.key === 'OS') && /^[1-9]$/.test(e.key)) {
+    e.preventDefault()
+    const index = parseInt(e.key) - 1
+    const sortedWindows = [...windowsStore.activeWindows].sort((a, b) => b.zIndex - a.zIndex)
+    if (sortedWindows[index]) {
+      if (sortedWindows[index].isMinimized) {
+        const win = windowsStore.windows.find(w => w.id === sortedWindows[index].id)
+        if (win) win.isMinimized = false
+      }
+      windowsStore.focusWindow(sortedWindows[index].id)
+      showShortcutToast(`Focused: ${t(sortedWindows[index].titleKey)}`)
+    }
+    return
+  }
+  
+  // Original Win key handler for Start Menu
   if (e.key === 'Meta' || e.key === 'OS' || e.key === 'Win') {
     metaKeyHeld = true
     otherKeyPressed = false
@@ -141,6 +265,16 @@ function handleKeydown(e: KeyboardEvent) {
 }
 
 function handleKeyup(e: KeyboardEvent) {
+  // Alt released: confirm Alt+Tab selection
+  if (e.key === 'Alt' && showAltTabOverlay.value) {
+    const selectedWindow = altTabWindows.value[altTabIndex.value]
+    if (selectedWindow) {
+      windowsStore.focusWindow(selectedWindow.id)
+    }
+    showAltTabOverlay.value = false
+    return
+  }
+  
   if (e.key === 'Meta' || e.key === 'OS' || e.key === 'Win') {
     if (metaKeyHeld && !otherKeyPressed && document.activeElement && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) {
       systemStore.toggleStartMenu()
@@ -153,6 +287,7 @@ function handleKeyup(e: KeyboardEvent) {
 function handleBlur() {
   metaKeyHeld = false
   otherKeyPressed = false
+  showAltTabOverlay.value = false
 }
 
 onMounted(() => {
@@ -246,19 +381,74 @@ function handleReplayTour() {
     />
 
     <!-- Active Windows -->
-    <WindowWrapper
-      v-for="win in windowsStore.activeWindows"
-      :key="win.id"
-      :windowState="win"
-    >
-      <component
-        :is="programs[win.component]"
-        v-bind="win.props || {}"
-      />
-    </WindowWrapper>
+    <TransitionGroup name="window">
+      <WindowWrapper
+        v-for="win in windowsStore.activeWindows"
+        :key="win.id"
+        :windowState="win"
+      >
+        <component
+          :is="programs[win.component]"
+          v-bind="win.props || {}"
+        />
+      </WindowWrapper>
+    </TransitionGroup>
 
-    <!-- Taskbar -->
-    <Taskbar @replay-tour="handleReplayTour" />
+    <!-- Taskbar -->\n    <Taskbar @replay-tour="handleReplayTour" @show-shortcuts="showShortcutsHelp = true" />
+
+    <!-- Alt+Tab Window Switcher Overlay -->
+    <Transition name="fade">
+      <div
+        v-if="showAltTabOverlay"
+        class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[100] flex items-center justify-center"
+      >
+        <div class="bg-[var(--window-bg)] border-2 border-[var(--accent)] rounded-lg p-6 shadow-2xl max-w-2xl">
+          <div class="text-center mb-4 text-[var(--window-title-text)]">
+            <kbd class="px-2 py-1 bg-black/10 dark:bg-white/10 rounded text-xs font-mono">Alt</kbd>
+            <span class="mx-2">+</span>
+            <kbd class="px-2 py-1 bg-black/10 dark:bg-white/10 rounded text-xs font-mono">Tab</kbd>
+            <span class="ml-4 text-sm opacity-70">Switch Windows</span>
+          </div>
+          <div class="flex gap-4 overflow-x-auto pb-2">
+            <div
+              v-for="(win, idx) in altTabWindows"
+              :key="win.id"
+              class="flex flex-col items-center gap-2 p-4 rounded-lg transition-all min-w-[120px]"
+              :class="idx === altTabIndex ? 'bg-[var(--accent)] text-white scale-105' : 'bg-black/5 dark:bg-white/5 text-[var(--window-title-text)]'"
+            >
+              <div class="text-3xl">{{ win.icon || '🪟' }}</div>
+              <div class="text-sm font-medium text-center line-clamp-2">{{ t(win.titleKey) }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Transition>
+
+    <!-- Shortcut Toast Notification -->
+    <Transition name="slide-down">
+      <div
+        v-if="shortcutToast"
+        class="fixed top-20 left-1/2 -translate-x-1/2 bg-[var(--accent)] text-white px-4 py-2 rounded-lg shadow-lg z-[100] font-sans text-sm"
+      >
+        {{ shortcutToast.text }}
+      </div>
+    </Transition>
+
+    <!-- Discovery Tooltip (First-time users) -->
+    <Transition name="slide-down">
+      <div
+        v-if="showDiscoveryTooltip"
+        class="fixed top-20 left-1/2 -translate-x-1/2 bg-[var(--accent)] text-white px-5 py-3 rounded-lg shadow-xl z-[100] font-sans text-sm max-w-sm text-center"
+      >
+        💡 <strong>Tip:</strong> Press <kbd class="px-2 py-1 mx-1 bg-white/20 rounded font-mono text-xs">?</kbd> for keyboard shortcuts, or click the <strong>?</strong> in the taskbar
+      </div>
+    </Transition>
+
+    <!-- Keyboard Shortcuts Help -->
+    <ShortcutsHelp
+      v-if="showShortcutsHelp"
+      @close="showShortcutsHelp = false"
+    />
 
     <!-- Welcome Tour -->
     <WelcomeTour
@@ -269,3 +459,55 @@ function handleReplayTour() {
 
   </div>
 </template>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-down-enter-active,
+.slide-down-leave-active {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-down-enter-from {
+  opacity: 0;
+  transform: translate(-50%, -20px);
+}
+
+.slide-down-leave-to {
+  opacity: 0;
+  transform: translate(-50%, -10px);
+}
+
+/* Window open/close animations */
+.window-enter-active {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.window-leave-active {
+  transition: all 0.25s cubic-bezier(0.4, 0, 1, 1);
+}
+
+.window-enter-from {
+  opacity: 0;
+  transform: scale(0.92) translateY(8px);
+  filter: blur(4px);
+}
+
+.window-leave-to {
+  opacity: 0;
+  transform: scale(0.96) translateY(-4px);
+  filter: blur(2px);
+}
+
+.window-move {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+</style>

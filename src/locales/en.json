@@ -1,7 +1,7 @@
 {
   "onboarding": {
-    "welcomeHint": "Click icons to explore, drag windows to rearrange. Welcome!",
-    "gotIt": "Got it"
+    "welcomeHint": "Click any icon to open an app. Drag windows to reposition.",
+    "gotIt": "Continue"
   },
   "mobile": {
     "menu": "Menu",
@@ -23,31 +23,32 @@
     "resume": "Resume"
   },
   "taskbar": {
-    "start": "Start — Open menu to view all apps",
-    "minimize": "Show Desktop — Minimize all windows",
+    "start": "Open Start menu",
+    "minimize": "Minimize all windows",
     "time": "Current time",
     "notifications": "Notifications",
     "activeWindows": "Active windows",
-    "noActiveWindows": "No open windows",
-    "clickToStart": "Click to open the Start menu"
+    "noActiveWindows": "No windows open",
+    "clickToStart": "Open Start menu",
+    "keyboardHelp": "Keyboard shortcuts"
   },
   "startMenu": {
     "developer": "Developer",
     "portfolioSystem": "Portfolio System",
     "apps": "Apps",
     "quickActions": "Quick Actions",
-    "emailMe": "Email Me",
+    "emailMe": "Send Email",
     "whatsapp": "WhatsApp",
-    "resume": "Resume",
-    "help": "Help & Tour",
-    "closeAll": "Close All Programs",
-    "confirmCloseAll": "Confirm Close All"
+    "resume": "Download Resume",
+    "help": "Replay Tour",
+    "closeAll": "Close All Windows",
+    "confirmCloseAll": "Close All Windows"
   },
   "programs": {
     "about": {
       "title": "About Me",
       "content": "Hello! I am a developer building cool things.",
-      "skills": "My Skills"
+      "skills": "Skills"
     },
     "contact": {
       "title": "Contact",
@@ -56,12 +57,12 @@
       "linkedin": "LinkedIn"
     },
     "projects": {
-      "title": "My Projects"
+      "title": "Projects"
     },
     "settings": {
-      "title": "System Settings",
+      "title": "Settings",
       "theme": "Theme",
-      "themeDescription": "Choose your preferred color scheme",
+      "themeDescription": "Color scheme",
       "themes": {
         "light": "Light",
         "dark": "Dark",
@@ -90,15 +91,26 @@
       "empty": "No projects available"
     },
     "projectViewer": {
-      "openLiveSite": "Open Live Site",
-      "viewSource": "View Source (GitHub)",
+      "openLiveSite": "View Live Site",
+      "viewSource": "View Source",
       "screenshots": "Screenshots",
-      "noScreenshots": "No screenshots available. Visit the live site or repository to see it in action.",
-      "techStack": "Technologies Used"
+      "noScreenshots": "No screenshots yet. Visit the live site to see this project.",
+      "techStack": "Tech Stack"
     },
     "stack": {
-      "description": "Technologies, frameworks, and tools I use.",
-      "usage": "Usage Level"
+      "description": "Technologies I work with.",
+      "usage": "Experience"
+    },
+    "errors": {
+      "loadFailed": "Failed to Load",
+      "iframeTimeout": "Connection Timeout",
+      "iframeBlocked": "Content Blocked",
+      "iframeError": "Load Error",
+      "timeoutMessage": "This page took too long to respond.",
+      "blockedMessage": "This content can't be displayed in a frame.",
+      "errorMessage": "This page failed to load.",
+      "tryAgain": "Retry",
+      "openExternal": "Open in New Tab"
     }
   },
   "onboarding": {
@@ -110,11 +122,15 @@
     "tour": {
       "step1": {
         "title": "Start Menu",
-        "description": "Click the Start button to see all apps. You can launch projects, view my tech stack, or get in touch."
+        "description": "Click Start to launch apps: Projects, Stack, or Contact."
       },
       "step2": {
         "title": "Window Management",
-        "description": "Open windows appear in the taskbar. Click to focus, or close when you're done. Drag windows to rearrange."
+        "description": "Open windows appear in the taskbar. Click to focus or drag to reposition."
+      },
+      "step3": {
+        "title": "Keyboard Shortcuts",
+        "description": "Press ? to see all shortcuts. Alt+Tab switches windows, Ctrl+W closes them."
       }
     },
     "skip": "Skip",
@@ -130,5 +146,26 @@
     "Dev's Journey": "Dev's Journey",
     "Aula Maker": "Aula Maker",
     "GeoTetraArmor (Fork)": "GeoTetraArmor (Fork)"
+  },
+  "shortcuts": {
+    "title": "Keyboard Shortcuts",
+    "subtitle": "Navigate faster with keyboard commands",
+    "close": "Close",
+    "sections": {
+      "windows": "Windows",
+      "system": "System"
+    },
+    "altTab": "Switch windows",
+    "closeWindow": "Close window",
+    "reopenClosed": "Reopen last closed",
+    "showDesktop": "Minimize all windows",
+    "focusWindow": "Focus window 1–9",
+    "startMenu": "Open Start menu",
+    "help": "Show shortcuts",
+    "tip": {
+      "title": "Tip",
+      "text": "Combine shortcuts to navigate faster. Try Alt+Tab then Enter."
+    },
+    "footer": "Press ESC to close"
   }
 }

@@ -120,13 +120,13 @@ watch(() => systemStore.isStartMenuOpen, (isOpen) => {
     <div
       ref="menuRef"
       v-if="systemStore.isStartMenuOpen"
-      class="fixed bg-white/95 dark:bg-black/90 backdrop-blur-md shadow-[0_10px_40px_rgba(0,0,0,0.3)] border border-[var(--window-border)] p-4 flex flex-col gap-4 text-[var(--window-title-text)] z-[100] font-sans tracking-normal"
+      class="fixed bg-white/95 dark:bg-black/90 backdrop-blur-md shadow-[var(--shadow-xl)] border border-[var(--window-border)] p-4 flex flex-col gap-4 text-[var(--window-title-text)] z-[100] font-sans tracking-normal"
       :class="menuClass"
       @click.stop
     >
       <div class="flex gap-4 border-b border-[var(--window-border)] pb-4" :class="isMobile ? 'flex-col items-center text-center mt-2' : 'items-center'">
         <div class="w-12 h-12 bg-[var(--accent-subtle)] rounded-full flex items-center justify-center border border-[var(--accent)]/10 shrink-0 overflow-hidden">
-          <img :src="profileData.avatar" :alt="profileData.name" class="w-full h-full object-cover" />
+          <img :src="profileData.avatar" :alt="profileData.name" loading="lazy" class="w-full h-full object-cover" />
         </div>
         <div>
           <h2 style="font-size: var(--text-heading); font-weight: var(--text-heading-weight); letter-spacing: var(--text-heading-tracking); line-height: var(--text-heading-leading);" class="tracking-tight">{{ profileData.firstName }}</h2>

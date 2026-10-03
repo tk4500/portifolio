@@ -7,6 +7,8 @@ import { useWindowSize } from '@vueuse/core'
 import StartMenu from './StartMenu.vue'
 import Icon from '../ui/Icon.vue'
 
+const emit = defineEmits(['replay-tour', 'show-shortcuts'])
+
 const windowsStore = useWindowsStore()
 const systemStore = useSystemStore()
 const { t, locale } = useI18n()
@@ -216,13 +218,13 @@ function isGroupActive(group: typeof windowsStore.activeWindows) {
 
 const taskbarClass = computed(() => {
   if (isMobile.value) {
-    return 'bottom-0 left-0 h-14 w-full flex-row px-2 shadow-[0_-1px_10px_rgba(0,0,0,0.2)]'
+    return 'bottom-0 left-0 h-14 w-full flex-row px-2 shadow-[var(--shadow-md)]'
   }
   switch (systemStore.taskbarPosition) {
-    case 'top': return 'top-0 left-0 h-12 w-full flex-row px-2 shadow-[0_1px_10px_rgba(0,0,0,0.2)]'
-    case 'bottom': return 'bottom-0 left-0 h-12 w-full flex-row px-2 shadow-[0_-1px_10px_rgba(0,0,0,0.2)]'
-    case 'left': return 'top-0 left-0 h-full w-12 flex-col py-2 shadow-[1px_0_10px_rgba(0,0,0,0.2)]'
-    case 'right': return 'top-0 right-0 h-full w-12 flex-col py-2 shadow-[-1px_0_10px_rgba(0,0,0,0.2)]'
+    case 'top': return 'top-0 left-0 h-12 w-full flex-row px-2 shadow-[var(--shadow-md)]'
+    case 'bottom': return 'bottom-0 left-0 h-12 w-full flex-row px-2 shadow-[var(--shadow-md)]'
+    case 'left': return 'top-0 left-0 h-full w-12 flex-col py-2 shadow-[var(--shadow-md)]'
+    case 'right': return 'top-0 right-0 h-full w-12 flex-col py-2 shadow-[var(--shadow-md)]'
   }
 })
 </script>
@@ -240,45 +242,26 @@ const taskbarClass = computed(() => {
       <div class="relative flex items-center justify-center">
         <button
           @click.stop="systemStore.toggleStartMenu()"
-          @mouseenter="showTooltip = false"
           class="bg-white/10 hover:bg-white/20 rounded-md font-medium transition-colors flex items-center justify-center gap-2 relative focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
           :class="[
             isHorizontal ? 'px-4 h-9' : 'w-9 h-9 min-h-[36px] min-w-[36px] mt-1',
             systemStore.isStartMenuOpen ? 'bg-white/30' : '',
-            { 'animate-pulse shadow-[0_0_15px_var(--accent)] bg-[var(--accent)]/20 hover:bg-[var(--accent)]/30 border border-[var(--accent)]/50': windowsStore.activeWindows.length === 0 && !systemStore.isStartMenuOpen && !isMobile }
+            { 'shadow-[0_0_8px_var(--accent)]/30': windowsStore.activeWindows.length === 0 && !systemStore.isStartMenuOpen && !isMobile }
           ]"
           :aria-expanded="systemStore.isStartMenuOpen"
           :aria-label="t('taskbar.start')"
         >
           <span class="text-xl relative">
             🪟
-            <!-- Notification Dot when empty -->
-            <span v-if="windowsStore.activeWindows.length === 0 && !systemStore.isStartMenuOpen" class="absolute -top-1 -right-1 flex h-2 w-2">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--accent)] opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-2 w-2 bg-[var(--accent)]"></span>
+            <!-- Subtle notification dot (non-pulsing) -->
+            <span v-if="windowsStore.activeWindows.length === 0 && !systemStore.isStartMenuOpen" class="absolute -top-1 -right-1 w-2 h-2">
+              <span class="inline-flex rounded-full h-2 w-2 bg-[var(--accent)]"></span>
             </span>
           </span>
           <span v-if="isHorizontal" class="hidden sm:inline">{{ t('taskbar.start') }}</span>
         </button>
         
-        <!-- Subtle Power User Hint -->
-        <Transition name="fade">
-          <div 
-            v-if="windowsStore.activeWindows.length === 0 && !systemStore.isStartMenuOpen && isHorizontal && !isMobile" 
-            class="absolute top-[-44px] left-0 bg-[var(--accent)] text-white text-xs px-3 py-1.5 rounded shadow-lg whitespace-nowrap backdrop-blur-md font-medium animate-pulse"
-          >
-            {{ t('taskbar.clickToStart') || 'Click here to start!' }}
-            <div class="absolute -bottom-1 left-4 w-2 h-2 bg-[var(--accent)] rotate-45"></div>
-          </div>
-          <div 
-            v-else-if="showTooltip && isHorizontal && !isMobile" 
-            @click="showTooltip = false"
-            class="absolute top-[-40px] left-0 bg-black/80 dark:bg-white/90 text-white dark:text-black text-xs px-3 py-1.5 rounded shadow-lg whitespace-nowrap backdrop-blur-md cursor-pointer"
-          >
-            Press <kbd class="font-mono bg-white/20 dark:bg-black/10 px-1 rounded mx-0.5">Win / ⌘</kbd> to open
-            <div class="absolute -bottom-1 left-4 w-2 h-2 bg-black/80 dark:bg-white/90 rotate-45"></div>
-          </div>
-        </Transition>
+        <!-- Removed: Tooltip and pulsing removed to reduce first-time anxiety -->
       </div>
 
       <!-- Active Window Tabs (Grouped) -->
@@ -331,8 +314,8 @@ const taskbarClass = computed(() => {
             v-if="isHorizontal"
             @click.stop="group.forEach(w => windowsStore.closeWindow(w.id))"
             class="absolute right-1 top-1/2 -translate-y-1/2 w-5 h-5 rounded hover:bg-[var(--danger)] hover:text-white flex items-center justify-center opacity-100 sm:opacity-0 group-hover/taskbar:opacity-100 transition-opacity focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--danger)] focus:opacity-100"
-            aria-label="Close all instances"
-            title="Close"
+            aria-label="Close all windows"
+            title="Close all windows"
           >
             <svg width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2L10 10M10 2L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
@@ -366,7 +349,7 @@ const taskbarClass = computed(() => {
                  <button
                    @click.stop="windowsStore.closeWindow(win.id)"
                    class="w-5 h-5 rounded hover:bg-[var(--danger)] hover:text-white flex items-center justify-center opacity-100 sm:opacity-0 group-hover/item:opacity-100 transition-opacity focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--danger)] focus:opacity-100"
-                   aria-label="Close instance"
+                   aria-label="Close window"
                  >
                    <svg width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2L10 10M10 2L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
                  </button>
@@ -378,7 +361,18 @@ const taskbarClass = computed(() => {
     </div>
 
     <!-- System Tray -->
-    <div class="flex items-center text-sm shrink-0 h-full" :class="isHorizontal ? 'flex-row' : 'flex-col w-full'">
+    <div class="flex items-center text-sm shrink-0 h-full" :class="isHorizontal ? 'flex-row gap-2' : 'flex-col w-full gap-2'">
+      <!-- Keyboard Shortcuts Help Indicator -->
+      <button
+        @click.stop="$emit('show-shortcuts')"
+        class="text-[var(--taskbar-text)] hover:bg-white/10 rounded transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white text-sm font-medium"
+        :class="isHorizontal ? 'px-2 py-1' : 'px-1 py-1'"
+        :aria-label="t('taskbar.keyboardHelp')"
+        title="Keyboard shortcuts (Press ?)"
+      >
+        <span class="opacity-70 hover:opacity-100">?</span>
+      </button>
+      
       <div class="flex items-center gap-3" :class="isHorizontal ? 'flex-row pr-2' : 'flex-col pb-2'">
         <span :class="isHorizontal ? '' : 'writing-vertical-rl'">{{ time }}</span>
       </div>

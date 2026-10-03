@@ -33,6 +33,12 @@ const steps = computed(() => [
     description: t('onboarding.tour.step2.description'),
     icon: '📂',
     highlight: 'taskbar'
+  },
+  {
+    title: t('onboarding.tour.step3.title'),
+    description: t('onboarding.tour.step3.description'),
+    icon: '⌨️',
+    cta: 'Try pressing ?'
   }
 ])
 
