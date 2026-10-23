@@ -56,7 +56,10 @@
       "title": "Contato",
       "email": "E-mail",
       "github": "GitHub",
-      "linkedin": "LinkedIn"
+      "linkedin": "LinkedIn",
+      "subtitle": "Disponível para novos projetos, contratos e consultoria.",
+      "copyEmail": "Copiar E-mail",
+      "copied": "✓ Copiado!"
     },
     "projects": {
       "title": "Meus Projetos"
@@ -111,6 +114,18 @@
     "stack": {
       "description": "Tecnologias, frameworks e ferramentas que utilizo.",
       "usage": "Nível de Uso"
+    },
+    "errors": {
+      "loadFailed": "Falha ao Carregar",
+      "iframeTimeout": "Tempo de Conexão Esgotado",
+      "iframeBlocked": "Conteúdo Bloqueado",
+      "iframeError": "Erro ao Carregar",
+      "iframeLoading": "Carregando...",
+      "timeoutMessage": "Esta página demorou muito para responder.",
+      "blockedMessage": "Este conteúdo não pode ser exibido em um quadro.",
+      "errorMessage": "Esta página falhou ao carregar.",
+      "tryAgain": "Tentar Novamente",
+      "openExternal": "Abrir em Nova Aba"
     }
   },
   "onboarding": {
@@ -147,5 +162,27 @@
     "Dev's Journey": "Jornada do Dev",
     "Aula Maker": "Aula Maker",
     "GeoTetraArmor (Fork)": "GeoTetraArmor (Fork)"
+  },
+  "shortcuts": {
+    "title": "Atalhos de Teclado",
+    "subtitle": "Navegue mais rápido com comandos de teclado",
+    "close": "Fechar",
+    "sections": {
+      "windows": "Janelas",
+      "system": "Sistema"
+    },
+    "altTab": "Alternar janelas",
+    "closeWindow": "Fechar janela",
+    "reopenClosed": "Reabrir última fechada",
+    "showDesktop": "Minimizar todas as janelas",
+    "focusWindow": "Focar janela 1–9",
+    "startMenu": "Abrir menu Iniciar",
+    "help": "Mostrar atalhos",
+    "windowClosedUndo": "Janela fechada • Ctrl+Shift+T para desfazer",
+    "tip": {
+      "title": "Dica",
+      "text": "Combine atalhos para navegar mais rápido. Experimente Alt+Tab e depois Enter."
+    },
+    "footer": "Pressione ESC para fechar"
   }
 }

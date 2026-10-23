@@ -238,7 +238,7 @@ function handleKeydown(e: KeyboardEvent) {
     
     const topWindow = visibleWindows.reduce((prev, curr) => (prev.zIndex > curr.zIndex ? prev : curr))
     windowsStore.closeWindow(topWindow.id)
-    showShortcutToast('Window closed • Ctrl+Shift+T to undo')
+    showShortcutToast(t('shortcuts.windowClosedUndo'))
     return
   }
   

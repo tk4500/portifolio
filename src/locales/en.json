@@ -56,7 +56,10 @@
       "title": "Contact",
       "email": "Email",
       "github": "GitHub",
-      "linkedin": "LinkedIn"
+      "linkedin": "LinkedIn",
+      "subtitle": "Available for contracts, fullstack projects, and frontend engineering.",
+      "copyEmail": "Copy Email",
+      "copied": "✓ Copied!"
     },
     "projects": {
       "title": "Projects"
@@ -174,6 +177,7 @@
     "focusWindow": "Focus window 1–9",
     "startMenu": "Open Start menu",
     "help": "Show shortcuts",
+    "windowClosedUndo": "Window closed • Ctrl+Shift+T to undo",
     "tip": {
       "title": "Tip",
       "text": "Combine shortcuts to navigate faster. Try Alt+Tab then Enter."

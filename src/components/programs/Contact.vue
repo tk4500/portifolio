@@ -26,8 +26,8 @@ function copyEmail() {
     <div class="w-full max-w-xl my-auto py-4 space-y-6">
       <div class="text-center">
         <h1 class="text-2xl font-bold tracking-tight">{{ t('programs.contact.title') }}</h1>
-        <p class="text-sm opacity-60 mt-1">
-          {{ locale === 'pt' ? 'Disponível para novos projetos, contratos e consultoria.' : 'Available for contracts, fullstack projects, and frontend engineering.' }}
+        <p class="text-sm opacity-70 mb-4 max-w-md">
+          {{ t('programs.contact.subtitle') }}
         </p>
       </div>
 
@@ -49,7 +49,7 @@ function copyEmail() {
           :class="copied ? 'bg-emerald-600 text-white' : 'bg-[var(--accent)] text-black hover:bg-[var(--accent-hover)] shadow-xs'"
           :aria-label="copied ? 'Email copied' : 'Copy email to clipboard'"
         >
-          {{ copied ? (locale === 'pt' ? '✓ Copiado!' : '✓ Copied!') : (locale === 'pt' ? 'Copiar E-mail' : 'Copy Email') }}
+          {{ copied ? t('programs.contact.copied') : t('programs.contact.copyEmail') }}
         </button>
       </div>
 

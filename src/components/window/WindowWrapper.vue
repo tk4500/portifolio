@@ -351,12 +351,23 @@ onUnmounted(() => {
       v-if="snapPreview"
       class="fixed pointer-events-none z-40 rounded-xl transition-all duration-150 border-2 border-[var(--accent)] bg-[var(--accent)]/15 backdrop-blur-[2px]"
       :class="{
-        'top-2 left-2 bottom-2 w-[calc(50vw-12px)]': snapPreview === 'left' && systemStore.taskbarPosition !== 'bottom',
+        // Left snap
         'top-2 left-2 bottom-14 w-[calc(50vw-12px)]': snapPreview === 'left' && systemStore.taskbarPosition === 'bottom',
-        'top-2 right-2 bottom-2 w-[calc(50vw-12px)]': snapPreview === 'right' && systemStore.taskbarPosition !== 'bottom',
+        'top-14 left-2 bottom-2 w-[calc(50vw-12px)]': snapPreview === 'left' && systemStore.taskbarPosition === 'top',
+        'top-2 left-14 bottom-2 w-[calc(50vw-36px)]': snapPreview === 'left' && systemStore.taskbarPosition === 'left',
+        'top-2 left-2 bottom-2 w-[calc(50vw-36px)]': snapPreview === 'left' && systemStore.taskbarPosition === 'right',
+
+        // Right snap
         'top-2 right-2 bottom-14 w-[calc(50vw-12px)]': snapPreview === 'right' && systemStore.taskbarPosition === 'bottom',
-        'top-2 left-2 right-2 bottom-2': snapPreview === 'top' && systemStore.taskbarPosition !== 'bottom',
-        'top-2 left-2 right-2 bottom-14': snapPreview === 'top' && systemStore.taskbarPosition === 'bottom'
+        'top-14 right-2 bottom-2 w-[calc(50vw-12px)]': snapPreview === 'right' && systemStore.taskbarPosition === 'top',
+        'top-2 right-2 bottom-2 w-[calc(50vw-36px)]': snapPreview === 'right' && systemStore.taskbarPosition === 'left',
+        'top-2 right-14 bottom-2 w-[calc(50vw-36px)]': snapPreview === 'right' && systemStore.taskbarPosition === 'right',
+
+        // Top / Maximize snap
+        'top-2 left-2 right-2 bottom-14': snapPreview === 'top' && systemStore.taskbarPosition === 'bottom',
+        'top-14 left-2 right-2 bottom-2': snapPreview === 'top' && systemStore.taskbarPosition === 'top',
+        'top-2 left-14 right-2 bottom-2': snapPreview === 'top' && systemStore.taskbarPosition === 'left',
+        'top-2 left-2 right-14 bottom-2': snapPreview === 'top' && systemStore.taskbarPosition === 'right'
       }"
     ></div>
   </Teleport>
