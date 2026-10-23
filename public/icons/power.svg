@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="power-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EF4444" />
+      <stop offset="100%" stop-color="#B91C1C" />
+    </linearGradient>
+    <filter id="power-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000000" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Squircle Base Frame -->
+  <rect x="6" y="6" width="52" height="52" rx="16" fill="url(#power-bg)" />
+  <rect x="6" y="6" width="52" height="52" rx="16" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" />
+
+  <g filter="url(#power-shadow)">
+    <!-- Standby / Power Ring -->
+    <path d="M24 22 A13 13 0 1 0 40 22" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" fill="none" />
+    <!-- Vertical Power Stalk -->
+    <line x1="32" y1="16" x2="32" y2="28" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" />
+  </g>
+</svg>

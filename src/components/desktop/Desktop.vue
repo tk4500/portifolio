@@ -413,7 +413,8 @@ function handleReplayTour() {
       </WindowWrapper>
     </TransitionGroup>
 
-    <!-- Taskbar -->\n    <Taskbar @replay-tour="handleReplayTour" @show-shortcuts="showShortcutsHelp = true" />
+    <!-- Taskbar -->
+    <Taskbar @replay-tour="handleReplayTour" @show-shortcuts="showShortcutsHelp = true" />
 
     <!-- Alt+Tab Window Switcher Overlay -->
     <Transition name="fade">
@@ -435,7 +436,9 @@ function handleReplayTour() {
               class="flex flex-col items-center gap-2 p-4 rounded-lg transition-all min-w-[120px]"
               :class="idx === altTabIndex ? 'bg-[var(--accent)] text-black font-bold scale-105' : 'bg-black/5 dark:bg-white/5 text-[var(--window-title-text)]'"
             >
-              <div class="text-3xl">{{ win.icon || '🪟' }}</div>
+              <div class="w-10 h-10 flex items-center justify-center">
+                <Icon :icon="win.icon || 'icons/windows.svg'" :size="36" />
+              </div>
               <div class="text-sm font-medium text-center line-clamp-2">{{ t(win.titleKey) }}</div>
             </div>
           </div>

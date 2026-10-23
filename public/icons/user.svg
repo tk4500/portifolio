@@ -1,4 +1,34 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <circle cx="12" cy="8" r="4"/>
-  <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="user-avatar-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#2563EB" />
+    </linearGradient>
+    <linearGradient id="user-badge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+    <filter id="user-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000000" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Squircle Base Frame -->
+  <rect x="6" y="6" width="52" height="52" rx="16" fill="url(#user-avatar-bg)" />
+  <rect x="6" y="6" width="52" height="52" rx="16" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" />
+
+  <!-- Stylized User Body & Head -->
+  <g filter="url(#user-shadow)">
+    <!-- Head -->
+    <circle cx="32" cy="24" r="9" fill="#FFFFFF" />
+    <circle cx="32" cy="24" r="9" fill="url(#user-avatar-bg)" opacity="0.1" />
+
+    <!-- Shoulders / Torso -->
+    <path d="M18 48 C18 38, 24 35, 32 35 C40 35, 46 38, 46 48 Z" fill="#FFFFFF" />
+  </g>
+
+  <!-- Interactive Terminal/ID Chip Accent (Pro Developer Metaphor) -->
+  <circle cx="44" cy="44" r="8" fill="url(#user-badge)" stroke="#FFFFFF" stroke-width="2" />
+  <!-- Code brackets </> inside chip -->
+  <path d="M41 42 l-2 2 l2 2 M47 42 l2 2 l-2 2" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
 </svg>

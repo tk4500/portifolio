@@ -1,16 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
   <defs>
-    <linearGradient id="journey-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#EF4444;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#F87171;stop-opacity:1" />
+    <linearGradient id="journey-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F43F5E" />
+      <stop offset="100%" stop-color="#BE123C" />
     </linearGradient>
+    <linearGradient id="journey-road" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF08A" />
+      <stop offset="100%" stop-color="#F59E0B" />
+    </linearGradient>
+    <filter id="journey-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#000000" flood-opacity="0.25" />
+    </filter>
   </defs>
-  <!-- Path/journey -->
-  <path d="M12 48Q20 40 28 38T44 38Q52 40 52 48" stroke="url(#journey-grad)" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <!-- Milestones -->
-  <circle cx="16" cy="46" r="4" fill="url(#journey-grad)" stroke="#ffffff" stroke-width="2"/>
-  <circle cx="32" cy="38" r="5" fill="url(#journey-grad)" stroke="#ffffff" stroke-width="2"/>
-  <circle cx="48" cy="46" r="4" fill="url(#journey-grad)" stroke="#ffffff" stroke-width="2"/>
-  <!-- Flag at end -->
-  <path d="M48 28v-12M48 16h8l-4 4 4 4h-8" fill="url(#journey-grad)" stroke="#ffffff" stroke-width="1"/>
+
+  <!-- Squircle Base Frame -->
+  <rect x="6" y="6" width="52" height="52" rx="16" fill="url(#journey-bg)" />
+  <rect x="6" y="6" width="52" height="52" rx="16" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" />
+
+  <g filter="url(#journey-shadow)">
+    <!-- Winding Quest Path -->
+    <path d="M16 46 Q 26 36, 32 40 T 48 24" stroke="url(#journey-road)" stroke-width="4" stroke-linecap="round" fill="none" />
+    <!-- Milestone Checkpoints -->
+    <circle cx="16" cy="46" r="3" fill="#FFFFFF" />
+    <circle cx="32" cy="40" r="3" fill="#FFFFFF" />
+    
+    <!-- Finish Trophy Flag -->
+    <path d="M48 16 V 32 M48 16 H 38 L 42 20 L 38 24 H 48" fill="#FBBF24" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round" />
+  </g>
 </svg>

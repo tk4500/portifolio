@@ -257,8 +257,8 @@ const taskbarClass = computed(() => {
           :aria-expanded="systemStore.isStartMenuOpen"
           :aria-label="t('taskbar.start')"
         >
-          <span class="text-xl relative">
-            🪟
+          <span class="relative flex items-center justify-center">
+            <Icon icon="icons/windows.svg" :size="20" class="drop-shadow-xs" />
             <!-- Subtle notification dot (non-pulsing) -->
             <span v-if="windowsStore.activeWindows.length === 0 && !systemStore.isStartMenuOpen" class="absolute -top-1 -right-1 w-2 h-2">
               <span class="inline-flex rounded-full h-2 w-2 bg-[var(--accent)]"></span>

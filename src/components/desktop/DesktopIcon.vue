@@ -201,8 +201,8 @@ function openProjectDetails(e: MouseEvent) {
     @touchend="onMouseUp"
     @contextmenu="projectData ? openProjectDetails : undefined"
   >
-    <div class="w-12 h-12 bg-white/10 dark:bg-white/8 rounded-xl shadow-[var(--shadow-md)] backdrop-blur-sm flex items-center justify-center mb-2 group-hover:scale-110 group-hover:shadow-[var(--shadow-lg)] transition-all duration-200 pointer-events-none border border-white/10">
-      <Icon :icon="icon || 'icons/folder.svg'" :size="32" class="text-white" />
+    <div class="w-12 h-12 bg-white/10 dark:bg-white/8 rounded-2xl shadow-[var(--shadow-md)] backdrop-blur-sm flex items-center justify-center mb-2 group-hover:scale-110 group-hover:shadow-[var(--shadow-lg)] transition-all duration-200 pointer-events-none border border-white/15 p-1">
+      <Icon :icon="icon || 'icons/folder.svg'" :size="40" class="w-10 h-10 object-contain drop-shadow-sm" />
     </div>
     <span style="font-size: var(--text-metadata); font-weight: var(--text-metadata-weight); letter-spacing: var(--text-metadata-tracking); line-height: var(--text-metadata-leading); text-shadow: var(--text-shadow-strong);" class="text-center select-none line-clamp-2 px-1 pointer-events-none">
       {{ skipTranslation ? titleKey : t(titleKey) }}

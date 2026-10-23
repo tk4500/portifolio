@@ -1,18 +1,39 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
   <defs>
-    <linearGradient id="chess-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#8B5CF6;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#C084FC;stop-opacity:1" />
+    <linearGradient id="chess-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6" />
+      <stop offset="100%" stop-color="#5B21B6" />
     </linearGradient>
+    <linearGradient id="chess-piece" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#E2E8F0" />
+    </linearGradient>
+    <filter id="chess-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#000000" flood-opacity="0.25" />
+    </filter>
   </defs>
-  <!-- Chess king -->
-  <path d="M30 16h4v4h-4zM28 20h8l-2 8h-4l-2-8z" fill="url(#chess-grad)"/>
-  <path d="M26 28h12l2 12H24l2-12z" fill="url(#chess-grad)"/>
-  <rect x="22" y="40" width="20" height="6" rx="1" fill="url(#chess-grad)"/>
-  <!-- AI circuit pattern -->
-  <circle cx="16" cy="20" r="2" fill="#C084FC"/>
-  <circle cx="48" cy="20" r="2" fill="#C084FC"/>
-  <circle cx="16" cy="44" r="2" fill="#C084FC"/>
-  <circle cx="48" cy="44" r="2" fill="#C084FC"/>
-  <path d="M16 20v24M48 20v24M16 32h12M48 32h-12" stroke="#C084FC" stroke-width="1" opacity="0.6"/>
+
+  <!-- Squircle Base Frame -->
+  <rect x="6" y="6" width="52" height="52" rx="16" fill="url(#chess-bg)" />
+  <rect x="6" y="6" width="52" height="52" rx="16" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" />
+
+  <g filter="url(#chess-shadow)">
+    <!-- Circuit connection lines in background -->
+    <path d="M15 24 H24 M40 24 H49 M15 40 H24 M40 40 H49" stroke="#C4B5FD" stroke-width="1.5" stroke-linecap="round" opacity="0.6" />
+    <circle cx="15" cy="24" r="2" fill="#DDD6FE" />
+    <circle cx="49" cy="24" r="2" fill="#DDD6FE" />
+    <circle cx="15" cy="40" r="2" fill="#DDD6FE" />
+    <circle cx="49" cy="40" r="2" fill="#DDD6FE" />
+
+    <!-- Chess Knight Head silhouette -->
+    <path d="M26 46 H38 V42 C38 42, 40 37, 41 33 C41 29, 39 25, 34 23 C34 20, 31 16, 27 16 C25 18, 24 20, 24 24 C22 25, 20 28, 21 31 C22 34, 25 34, 26 34 L25 40 Z" fill="url(#chess-piece)" />
+    <!-- Knight Eye -->
+    <circle cx="28" cy="24" r="1.5" fill="#5B21B6" />
+    <!-- Base -->
+    <rect x="23" y="44" width="18" height="4" rx="1.5" fill="url(#chess-piece)" />
+  </g>
+
+  <!-- AI Brain / Sparkle Chip -->
+  <circle cx="45" cy="18" r="6" fill="#10B981" stroke="#FFFFFF" stroke-width="1.5" />
+  <path d="M45 15 L46 17 L48 18 L46 19 L45 21 L44 19 L42 18 L44 17 Z" fill="#FFFFFF" />
 </svg>

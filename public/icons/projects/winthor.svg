@@ -1,18 +1,35 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
   <defs>
-    <linearGradient id="winthor-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#10B981;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#34D399;stop-opacity:1" />
+    <linearGradient id="winthor-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981" />
+      <stop offset="100%" stop-color="#047857" />
     </linearGradient>
+    <linearGradient id="db-cylinder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#E2E8F0" />
+    </linearGradient>
+    <filter id="winthor-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#000000" flood-opacity="0.25" />
+    </filter>
   </defs>
-  <!-- Integration flow -->
-  <rect x="12" y="18" width="14" height="14" rx="2" fill="url(#winthor-grad)"/>
-  <rect x="38" y="18" width="14" height="14" rx="2" fill="url(#winthor-grad)"/>
-  <rect x="12" y="38" width="14" height="14" rx="2" fill="url(#winthor-grad)"/>
-  <rect x="38" y="38" width="14" height="14" rx="2" fill="url(#winthor-grad)"/>
-  <!-- Connection lines -->
-  <path d="M26 25h12M26 45h12M19 32v6M45 32v6" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
-  <!-- Central hub -->
-  <circle cx="32" cy="32" r="4" fill="#ffffff"/>
-  <circle cx="32" cy="32" r="2" fill="url(#winthor-grad)"/>
+
+  <!-- Squircle Base Frame -->
+  <rect x="6" y="6" width="52" height="52" rx="16" fill="url(#winthor-bg)" />
+  <rect x="6" y="6" width="52" height="52" rx="16" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" />
+
+  <g filter="url(#winthor-shadow)">
+    <!-- ERP Database Cylinders / Data Pipeline -->
+    <!-- Top Cylinder -->
+    <path d="M20 20 C20 17, 25 15, 32 15 C39 15, 44 17, 44 20 V25 C44 28, 39 30, 32 30 C25 30, 20 28, 20 25 Z" fill="url(#db-cylinder)" stroke="#047857" stroke-width="1" />
+    <ellipse cx="32" cy="20" rx="12" ry="4.5" fill="#FFFFFF" stroke="#047857" stroke-width="1" />
+
+    <!-- Bottom Cylinder -->
+    <path d="M20 30 C20 30, 25 32, 32 32 C39 32, 44 30, 44 30 V35 C44 38, 39 40, 32 40 C25 40, 20 38, 20 35 Z" fill="url(#db-cylinder)" stroke="#047857" stroke-width="1" />
+    
+    <path d="M20 40 C20 40, 25 42, 32 42 C39 42, 44 40, 44 40 V45 C44 48, 39 50, 32 50 C25 50, 20 48, 20 45 Z" fill="url(#db-cylinder)" stroke="#047857" stroke-width="1" />
+  </g>
+
+  <!-- Import / Fast Sync Arrow Badge -->
+  <circle cx="46" cy="46" r="7.5" fill="#3B82F6" stroke="#FFFFFF" stroke-width="2" />
+  <path d="M46 41 V49 M42 46 L46 50 L50 46" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
 </svg>

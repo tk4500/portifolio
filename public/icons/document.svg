@@ -1,4 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-  <polyline points="14 2 14 8 20 8"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="doc-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#475569" />
+      <stop offset="100%" stop-color="#1E293B" />
+    </linearGradient>
+    <linearGradient id="page-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#F8FAFC" />
+    </linearGradient>
+    <linearGradient id="corner-fold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#CBD5E1" />
+      <stop offset="100%" stop-color="#94A3B8" />
+    </linearGradient>
+    <filter id="doc-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#000000" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Squircle Base Frame -->
+  <rect x="6" y="6" width="52" height="52" rx="16" fill="url(#doc-bg)" />
+  <rect x="6" y="6" width="52" height="52" rx="16" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" />
+
+  <g filter="url(#doc-shadow)">
+    <!-- Document Page with folded top-right corner -->
+    <path d="M18 16 H36 L46 26 V48 C46 49.5, 44.5 51, 43 51 H18 C16.5 51, 15 49.5, 15 48 V19 C15 17.5, 16.5 16, 18 16 Z" fill="url(#page-grad)" />
+    <!-- Folded Ear -->
+    <path d="M36 16 V26 H46 Z" fill="url(#corner-fold)" />
+
+    <!-- Content Lines -->
+    <line x1="21" y1="28" x2="33" y2="28" stroke="#38BDF8" stroke-width="2" stroke-linecap="round" />
+    <line x1="21" y1="34" x2="40" y2="34" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round" />
+    <line x1="21" y1="39" x2="38" y2="39" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round" />
+    <line x1="21" y1="44" x2="32" y2="44" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round" />
+  </g>
 </svg>

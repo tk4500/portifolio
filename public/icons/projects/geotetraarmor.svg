@@ -1,14 +1,33 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
   <defs>
-    <linearGradient id="geo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#6366F1;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#818CF8;stop-opacity:1" />
+    <linearGradient id="geo-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5" />
+      <stop offset="100%" stop-color="#312E81" />
     </linearGradient>
+    <linearGradient id="armor-plate" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#0284C7" />
+    </linearGradient>
+    <filter id="geo-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#000000" flood-opacity="0.25" />
+    </filter>
   </defs>
-  <!-- Minecraft block style -->
-  <path d="M32 12L48 22v20L32 52 16 42V22z" fill="url(#geo-grad)" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
-  <path d="M32 12v40M16 22l16 10 16-10M32 32l16 10M32 32L16 42" stroke="#ffffff" stroke-width="1.5" opacity="0.6"/>
-  <!-- Pickaxe symbol -->
-  <path d="M26 24l6-2 2 6-8 8-2-2z" fill="#ffffff" opacity="0.8"/>
-  <rect x="30" y="34" width="2" height="8" rx="1" fill="#ffffff" opacity="0.8" transform="rotate(-45 31 38)"/>
+
+  <!-- Squircle Base Frame -->
+  <rect x="6" y="6" width="52" height="52" rx="16" fill="url(#geo-bg)" />
+  <rect x="6" y="6" width="52" height="52" rx="16" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" />
+
+  <g filter="url(#geo-shadow)">
+    <!-- Isometric Minecraft Voxel Armor Shield / Block -->
+    <!-- Top Face -->
+    <polygon points="32 15, 47 23, 32 31, 17 23" fill="#67E8F9" stroke="#FFFFFF" stroke-width="1" />
+    <!-- Left Face -->
+    <polygon points="17 23, 32 31, 32 46, 17 38" fill="url(#armor-plate)" stroke="#FFFFFF" stroke-width="1" />
+    <!-- Right Face -->
+    <polygon points="32 31, 47 23, 47 38, 32 46" fill="#0369A1" stroke="#FFFFFF" stroke-width="1" />
+  </g>
+
+  <!-- Diamond / Tetra Crystal Badge -->
+  <circle cx="46" cy="46" r="7.5" fill="#10B981" stroke="#FFFFFF" stroke-width="2" />
+  <path d="M46 41 L50 46 L46 51 L42 46 Z" fill="#FFFFFF" />
 </svg>

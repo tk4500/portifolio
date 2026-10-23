@@ -153,16 +153,16 @@ watch(() => systemStore.isStartMenuOpen, (isOpen) => {
       <!-- Power Options -->
       <div class="border-t border-[var(--window-border)] pt-2 mt-2">
          <button
-            @click="launchApp('power', 'Power', '🔌')"
-            class="w-full flex gap-3 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--danger)]"
-            :class="[
-              confirmCloseAll ? 'bg-[var(--danger)] text-white hover:bg-[var(--danger-hover)]' : 'hover:bg-[var(--danger)] hover:text-white',
-              isMobile ? 'flex-col items-center justify-center p-3 text-center active:bg-[var(--danger)] active:text-white' : 'items-center px-3 py-2 text-left'
-            ]"
-          >
-            <Icon icon="icons/windows.svg" :size="32" :class="isMobile ? 'mb-1' : ''" class="text-[var(--danger)]" />
-            <span style="font-size: var(--text-label); font-weight: var(--text-label-weight); letter-spacing: var(--text-label-tracking); line-height: var(--text-label-leading);" :class="isMobile ? 'text-[11px] leading-tight opacity-80' : ''">{{ confirmCloseAll ? t('startMenu.confirmCloseAll') : t('startMenu.closeAll') }}</span>
-          </button>
+           @click="launchApp('power', 'Power', '🔌')"
+           class="w-full flex gap-3 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--danger)]"
+           :class="[
+             confirmCloseAll ? 'bg-[var(--danger)] text-white hover:bg-[var(--danger-hover)]' : 'hover:bg-[var(--danger)] hover:text-white',
+             isMobile ? 'flex-col items-center justify-center p-3 text-center active:bg-[var(--danger)] active:text-white' : 'items-center px-3 py-2 text-left'
+           ]"
+         >
+           <Icon icon="icons/power.svg" :size="32" :class="isMobile ? 'mb-1' : ''" />
+           <span style="font-size: var(--text-label); font-weight: var(--text-label-weight); letter-spacing: var(--text-label-tracking); line-height: var(--text-label-leading);" :class="isMobile ? 'text-[11px] leading-tight opacity-80' : ''">{{ confirmCloseAll ? t('startMenu.confirmCloseAll') : t('startMenu.closeAll') }}</span>
+         </button>
       </div>
     </div>
   </Transition>

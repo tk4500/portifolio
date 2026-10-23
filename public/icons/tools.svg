@@ -1,3 +1,50 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="tools-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+    <linearGradient id="wrench-metal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#E2E8F0" />
+    </linearGradient>
+    <linearGradient id="screwdriver-handle" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+    <filter id="tools-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000000" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Squircle Base Frame -->
+  <rect x="6" y="6" width="52" height="52" rx="16" fill="url(#tools-bg)" />
+  <rect x="6" y="6" width="52" height="52" rx="16" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" />
+
+  <g filter="url(#tools-shadow)">
+    <!-- Crossed Screwdriver -->
+    <g transform="rotate(-45 32 32)">
+      <!-- Shaft & Tip -->
+      <rect x="30" y="14" width="4" height="24" rx="1" fill="url(#wrench-metal)" />
+      <path d="M29 14 L35 14 L33 11 L31 11 Z" fill="#94A3B8" />
+      <!-- Handle -->
+      <rect x="28.5" y="34" width="7" height="18" rx="2.5" fill="url(#screwdriver-handle)" stroke="#FFFFFF" stroke-width="1" />
+      <line x1="32" y1="36" x2="32" y2="48" stroke="#FFFFFF" stroke-width="1" opacity="0.5" />
+    </g>
+
+    <!-- Crossed Wrench -->
+    <g transform="rotate(45 32 32)">
+      <!-- Shaft -->
+      <rect x="30" y="16" width="4.5" height="28" rx="1" fill="url(#wrench-metal)" />
+      <!-- Wrench Open Head -->
+      <path d="M26 18 C26 13, 31 11, 36 12 C37.5 12.5, 38.5 13.5, 38 15 C37.5 16.5, 36 17, 34 17 C31.5 17, 29.5 19, 29.5 21.5 C29.5 22.5, 30 23.5, 31 24 L29 25 C27 23, 26 20.5, 26 18 Z" fill="url(#wrench-metal)" />
+      <!-- Closed Ring End -->
+      <circle cx="32" cy="46" r="5.5" fill="url(#wrench-metal)" />
+      <circle cx="32" cy="46" r="2.5" fill="url(#tools-bg)" />
+    </g>
+  </g>
+
+  <!-- Interactive Terminal/Layers Stack Badge -->
+  <circle cx="45" cy="45" r="7" fill="#065F46" stroke="#FFFFFF" stroke-width="1.5" />
+  <path d="M42 43 l3 2 l3 -2 M42 46 l3 2 l3 -2" stroke="#34D399" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
 </svg>

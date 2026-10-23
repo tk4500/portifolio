@@ -1,6 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <rect x="3" y="3" width="7" height="7"/>
-  <rect x="14" y="3" width="7" height="7"/>
-  <rect x="14" y="14" width="7" height="7"/>
-  <rect x="3" y="14" width="7" height="7"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="win-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284C7" />
+      <stop offset="100%" stop-color="#0369A1" />
+    </linearGradient>
+    <filter id="win-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000000" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Squircle Base Frame -->
+  <rect x="6" y="6" width="52" height="52" rx="16" fill="url(#win-bg)" />
+  <rect x="6" y="6" width="52" height="52" rx="16" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" />
+
+  <g filter="url(#win-shadow)">
+    <!-- 4-Pane Modern Fluent Tiles with Subtle Angular Tilt -->
+    <path d="M17 18 L30 16.5 V29 H17 Z" fill="#38BDF8" rx="2" />
+    <path d="M33 16.2 L47 14.5 V29 H33 Z" fill="#60A5FA" rx="2" />
+    <path d="M17 32 H30 V44.5 L17 43 Z" fill="#0EA5E9" rx="2" />
+    <path d="M33 32 H47 V46.5 L33 44.8 Z" fill="#2563EB" rx="2" />
+  </g>
 </svg>
