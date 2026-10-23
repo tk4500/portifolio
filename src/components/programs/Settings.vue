@@ -30,7 +30,7 @@ function handleLanguageChange(lang: 'pt' | 'en') {
       <!-- Language Configuration -->
       <section class="bg-black/5 dark:bg-white/5 border-[var(--window-border)] p-4 rounded-xl shadow-sm border">
         <h2 class="text-lg font-semibold mb-2 flex items-center gap-2">
-          <span>🌐</span> {{ t('programs.settings.language') }}
+          <Icon icon="icons/settings.svg" :size="20" /> {{ t('programs.settings.language') }}
         </h2>
         <p class="text-sm opacity-70 mb-4">{{ t('programs.settings.languageDescription') }}</p>
         <div class="flex gap-2 flex-wrap" role="group" :aria-label="t('programs.settings.language')">
@@ -50,7 +50,7 @@ function handleLanguageChange(lang: 'pt' | 'en') {
       <!-- Theme Configuration -->
       <section class="bg-black/5 dark:bg-white/5 border-[var(--window-border)] p-4 rounded-xl shadow-sm border">
         <h2 class="text-lg font-semibold mb-2 flex items-center gap-2">
-          <span>🌗</span> {{ t('programs.settings.theme') }}
+          <Icon icon="icons/windows.svg" :size="20" /> {{ t('programs.settings.theme') }}
         </h2>
         <p class="text-sm opacity-70 mb-4">{{ t('programs.settings.themeDescription') || 'Choose your preferred color scheme' }}</p>
         <div class="flex gap-2 flex-wrap" role="group" :aria-label="t('programs.settings.theme')">
@@ -70,7 +70,7 @@ function handleLanguageChange(lang: 'pt' | 'en') {
       <!-- Taskbar Position -->
       <section class="bg-black/5 dark:bg-white/5 border-[var(--window-border)] p-4 rounded-xl shadow-sm border">
         <h2 class="text-lg font-semibold mb-2 flex items-center gap-2">
-          <span>📍</span> {{ t('programs.settings.positions.title') || 'Taskbar Position' }}
+          <Icon icon="icons/cube.svg" :size="20" /> {{ t('programs.settings.positions.title') || 'Taskbar Position' }}
         </h2>
         <div class="flex gap-2 flex-wrap" role="group" aria-label="Taskbar Position">
           <button
@@ -89,7 +89,7 @@ function handleLanguageChange(lang: 'pt' | 'en') {
       <!-- Wallpaper Background -->
       <section class="bg-black/5 dark:bg-white/5 border-[var(--window-border)] p-4 rounded-xl shadow-sm border">
         <h2 class="text-lg font-semibold mb-2 flex items-center gap-2">
-          <span>🖼️</span> {{ t('programs.settings.colors.title') || 'Wallpaper Background' }}
+          <Icon icon="icons/document.svg" :size="20" /> {{ t('programs.settings.colors.title') || 'Wallpaper Background' }}
         </h2>
         <div class="flex gap-2 flex-wrap" role="group" aria-label="Wallpaper Background">
           <button

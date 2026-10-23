@@ -29,7 +29,7 @@ function openProject(project: any) {
   <div class="h-full bg-[var(--window-bg)] text-[var(--window-title-text)] flex flex-col">
     <!-- Toolbar -->
     <div class="bg-black/5 dark:bg-white/5 border-b border-[var(--window-border)] p-2 flex items-center text-sm gap-2 select-none">
-      <span class="opacity-60">📂</span>
+      <Icon icon="icons/folder.svg" :size="18" />
       <span class="opacity-80">C:\Projects\</span>
       <span class="ml-auto px-2 py-0.5 rounded text-xs" style="background: var(--secondary-subtle); color: var(--secondary);">{{ projects.length }}</span>
     </div>
@@ -38,7 +38,7 @@ function openProject(project: any) {
     <div class="flex-1 p-4 overflow-y-auto flex flex-wrap content-start gap-4">
       <!-- Empty state -->
       <div v-if="projects.length === 0" class="w-full flex flex-col items-center justify-center py-16 opacity-40">
-        <div class="text-6xl mb-4">📂</div>
+        <Icon icon="icons/folder.svg" :size="56" class="mb-4" />
         <p class="text-sm">{{ t('programs.archive.empty') }}</p>
       </div>
       <!-- Project grid -->

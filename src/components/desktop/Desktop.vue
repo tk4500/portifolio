@@ -195,7 +195,7 @@ function handleKeydown(e: KeyboardEvent) {
   if (e.key === '?' && !['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as HTMLElement)?.tagName || '')) {
     e.preventDefault()
     showShortcutsHelp.value = true
-    showShortcutToast('💡 Keyboard shortcuts')
+    showShortcutToast(`💡 ${t('shortcuts.title')}`)
     return
   }
   
@@ -254,7 +254,7 @@ function handleKeydown(e: KeyboardEvent) {
         if (win) win.isMinimized = false
       }
     })
-    showShortcutToast(hasVisibleWindows ? 'Show Desktop' : 'Restore Windows')
+    showShortcutToast(hasVisibleWindows ? t('shortcuts.showDesktop') : t('shortcuts.showDesktop'))
     return
   }
   
@@ -269,7 +269,7 @@ function handleKeydown(e: KeyboardEvent) {
         if (win) win.isMinimized = false
       }
       windowsStore.focusWindow(sortedWindows[index].id)
-      showShortcutToast(`Focused: ${t(sortedWindows[index].titleKey)}`)
+      showShortcutToast(t(sortedWindows[index].titleKey))
     }
     return
   }
@@ -352,11 +352,32 @@ function handleDesktopClick() {
 
 function handleWelcomeTourClose() {
   showWelcomeTour.value = false
+  // Ensure the primary About window is opened so recruiter is not left on an empty canvas
+  if (windowsStore.activeWindows.length === 0) {
+    windowsStore.registerOrOpenWindow({
+      appId: 'about',
+      titleKey: 'desktop.icons.about',
+      component: 'about',
+      width: 600,
+      height: 500,
+      icon: 'icons/user.svg'
+    })
+  }
 }
 
 function handleWelcomeTourStart() {
   showWelcomeTour.value = false
-  // Open Start Menu to guide user
+  // Open About Me and guide user
+  if (windowsStore.activeWindows.length === 0) {
+    windowsStore.registerOrOpenWindow({
+      appId: 'about',
+      titleKey: 'desktop.icons.about',
+      component: 'about',
+      width: 600,
+      height: 500,
+      icon: 'icons/user.svg'
+    })
+  }
   setTimeout(() => {
     systemStore.toggleStartMenu()
   }, 300)
@@ -427,7 +448,7 @@ function handleReplayTour() {
             <kbd class="px-2 py-1 bg-black/10 dark:bg-white/10 rounded text-xs font-mono">Alt</kbd>
             <span class="mx-2">+</span>
             <kbd class="px-2 py-1 bg-black/10 dark:bg-white/10 rounded text-xs font-mono">Tab</kbd>
-            <span class="ml-4 text-sm opacity-70">Switch Windows</span>
+            <span class="ml-4 text-sm opacity-70">{{ t('shortcuts.altTab') }}</span>
           </div>
           <div class="flex gap-4 overflow-x-auto pb-2">
             <div
@@ -462,7 +483,7 @@ function handleReplayTour() {
         v-if="showDiscoveryTooltip"
         class="fixed top-20 left-1/2 -translate-x-1/2 bg-[var(--accent)] text-black font-medium px-5 py-3 rounded-lg shadow-xl z-[100] font-sans text-sm max-w-sm text-center"
       >
-        💡 <strong>Tip:</strong> Press <kbd class="px-2 py-1 mx-1 bg-black/15 text-black rounded font-mono text-xs">?</kbd> for keyboard shortcuts, or click the <strong>?</strong> in the taskbar
+        💡 <strong>{{ t('shortcuts.tip.title') }}:</strong> {{ t('shortcuts.tip.text') }}
       </div>
     </Transition>
 

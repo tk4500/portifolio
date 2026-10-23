@@ -29,8 +29,8 @@ function getProficiency(level: number) {
     <div class="bg-[var(--desktop-bg)] text-white p-8 relative overflow-hidden">
       <div class="absolute -bottom-16 -left-16 w-48 h-48 bg-[var(--accent)] opacity-[0.06] rounded-full blur-3xl pointer-events-none"></div>
       <div class="flex items-center gap-5 max-w-6xl mx-auto w-full relative z-10">
-        <div class="text-5xl bg-white/8 p-4 rounded-2xl backdrop-blur-sm border border-white/[0.06]">
-          🛠️
+        <div class="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/15 flex items-center justify-center p-2">
+          <Icon icon="icons/tools.svg" :size="48" class="drop-shadow-sm" />
         </div>
         <div>
           <h1 class="text-2xl font-semibold tracking-tight">{{ t('desktop.icons.stack') || 'Tech Stack' }}</h1>

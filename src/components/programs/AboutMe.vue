@@ -3,7 +3,7 @@ import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import aboutDataRaw from '../../assets/data/about.json'
 
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 
 const aboutData = computed(() => (aboutDataRaw as any)[locale.value] || (aboutDataRaw as any)['en'])
 const profile = computed(() => aboutData.value.profile)
@@ -41,12 +41,19 @@ const activeTab = ref((aboutDataRaw as any)['en'].tabs[0].id)
       </div>
 
       <!-- Tabs Navigation (Sticky) -->
-      <div class="sticky top-0 z-10 flex border-b border-[var(--window-border)] px-2 md:px-4 bg-[var(--window-bg)] overflow-x-auto hide-scrollbar">
+      <div role="tablist" :aria-label="t('desktop.icons.about')" class="sticky top-0 z-10 flex border-b border-[var(--window-border)] px-2 md:px-4 bg-[var(--window-bg)] overflow-x-auto hide-scrollbar">
         <button
           v-for="tab in tabs"
           :key="tab.id"
+          role="tab"
+          :id="`tab-${tab.id}`"
+          :aria-controls="`panel-${tab.id}`"
+          :aria-selected="activeTab === tab.id"
+          tabindex="0"
           @click="activeTab = tab.id"
-          class="px-4 md:px-6 py-3 font-medium text-sm transition-colors relative whitespace-nowrap flex-shrink-0 focus:outline-none"
+          @keydown.right.prevent="activeTab = tabs[(tabs.findIndex((item: any) => item.id === tab.id) + 1) % tabs.length].id"
+          @keydown.left.prevent="activeTab = tabs[(tabs.findIndex((item: any) => item.id === tab.id) - 1 + tabs.length) % tabs.length].id"
+          class="px-4 md:px-6 py-3 font-medium text-sm transition-colors relative whitespace-nowrap flex-shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] cursor-pointer"
           :class="activeTab === tab.id ? '' : 'opacity-50 hover:opacity-80'"
           :style="activeTab === tab.id ? 'color: var(--secondary);' : ''"
         >
@@ -57,7 +64,16 @@ const activeTab = ref((aboutDataRaw as any)['en'].tabs[0].id)
 
       <!-- Tab Content -->
       <div class="p-4 sm:p-6">
-        <div v-for="tab in tabs" :key="tab.id" v-show="activeTab === tab.id" class="space-y-4 sm:space-y-5 max-w-3xl mx-auto">
+        <div
+          v-for="tab in tabs"
+          :key="tab.id"
+          v-show="activeTab === tab.id"
+          role="tabpanel"
+          :id="`panel-${tab.id}`"
+          :aria-labelledby="`tab-${tab.id}`"
+          tabindex="0"
+          class="space-y-4 sm:space-y-5 max-w-3xl mx-auto focus:outline-none"
+        >
           <div v-for="(item, idx) in tab.items" :key="idx" class="border-l-2 pl-4 py-1 relative hover:border-[var(--secondary)] transition-colors" style="border-color: var(--secondary-subtle);">
             <div class="absolute w-2.5 h-2.5 bg-[var(--accent)] rounded-full -left-[7px] top-2.5"></div>
             <div class="flex justify-between items-start mb-1 sm:flex-row flex-col sm:items-center gap-1 sm:gap-4">

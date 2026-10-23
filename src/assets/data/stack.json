@@ -220,7 +220,7 @@
         {
           "id": "vps",
           "name": "VPS Hosting",
-          "icon": "☁️",
+          "icon": "icons/cube.svg",
           "level": 75
         },
         {
@@ -244,7 +244,7 @@
         {
           "id": "b2b",
           "name": "B2B Integrations",
-          "icon": "🔗",
+          "icon": "icons/settings.svg",
           "level": 85
         },
         {
@@ -500,7 +500,7 @@
         {
           "id": "vps",
           "name": "Hospedagem VPS",
-          "icon": "☁️",
+          "icon": "icons/cube.svg",
           "level": 75
         },
         {
@@ -524,7 +524,7 @@
         {
           "id": "b2b",
           "name": "Integrações B2B",
-          "icon": "🔗",
+          "icon": "icons/settings.svg",
           "level": 85
         },
         {

@@ -116,6 +116,7 @@
       "iframeTimeout": "Connection Timeout",
       "iframeBlocked": "Content Blocked",
       "iframeError": "Load Error",
+      "iframeLoading": "Loading...",
       "timeoutMessage": "This page took too long to respond.",
       "blockedMessage": "This content can't be displayed in a frame.",
       "errorMessage": "This page failed to load.",
@@ -140,7 +141,8 @@
       },
       "step3": {
         "title": "Keyboard Shortcuts",
-        "description": "Press ? to see all shortcuts. Alt+Tab switches windows, Ctrl+W closes them."
+        "description": "Press ? to see all shortcuts. Alt+Tab switches windows, Alt+W closes them.",
+        "cta": "Try pressing ?"
       }
     },
     "skip": "Skip",

@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { ref, computed, defineAsyncComponent } from 'vue'
+import { ref, computed, defineAsyncComponent, watch } from 'vue'
 import { useSystemStore } from '../../stores/useSystemStore'
+import { useWindowsStore } from '../../stores/useWindowsStore'
 import { useI18n } from 'vue-i18n'
 import projectsDataRaw from '../../assets/data/projects.json'
 import Icon from '../ui/Icon.vue'
 
 const systemStore = useSystemStore()
+const windowsStore = useWindowsStore()
 const { t, locale } = useI18n()
 
 // Mobile state
@@ -95,12 +97,30 @@ const programs: Record<string, any> = {
   archive: defineAsyncComponent(() => import('../programs/ArchiveManager.vue')),
   stack: defineAsyncComponent(() => import('../programs/Stack.vue')),
   iframe: defineAsyncComponent(() => import('../programs/IframeViewer.vue')),
-  settings: defineAsyncComponent(() => import('../programs/Settings.vue'))
+  settings: defineAsyncComponent(() => import('../programs/Settings.vue')),
+  projectViewer: defineAsyncComponent(() => import('../programs/ProjectViewer.vue'))
 }
 
 // App interaction state
 const showScreenshotGallery = ref(false)
 const currentGalleryProject = ref<any | null>(null)
+const selectedProject = ref<any | null>(null)
+
+// Bridge desktop windows store registrations to MobileOS
+watch(() => windowsStore.activeWindows.map(w => ({ id: w.id, component: w.component, props: w.props })), (wins) => {
+  if (wins.length === 0) return
+  const latest = wins[wins.length - 1]
+  if (latest.component === 'projectViewer' && latest.props?.project) {
+    selectedProject.value = latest.props.project
+    currentApp.value = 'projectViewer'
+  } else if (latest.component === 'iframe' && latest.props?.url) {
+    sessionStorage.setItem('mobile-iframe-url', latest.props.url)
+    sessionStorage.setItem('mobile-iframe-title', latest.props.title || 'App')
+    currentApp.value = 'iframe'
+  } else if (programs[latest.component]) {
+    currentApp.value = latest.component
+  }
+}, { deep: true })
 
 // App actions
 let longPressTimer: number | null = null
@@ -164,51 +184,22 @@ function openApp(app: any) {
     return
   }
   
-  // Project apps: determine action
-  const action = getProjectAction(app)
-  
+  // Project apps: open ProjectViewer case study by default (Desktop parity & CORS immunity)
   isTransitioning.value = true
   showAppDrawer.value = false
   showRecents.value = false
-  
+
   setTimeout(() => {
-    if (action === 'live-site') {
-      // Task 3: Open iframe for live sites
-      currentApp.value = 'iframe'
-      sessionStorage.setItem('mobile-iframe-url', app.url)
-      sessionStorage.setItem('mobile-iframe-title', app.name)
-      
-      // Add to recents
-      recentApps.value = [
-        app.id,
-        ...recentApps.value.filter(id => id !== app.id)
-      ].slice(0, 6)
-      
-      isTransitioning.value = false
-    } else if (action === 'screenshots') {
-      // Task 4: Show screenshot gallery
-      currentGalleryProject.value = app
-      showScreenshotGallery.value = true
-      isTransitioning.value = false
-    } else {
-      // Task 5: GitHub prompt with bottom sheet
-      isTransitioning.value = false
-      bottomSheet.value = {
-        show: true,
-        title: app.name,
-        message: locale.value === 'pt' 
-          ? 'Este projeto não está online. Deseja abrir o repositório no GitHub?'
-          : 'This project is not live. Open GitHub repository?',
-        confirmText: locale.value === 'pt' ? 'Abrir GitHub' : 'Open GitHub',
-        cancelText: locale.value === 'pt' ? 'Cancelar' : 'Cancel',
-        onConfirm: () => {
-          if (app.github) {
-            window.open(app.github, '_blank', 'noopener,noreferrer')
-          }
-          bottomSheet.value = null
-        }
-      }
-    }
+    selectedProject.value = app
+    currentApp.value = 'projectViewer'
+
+    // Add to recents
+    recentApps.value = [
+      app.id,
+      ...recentApps.value.filter(id => id !== app.id)
+    ].slice(0, 6)
+
+    isTransitioning.value = false
   }, 200)
 }
 
@@ -216,6 +207,7 @@ function goHome() {
   isTransitioning.value = true
   setTimeout(() => {
     currentApp.value = null
+    selectedProject.value = null
     showAppDrawer.value = false
     showRecents.value = false
     sessionStorage.removeItem('mobile-iframe-url')
@@ -249,8 +241,13 @@ function closeScreenshotGallery() {
   currentGalleryProject.value = null
 }
 
-// Iframe props
-const iframeProps = computed(() => {
+// Iframe / Project Viewer props
+const appProps = computed(() => {
+  if (currentApp.value === 'projectViewer') {
+    return {
+      project: selectedProject.value
+    }
+  }
   if (currentApp.value === 'iframe') {
     return {
       url: sessionStorage.getItem('mobile-iframe-url'),
@@ -262,6 +259,9 @@ const iframeProps = computed(() => {
 
 // Current app title
 const currentAppTitle = computed(() => {
+  if (currentApp.value === 'projectViewer') {
+    return selectedProject.value?.name || 'Project'
+  }
   if (currentApp.value === 'iframe') {
     return sessionStorage.getItem('mobile-iframe-title') || 'App'
   }
@@ -343,7 +343,7 @@ function toggleLocale() {
         <div class="mobile-app-content overflow-auto" :style="{ height: 'calc(100% - 3.5rem)' }">
           <component
             :is="programs[currentApp]"
-            v-bind="iframeProps"
+            v-bind="appProps"
           />
         </div>
       </div>

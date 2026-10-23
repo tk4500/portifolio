@@ -105,7 +105,8 @@
       "viewSource": "Ver Código (GitHub)",
       "screenshots": "Capturas de Tela",
       "noScreenshots": "Nenhuma captura de tela disponível. Visite o site ou o repositório para ver em ação.",
-      "techStack": "Tecnologias Utilizadas"
+      "techStack": "Tecnologias Utilizadas",
+      "iframeLoading": "Carregando..."
     },
     "stack": {
       "description": "Tecnologias, frameworks e ferramentas que utilizo.",
@@ -126,6 +127,11 @@
       "step2": {
         "title": "Gerenciamento de Janelas",
         "description": "Janelas abertas aparecem na barra de tarefas. Clique para focar, ou feche quando terminar. Arraste janelas para reorganizar."
+      },
+      "step3": {
+        "title": "Atalhos de Teclado",
+        "description": "Pressione ? para ver todos os atalhos. Alt+Tab alterna janelas, Alt+W fecha.",
+        "cta": "Tente pressionar ?"
       }
     },
     "skip": "Pular",

@@ -67,12 +67,17 @@ useDraggable(titleBarRef, {
       el.style.transform = `translate(${dx}px, ${dy}px)`
     }
 
-    // Snap preview based on cursor position
-    const cursorX = position.x
-    const cursorY = position.y
-    if (cursorX <= 10) snapPreview.value = 'left'
-    else if (cursorX >= screenWidth.value - 10) snapPreview.value = 'right'
-    else if (cursorY <= 10) snapPreview.value = 'top'
+    // Snap preview based on pointer position
+    const e = window.event as MouseEvent | TouchEvent | undefined
+    let clientX = position.x
+    let clientY = position.y
+    if (e && 'clientX' in e) {
+      clientX = e.clientX
+      clientY = e.clientY
+    }
+    if (clientX <= 15) snapPreview.value = 'left'
+    else if (clientX >= screenWidth.value - 15) snapPreview.value = 'right'
+    else if (clientY <= 15) snapPreview.value = 'top'
     else snapPreview.value = null
   },
   onEnd: (position) => {
@@ -282,6 +287,8 @@ onUnmounted(() => {
       windowState.isMaximized || windowState.snappedPosition || isMobile ? 'rounded-none' : ''
     ]"
     :style="computedStyle"
+    role="dialog"
+    :aria-labelledby="`title-${windowState.id}`"
     :aria-hidden="windowState.isMinimized"
     tabindex="-1"
     @mousedown.capture="focus"
@@ -296,7 +303,11 @@ onUnmounted(() => {
     >
       <div class="flex items-center gap-2 overflow-hidden">
         <Icon v-if="windowState.icon" :icon="windowState.icon" :size="20" />
-        <span style="font-size: var(--text-label); font-weight: var(--text-label-weight); letter-spacing: var(--text-label-tracking); line-height: var(--text-label-leading);" class="text-[var(--window-title-text)] truncate font-sans">
+        <span
+          :id="`title-${windowState.id}`"
+          style="font-size: var(--text-label); font-weight: var(--text-label-weight); letter-spacing: var(--text-label-tracking); line-height: var(--text-label-leading);"
+          class="text-[var(--window-title-text)] truncate font-sans"
+        >
           {{ windowState.skipTranslation ? windowState.titleKey : t(windowState.titleKey) }}
         </span>
       </div>
@@ -338,11 +349,14 @@ onUnmounted(() => {
   <Teleport to="body">
     <div
       v-if="snapPreview"
-      class="fixed bg-white/20 border-2 border-white/50 backdrop-blur-sm z-40 transition-all duration-200 pointer-events-none rounded-xl"
+      class="fixed pointer-events-none z-40 rounded-xl transition-all duration-150 border-2 border-[var(--accent)] bg-[var(--accent)]/15 backdrop-blur-[2px]"
       :class="{
-        'top-2 left-2 bottom-14 w-[calc(50vw-12px)]': snapPreview === 'left',
-        'top-2 right-2 bottom-14 w-[calc(50vw-12px)]': snapPreview === 'right',
-        'top-2 left-2 right-2 bottom-14': snapPreview === 'top'
+        'top-2 left-2 bottom-2 w-[calc(50vw-12px)]': snapPreview === 'left' && systemStore.taskbarPosition !== 'bottom',
+        'top-2 left-2 bottom-14 w-[calc(50vw-12px)]': snapPreview === 'left' && systemStore.taskbarPosition === 'bottom',
+        'top-2 right-2 bottom-2 w-[calc(50vw-12px)]': snapPreview === 'right' && systemStore.taskbarPosition !== 'bottom',
+        'top-2 right-2 bottom-14 w-[calc(50vw-12px)]': snapPreview === 'right' && systemStore.taskbarPosition === 'bottom',
+        'top-2 left-2 right-2 bottom-2': snapPreview === 'top' && systemStore.taskbarPosition !== 'bottom',
+        'top-2 left-2 right-2 bottom-14': snapPreview === 'top' && systemStore.taskbarPosition === 'bottom'
       }"
     ></div>
   </Teleport>

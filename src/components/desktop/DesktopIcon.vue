@@ -59,9 +59,12 @@ function getClientY(e: MouseEvent | TouchEvent) {
   return 'touches' in e ? e.touches[0].clientY : (e as MouseEvent).clientY
 }
 
-// We distinguish between a drag and a click
+// Track if a drag operation actually moved the icon
+let wasDragged = false
 let startPos = { x: 0, y: 0 }
+
 function onMouseDown(e: MouseEvent | TouchEvent) {
+  wasDragged = false
   startPos = { x: getClientX(e), y: getClientY(e) }
 }
 
@@ -80,8 +83,10 @@ function onMouseUp(e: MouseEvent | TouchEvent) {
   const dy = Math.abs(ey - startPos.y)
   // If moved less than 5 pixels, consider it a click
   if (dx < 5 && dy < 5) {
+    wasDragged = false
     open()
   } else {
+    wasDragged = true
     const gridSize = 100
     const paddingX = systemStore.taskbarPosition === 'left' ? 60 : 20
     const paddingY = systemStore.taskbarPosition === 'top' ? 60 : 20
@@ -99,6 +104,14 @@ function onMouseUp(e: MouseEvent | TouchEvent) {
     y.value = snappedY
     systemStore.updateIconPosition(props.id, x.value, y.value)
   }
+}
+
+// Resilient click handler for screen-readers and automation drivers triggering .click()
+function handleClick() {
+  if (!wasDragged) {
+    open()
+  }
+  wasDragged = false
 }
 
 function open() {
@@ -193,6 +206,7 @@ function openProjectDetails(e: MouseEvent) {
     :title="projectData?.description"
     role="button"
     tabindex="0"
+    @click="handleClick"
     @keydown.enter="open"
     @keydown.space.prevent="open"
     @mousedown="onMouseDown"

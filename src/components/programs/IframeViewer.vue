@@ -87,7 +87,7 @@ onMounted(() => {
     <!-- Loading state -->
     <div v-if="isLoading" class="absolute inset-0 flex flex-col items-center justify-center bg-[var(--window-bg)] text-[var(--window-title-text)]">
       <div class="w-8 h-8 border-2 border-[var(--accent)] border-t-transparent rounded-full animate-spin mb-3"></div>
-      <p class="text-sm opacity-60">Loading...</p>
+      <p class="text-sm opacity-60">{{ t('programs.projectViewer.iframeLoading') || 'Loading...' }}</p>
     </div>
 
     <!-- Error state with specific messaging -->

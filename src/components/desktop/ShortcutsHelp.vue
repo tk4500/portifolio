@@ -30,13 +30,17 @@ onUnmounted(() => {
     @click="emit('close')"
   >
     <div 
-      class="bg-[var(--window-bg)] border border-[var(--window-border)] rounded-xl shadow-2xl w-full max-w-2xl max-h-[80vh] overflow-auto m-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="shortcuts-modal-title"
+      tabindex="-1"
+      class="bg-[var(--window-bg)] border border-[var(--window-border)] rounded-xl shadow-2xl w-full max-w-2xl max-h-[80vh] overflow-auto m-4 focus:outline-none"
       @click.stop
     >
       <!-- Header -->
       <div class="sticky top-0 bg-[var(--window-bg)] border-b border-[var(--window-border)] px-6 py-4 flex items-center justify-between">
         <div>
-          <h2 class="text-xl font-semibold text-[var(--window-title-text)]">{{ t('shortcuts.title') }}</h2>
+          <h2 id="shortcuts-modal-title" class="text-xl font-semibold text-[var(--window-title-text)]">{{ t('shortcuts.title') }}</h2>
           <p class="text-sm text-[var(--text-secondary)] mt-1">{{ t('shortcuts.subtitle') }}</p>
         </div>
         <button

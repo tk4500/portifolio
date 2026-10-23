@@ -406,8 +406,8 @@ const taskbarClass = computed(() => {
         <span class="opacity-70 hover:opacity-100">?</span>
       </button>
       
-      <div class="flex items-center gap-3" :class="isHorizontal ? 'flex-row pr-2' : 'flex-col pb-2'">
-        <span :class="isHorizontal ? '' : 'writing-vertical-rl'">{{ time }}</span>
+      <div class="flex items-center gap-3 text-white" :class="isHorizontal ? 'flex-row pr-2' : 'flex-col pb-2'">
+        <span class="text-xs font-medium tracking-wide" :class="isHorizontal ? '' : 'writing-vertical-rl'">{{ time }}</span>
       </div>
     </div>
 
@@ -429,7 +429,7 @@ const taskbarClass = computed(() => {
           :class="windowsStore.closedWindows.length === 0 ? 'cursor-not-allowed' : 'cursor-pointer'"
         >
           <span>↶</span>
-          <span>Reopen Last Closed</span>
+          <span>{{ t('shortcuts.reopenClosed') }}</span>
           <kbd class="ml-auto text-xs opacity-60 font-mono bg-black/5 dark:bg-white/5 px-1.5 py-0.5 rounded">Ctrl+Shift+T</kbd>
         </button>
       </div>

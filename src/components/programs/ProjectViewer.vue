@@ -105,18 +105,18 @@ function getTechName(iconPath: string): string {
         <button
           v-if="currentProject.url"
           @click="openLiveSite"
-          class="px-5 py-2.5 bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-zinc-950 font-semibold rounded-lg shadow-sm hover:shadow-md transition-all flex items-center gap-2 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--accent)] cursor-pointer"
+          class="flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--accent)] text-zinc-950 font-semibold hover:bg-[var(--accent-hover)] transition-colors text-sm shadow-sm cursor-pointer"
         >
-          <span>🌐</span> {{ t('programs.projectViewer.openLiveSite') }}
+          <Icon icon="icons/projects/portfolio-os.svg" :size="18" /> {{ t('programs.projectViewer.openLiveSite') }}
         </button>
         <a
           v-if="currentProject.github"
           :href="currentProject.github"
           target="_blank"
           rel="noopener noreferrer"
-          class="px-5 py-2.5 bg-black/80 dark:bg-white/10 hover:bg-black dark:hover:bg-white/15 text-white font-medium rounded-lg shadow-sm hover:shadow-md transition-all flex items-center gap-2 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--accent)]"
+          class="flex items-center gap-2 px-4 py-2 rounded-lg bg-black/5 dark:bg-white/5 border border-[var(--window-border)] hover:bg-black/10 dark:hover:bg-white/10 transition-colors text-sm font-medium"
         >
-          <span>💻</span> {{ t('programs.projectViewer.viewSource') }}
+          <Icon icon="icons/github.svg" :size="18" /> {{ t('programs.projectViewer.viewSource') }}
         </a>
       </div>
 
