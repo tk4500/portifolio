@@ -392,9 +392,10 @@ function toggleLocale() {
                 </div>
               </div>
               <span
-                class="text-xs text-center line-clamp-2 font-medium"
+                class="text-xs text-center truncate max-w-full px-1 font-medium"
                 :class="isLightWallpaper ? 'text-zinc-900 font-semibold drop-shadow-none' : 'text-white drop-shadow-sm'"
                 style="font-size: var(--text-metadata);"
+                :title="app.name"
               >
                 {{ app.name }}
               </span>
@@ -457,9 +458,10 @@ function toggleLocale() {
                 </div>
               </div>
               <span
-                class="text-xs text-center line-clamp-2 font-medium"
+                class="text-xs text-center truncate max-w-full px-1 font-medium"
                 :class="isLightWallpaper ? 'text-zinc-900 font-semibold drop-shadow-none' : 'text-white drop-shadow-sm'"
                 style="font-size: var(--text-metadata);"
+                :title="app.name"
               >
                 {{ app.name }}
               </span>

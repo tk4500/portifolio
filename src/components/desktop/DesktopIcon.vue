@@ -81,11 +81,8 @@ function onMouseUp(e: MouseEvent | TouchEvent) {
 
   const dx = Math.abs(ex - startPos.x)
   const dy = Math.abs(ey - startPos.y)
-  // If moved less than 5 pixels, consider it a click
-  if (dx < 5 && dy < 5) {
-    wasDragged = false
-    open()
-  } else {
+  // If moved 5 pixels or more, consider it a drag and snap to grid
+  if (dx >= 5 || dy >= 5) {
     wasDragged = true
     const gridSize = 100
     const paddingX = systemStore.taskbarPosition === 'left' ? 60 : 20
@@ -106,7 +103,7 @@ function onMouseUp(e: MouseEvent | TouchEvent) {
   }
 }
 
-// Resilient click handler for screen-readers and automation drivers triggering .click()
+// Resilient click handler for mouse, touch, screen-readers, and automation drivers triggering .click()
 function handleClick() {
   if (!wasDragged) {
     open()
@@ -225,8 +222,9 @@ function openProjectDetails(e: MouseEvent) {
     <span
       style="font-size: var(--text-metadata); font-weight: var(--text-metadata-weight); letter-spacing: var(--text-metadata-tracking); line-height: var(--text-metadata-leading);"
       :style="systemStore.isDarkMode ? { textShadow: 'var(--text-shadow-strong)' } : {}"
-      class="text-center select-none line-clamp-2 px-1 pointer-events-none font-medium"
+      class="text-center select-none truncate max-w-full px-1.5 pointer-events-none font-medium"
       :class="systemStore.isDarkMode ? 'text-white' : 'text-zinc-900 font-semibold'"
+      :title="skipTranslation ? titleKey : t(titleKey)"
     >
       {{ skipTranslation ? titleKey : t(titleKey) }}
     </span>
