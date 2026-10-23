@@ -41,19 +41,19 @@
 
 /* Semantic OS Color System */
 :root {
-  /* Surface colors */
-  --desktop-bg: oklch(20% 0.02 260); /* Deep cool navy #0f0f14 */
-  --window-bg: oklch(98% 0 0 / 0.97);
-  --window-border: oklch(0% 0 0 / 0.08);
-  --window-titlebar: oklch(96% 0.01 260);
+  /* Surface colors (Light Mode default) */
+  --desktop-bg: oklch(93% 0.01 260); /* Light slate #e4e7eb */
+  --window-bg: oklch(100% 0 0 / 0.98);
+  --window-border: oklch(0% 0 0 / 0.12);
+  --window-titlebar: oklch(95% 0.01 260);
   
   /* Text colors */
-  --window-title-text: oklch(25% 0.04 260); /* Navy text */
-  --text-secondary: oklch(50% 0.02 260);
+  --window-title-text: oklch(18% 0.04 260); /* Deep navy text */
+  --text-secondary: oklch(45% 0.02 260);
   
   /* Taskbar */
-  --taskbar-bg: oklch(18% 0.02 260 / 0.82);
-  --taskbar-text: oklch(100% 0 0);
+  --taskbar-bg: oklch(96% 0.01 260 / 0.88);
+  --taskbar-text: oklch(20% 0.04 260);
   
   /* Brand Accent: Burnt Orange */
   --accent-hue: 45;
@@ -97,9 +97,14 @@
 
 html.dark {
   /* Dark mode surfaces */
+  --desktop-bg: oklch(20% 0.02 260); /* Deep cool navy #0f0f14 */
   --window-bg: oklch(22% 0.03 260 / 0.96); /* #16161e */
   --window-border: oklch(100% 0 0 / 0.06);
   --window-titlebar: oklch(20% 0.03 260);
+  
+  /* Taskbar */
+  --taskbar-bg: oklch(18% 0.02 260 / 0.82);
+  --taskbar-text: oklch(100% 0 0);
   
   /* Dark mode text */
   --window-title-text: oklch(92% 0.01 260); /* #e8e8ed */

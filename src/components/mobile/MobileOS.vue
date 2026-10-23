@@ -36,12 +36,17 @@ const bottomSheet = ref<{
 const longPressApp = ref<any | null>(null)
 const recentApps = ref<string[]>([])
 
-// Home screen featured apps (shown directly on home)
+// Check if current background is light
+const isLightWallpaper = computed(() => {
+  const bg = systemStore.backgroundColor.toLowerCase()
+  return bg.includes('#e4e7eb') || bg.includes('#dbeafe') || bg.includes('#ffedd5') || bg.includes('#ccfbf1') || bg.includes('rgb(228') || bg.includes('rgb(219') || bg.includes('rgb(255') || bg.includes('rgb(204')
+})
 const homeApps = computed(() => [
   { id: 'about', name: t('desktop.icons.about'), icon: 'icons/user.svg', type: 'app' },
   { id: 'archive', name: t('desktop.icons.projects'), icon: 'icons/folder.svg', type: 'app' },
   { id: 'stack', name: t('desktop.icons.stack'), icon: 'icons/tools.svg', type: 'app' },
   { id: 'contact', name: t('desktop.icons.contact'), icon: 'icons/mail.svg', type: 'app' },
+  { id: 'settings', name: t('desktop.icons.settings'), icon: 'icons/settings.svg', type: 'app' },
 ])
 
 // All apps (shown in app drawer)
@@ -61,7 +66,6 @@ const allApps = computed(() => {
   
   return [
     ...homeApps.value,
-    { id: 'settings', name: t('desktop.icons.settings'), icon: 'icons/settings.svg', type: 'app' },
     ...projectApps
   ]
 })
@@ -283,22 +287,32 @@ function toggleLocale() {
 </script>
 
 <template>
-  <div class="mobile-os fixed inset-0 bg-gradient-to-b from-sky-400 to-sky-300 dark:from-slate-800 dark:to-slate-900 overflow-hidden">
+  <div
+    class="mobile-os fixed inset-0 overflow-hidden font-sans text-[var(--window-title-text)] transition-colors duration-300"
+    :style="{ background: systemStore.backgroundColor }"
+  >
     
     <!-- Status Bar -->
-    <div class="status-bar h-6 bg-black/10 dark:bg-white/5 flex items-center justify-between px-4 text-xs select-none" style="color: var(--text);">
+    <div
+      class="status-bar h-6 backdrop-blur-md flex items-center justify-between px-4 text-xs select-none transition-colors duration-200"
+      :class="isLightWallpaper ? 'bg-black/5 text-zinc-900 border-b border-black/5' : 'bg-black/20 dark:bg-black/30 text-white shadow-xs'"
+    >
       <div class="flex items-center gap-2">
-        <span>{{ currentTime }}</span>
+        <span class="font-medium tracking-tight">{{ currentTime }}</span>
         <button
           @click="toggleLocale"
-          class="px-1.5 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:hover:bg-white/20 transition-colors cursor-pointer"
+          class="px-1.5 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase active:scale-95 transition-all cursor-pointer border"
+          :class="isLightWallpaper ? 'bg-black/10 hover:bg-black/15 text-zinc-900 border-black/10' : 'bg-white/15 hover:bg-white/25 text-white border-white/10'"
           :aria-label="t('taskbar.languageSelect')"
           title="Switch language"
         >
           {{ locale }}
         </button>
       </div>
-      <div class="flex gap-2 items-center">
+      <div
+        class="flex gap-2 items-center"
+        :class="isLightWallpaper ? 'text-zinc-800' : 'text-white opacity-90'"
+      >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M5 12.55a11 11 0 0 1 14 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/>
         </svg>
@@ -318,25 +332,21 @@ function toggleLocale() {
       >
         <!-- Mobile App Header -->
         <div class="mobile-app-header h-14 bg-[var(--window-titlebar)] border-b border-[var(--window-border)] flex items-center justify-between px-4">
-          <div class="flex-1" />
+          <button
+            @click="goBack"
+            class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-black/10 dark:hover:bg-white/10 active:scale-95 transition-all text-[var(--window-title-text)] cursor-pointer"
+            :aria-label="t('mobile.close')"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
           
-          <span class="font-medium text-[var(--window-title-text)] truncate" style="font-size: var(--text-label);">
+          <span class="font-semibold text-[var(--window-title-text)] truncate max-w-[200px]" style="font-size: var(--text-label);">
             {{ currentAppTitle }}
           </span>
           
-          <div class="flex-1 flex justify-end">
-            <button
-              @click="systemStore.toggleStartMenu"
-              class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
-              aria-label="Menu"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="1" fill="currentColor"/>
-                <circle cx="12" cy="6" r="1" fill="currentColor"/>
-                <circle cx="12" cy="18" r="1" fill="currentColor"/>
-              </svg>
-            </button>
-          </div>
+          <div class="w-9 h-9" />
         </div>
         
         <!-- App Content -->
@@ -357,8 +367,8 @@ function toggleLocale() {
         :style="{ top: '24px' }"
       >
         <!-- Home screen content -->
-        <div class="flex-1 flex items-center justify-center p-8">
-          <div class="grid grid-cols-4 gap-6 max-w-sm">
+        <div class="flex-1 flex items-center justify-center p-6">
+          <div class="grid grid-cols-3 sm:grid-cols-4 gap-6 max-w-sm w-full">
             <button
               v-for="app in homeApps"
               :key="app.id"
@@ -369,16 +379,23 @@ function toggleLocale() {
               @touchmove="handleAppTouchMove"
               @touchcancel="handleAppTouchEnd"
             >
-              <div class="w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg group-active:scale-95 transition-transform relative" style="background: var(--window-bg);">
-                <Icon :icon="app.icon" :size="32" />
+              <div
+                class="w-14 h-14 rounded-2xl flex items-center justify-center transition-all relative border p-1"
+                :class="isLightWallpaper ? 'bg-white/70 hover:bg-white/90 border-black/10 shadow-sm' : 'bg-white/10 dark:bg-white/10 hover:bg-white/20 border-white/15 shadow-md backdrop-blur-md'"
+              >
+                <Icon :icon="app.icon" :size="36" />
                 <!-- Type badge for projects -->
-                <div v-if="app.type === 'live-project' || app.type === 'non-live-project'" class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-sm flex items-center justify-center text-xs shadow-md">
-                  <span v-if="getProjectAction(app) === 'live-site'" class="text-[10px]">🌐</span>
-                  <span v-else-if="getProjectAction(app) === 'screenshots'" class="text-[10px]">📸</span>
-                  <span v-else class="text-[10px]">🔗</span>
+                <div v-if="app.type === 'live-project' || app.type === 'non-live-project'" class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-black/60 dark:bg-white/90 text-white dark:text-zinc-950 backdrop-blur-sm flex items-center justify-center text-[10px] shadow-sm font-bold border border-white/20">
+                  <span v-if="getProjectAction(app) === 'live-site'">🌐</span>
+                  <span v-else-if="getProjectAction(app) === 'screenshots'">📸</span>
+                  <span v-else>🔗</span>
                 </div>
               </div>
-              <span class="text-xs text-center line-clamp-2 text-white dark:text-slate-200" style="font-size: var(--text-metadata);">
+              <span
+                class="text-xs text-center line-clamp-2 font-medium"
+                :class="isLightWallpaper ? 'text-zinc-900 font-semibold drop-shadow-none' : 'text-white drop-shadow-sm'"
+                style="font-size: var(--text-metadata);"
+              >
                 {{ app.name }}
               </span>
             </button>
@@ -391,18 +408,24 @@ function toggleLocale() {
     <Transition name="slide-up">
       <div
         v-if="showAppDrawer"
-        class="app-drawer fixed inset-0 bg-[var(--desktop-bg)] z-30 flex flex-col"
+        class="app-drawer fixed inset-0 z-30 flex flex-col backdrop-blur-xl text-[var(--window-title-text)] transition-colors duration-300"
+        :style="{ background: systemStore.backgroundColor }"
         @click.self="showAppDrawer = false"
       >
         <!-- Drawer Header -->
-        <div class="h-14 flex items-center justify-between px-4 border-b border-[var(--window-border)]" style="margin-top: 24px;">
-          <span class="font-medium" style="font-size: var(--text-heading);">{{ t('mobile.apps') }}</span>
+        <div class="h-14 flex items-center justify-between px-4 border-b border-[var(--window-border)] bg-black/10 dark:bg-white/5" style="margin-top: 24px;">
+          <div class="flex items-center gap-2">
+            <span class="font-semibold tracking-tight text-base">{{ t('mobile.apps') }}</span>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-[var(--accent)] text-zinc-950 font-bold">
+              {{ allApps.length }}
+            </span>
+          </div>
           <button
             @click="showAppDrawer = false"
-            class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
+            class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-black/10 dark:hover:bg-white/10 transition-colors text-[var(--window-title-text)]"
             aria-label="Close"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
               <path d="M18 6L6 18M6 6l12 12"/>
             </svg>
           </button>
@@ -421,16 +444,23 @@ function toggleLocale() {
               @touchmove="handleAppTouchMove"
               @touchcancel="handleAppTouchEnd"
             >
-              <div class="w-14 h-14 rounded-2xl flex items-center justify-center shadow-md group-active:scale-95 transition-transform relative" style="background: var(--window-bg);">
-                <Icon :icon="app.icon" :size="32" />
+              <div
+                class="w-14 h-14 rounded-2xl flex items-center justify-center transition-all relative border p-1"
+                :class="isLightWallpaper ? 'bg-white/70 hover:bg-white/90 border-black/10 shadow-sm' : 'bg-white/10 dark:bg-white/10 hover:bg-white/20 border-white/15 shadow-md backdrop-blur-md'"
+              >
+                <Icon :icon="app.icon" :size="36" />
                 <!-- Type badge for projects in drawer -->
-                <div v-if="app.type === 'live-project' || app.type === 'non-live-project'" class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-sm flex items-center justify-center text-xs shadow-md">
-                  <span v-if="getProjectAction(app) === 'live-site'" class="text-[10px]">🌐</span>
-                  <span v-else-if="getProjectAction(app) === 'screenshots'" class="text-[10px]">📸</span>
-                  <span v-else class="text-[10px]">🔗</span>
+                <div v-if="app.type === 'live-project' || app.type === 'non-live-project'" class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-black/60 dark:bg-white/90 text-white dark:text-zinc-950 backdrop-blur-sm flex items-center justify-center text-[10px] shadow-sm font-bold border border-white/20">
+                  <span v-if="getProjectAction(app) === 'live-site'">🌐</span>
+                  <span v-else-if="getProjectAction(app) === 'screenshots'">📸</span>
+                  <span v-else>🔗</span>
                 </div>
               </div>
-              <span class="text-xs text-center line-clamp-2" style="font-size: var(--text-metadata);">
+              <span
+                class="text-xs text-center line-clamp-2 font-medium"
+                :class="isLightWallpaper ? 'text-zinc-900 font-semibold drop-shadow-none' : 'text-white drop-shadow-sm'"
+                style="font-size: var(--text-metadata);"
+              >
                 {{ app.name }}
               </span>
             </button>
@@ -443,43 +473,55 @@ function toggleLocale() {
     <Transition name="slide-up">
       <div
         v-if="showRecents"
-        class="recents-overlay fixed inset-0 bg-[var(--desktop-bg)] z-30 flex flex-col"
+        class="recents-overlay fixed inset-0 z-30 flex flex-col backdrop-blur-xl text-[var(--window-title-text)] transition-colors duration-300"
+        :style="{ background: systemStore.backgroundColor }"
         @click.self="showRecents = false"
       >
         <!-- Recents Header -->
-        <div class="h-14 flex items-center justify-between px-4 border-b border-[var(--window-border)]" style="margin-top: 24px;">
-          <span class="font-medium" style="font-size: var(--text-heading);">{{ t('mobile.recent') }}</span>
+        <div class="h-14 flex items-center justify-between px-4 border-b border-[var(--window-border)] bg-black/10 dark:bg-white/5" style="margin-top: 24px;">
+          <div class="flex items-center gap-2">
+            <span class="font-semibold tracking-tight text-base">{{ t('mobile.recent') }}</span>
+            <span v-if="recentApps.length > 0" class="text-xs px-2 py-0.5 rounded-full bg-[var(--accent)] text-zinc-950 font-bold">
+              {{ recentApps.length }}
+            </span>
+          </div>
           <button
             @click="showRecents = false"
-            class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
+            class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-black/10 dark:hover:bg-white/10 transition-colors text-[var(--window-title-text)]"
             aria-label="Close"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
               <path d="M18 6L6 18M6 6l12 12"/>
             </svg>
           </button>
         </div>
         
         <!-- Recent Apps -->
-        <div class="flex-1 overflow-auto p-6">
-          <div v-if="recentApps.length === 0" class="text-center py-12 opacity-60">
-            {{ t('mobile.no_recent') }}
+        <div class="flex-1 overflow-auto p-4 sm:p-6">
+          <div v-if="recentApps.length === 0" class="text-center py-16 opacity-60 flex flex-col items-center">
+            <Icon icon="icons/windows.svg" :size="48" class="mb-3 opacity-40" />
+            <p class="text-sm font-medium">{{ t('mobile.no_recent') }}</p>
           </div>
-          <div v-else class="space-y-4">
+          <div v-else class="space-y-3.5 max-w-md mx-auto">
             <button
               v-for="appId in recentApps"
               :key="appId"
               @click="openApp(allApps.find(a => a.id === appId))"
-              class="w-full h-32 rounded-2xl shadow-lg overflow-hidden relative group"
-              style="background: var(--window-bg);"
+              class="w-full rounded-2xl border border-[var(--window-border)] bg-[var(--window-bg)] shadow-md hover:shadow-lg transition-all p-4 flex items-center gap-4 text-left group active:scale-[0.98] cursor-pointer"
             >
-              <div class="absolute inset-0 flex items-center justify-center">
-                <Icon :icon="allApps.find(a => a.id === appId)?.icon || ''" :size="48" />
+              <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-black/5 dark:bg-white/5 border border-[var(--window-border)] p-1.5 shadow-xs">
+                <Icon :icon="allApps.find(a => a.id === appId)?.icon || 'icons/cube.svg'" :size="36" />
               </div>
-              <div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/60 to-transparent">
-                <span class="text-white font-medium text-sm">
+              <div class="flex-1 min-w-0">
+                <h3 class="font-semibold text-sm text-[var(--window-title-text)] truncate">
                   {{ allApps.find(a => a.id === appId)?.name }}
-                </span>
+                </h3>
+                <p class="text-xs text-[var(--text-secondary)] opacity-80 truncate mt-0.5">
+                  {{ allApps.find(a => a.id === appId)?.type === 'app' ? t('desktop.quickLinks') : 'Project' }}
+                </p>
+              </div>
+              <div class="w-8 h-8 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center opacity-60 group-hover:opacity-100 group-hover:bg-[var(--accent)] group-hover:text-zinc-950 transition-all text-xs">
+                →
               </div>
             </button>
           </div>
@@ -626,57 +668,71 @@ function toggleLocale() {
       </div>
     </Transition>
     
-    <!-- Android Navigation Bar -->
-    <div class="android-nav fixed bottom-0 left-0 right-0 h-14 bg-[var(--window-titlebar)] border-t border-[var(--window-border)] flex items-center justify-around z-50">
+    <!-- Android / System Navigation Bar -->
+    <nav
+      class="android-nav fixed bottom-0 left-0 right-0 h-14 backdrop-blur-xl border-t flex items-center justify-around z-50 px-3 select-none transition-colors duration-200"
+      :class="isLightWallpaper ? 'bg-white/80 border-black/10 text-zinc-900 shadow-md' : 'bg-black/50 dark:bg-black/60 border-white/10 text-white'"
+      role="navigation"
+      aria-label="System Navigation"
+    >
       <!-- Back -->
       <button
         @click="goBack"
-        :disabled="!currentApp"
-        class="w-12 h-12 flex items-center justify-center rounded-full transition-colors disabled:opacity-30"
-        :class="currentApp ? 'hover:bg-black/10 dark:hover:bg-white/10' : ''"
+        :disabled="!currentApp && !showAppDrawer && !showRecents"
+        class="flex-1 max-w-[72px] h-11 flex items-center justify-center rounded-xl transition-all disabled:opacity-25 active:scale-90 cursor-pointer"
+        :class="[
+          isLightWallpaper ? 'hover:bg-black/5 active:bg-black/10 text-zinc-900' : 'hover:bg-white/10 active:bg-white/15 text-white',
+          !(currentApp || showAppDrawer || showRecents) ? 'cursor-default' : ''
+        ]"
         aria-label="Back"
       >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
         </svg>
       </button>
       
       <!-- Home -->
       <button
         @click="goHome"
-        class="w-12 h-12 flex items-center justify-center rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
+        class="flex-1 max-w-[72px] h-11 flex items-center justify-center rounded-xl active:scale-90 transition-all cursor-pointer"
+        :class="isLightWallpaper ? 'hover:bg-black/5 active:bg-black/10 text-zinc-900' : 'hover:bg-white/10 active:bg-white/15 text-white'"
         aria-label="Home"
       >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"/>
-        </svg>
+        <div class="w-4 h-4 rounded-full border-2 border-current"></div>
       </button>
       
       <!-- Recents -->
       <button
         @click="toggleRecents"
-        class="w-12 h-12 flex items-center justify-center rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
+        class="flex-1 max-w-[72px] h-11 flex items-center justify-center rounded-xl active:scale-90 transition-all cursor-pointer relative"
+        :class="[
+          isLightWallpaper ? 'hover:bg-black/5 active:bg-black/10 text-zinc-900' : 'hover:bg-white/10 active:bg-white/15 text-white',
+          showRecents ? (isLightWallpaper ? 'bg-black/10 text-[var(--accent)]' : 'bg-white/15 text-[var(--accent)]') : ''
+        ]"
         aria-label="Recent apps"
       >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="3" width="18" height="18" rx="2"/>
-        </svg>
+        <div class="w-4 h-4 rounded-sm border-2 border-current"></div>
+        <span v-if="recentApps.length > 0" class="absolute top-2 right-4 w-1.5 h-1.5 rounded-full bg-[var(--accent)]"></span>
       </button>
       
       <!-- App Drawer -->
       <button
         @click="toggleAppDrawer"
-        class="w-12 h-12 flex items-center justify-center rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
+        class="flex-1 max-w-[72px] h-11 flex items-center justify-center rounded-xl active:scale-90 transition-all cursor-pointer"
+        :class="[
+          isLightWallpaper ? 'hover:bg-black/5 active:bg-black/10 text-zinc-900' : 'hover:bg-white/10 active:bg-white/15 text-white',
+          showAppDrawer ? (isLightWallpaper ? 'bg-black/10 text-[var(--accent)]' : 'bg-white/15 text-[var(--accent)]') : ''
+        ]"
         aria-label="Apps"
       >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="3" width="7" height="7" rx="1"/>
-          <rect x="14" y="3" width="7" height="7" rx="1"/>
-          <rect x="3" y="14" width="7" height="7" rx="1"/>
-          <rect x="14" y="14" width="7" height="7" rx="1"/>
-        </svg>
+        <div class="grid grid-cols-2 gap-0.5">
+          <div class="w-1.5 h-1.5 rounded-[1px] bg-current"></div>
+          <div class="w-1.5 h-1.5 rounded-[1px] bg-current"></div>
+          <div class="w-1.5 h-1.5 rounded-[1px] bg-current"></div>
+          <div class="w-1.5 h-1.5 rounded-[1px] bg-current"></div>
+        </div>
       </button>
-    </div>
+    </nav>
 
     <!-- Badge Legend (First-time tooltip) -->
     <Transition name="fade">
@@ -687,14 +743,23 @@ function toggleLocale() {
       >
         <div class="flex items-start gap-3">
           <div class="flex-1">
-            <p class="text-sm font-medium mb-2">Project Badges</p>
-            <div class="text-xs space-y-1 opacity-90">
-              <div>🌐 = Live site (opens in browser)</div>
-              <div>📸 = Screenshots (view gallery)</div>
-              <div>🔗 = GitHub only (source code)</div>
+            <p class="text-sm font-semibold mb-2">Project Badges</p>
+            <div class="text-xs space-y-1.5 opacity-95">
+              <div class="flex items-center gap-1.5">
+                <span class="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center text-[10px]">🌐</span>
+                <span>Live site (direct case study)</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center text-[10px]">📸</span>
+                <span>Screenshots (view gallery)</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center text-[10px]">🔗</span>
+                <span>GitHub only (source code)</span>
+              </div>
             </div>
           </div>
-          <button class="text-white/80 hover:text-white text-xl leading-none">×</button>
+          <button class="text-white/80 hover:text-white text-xl leading-none cursor-pointer">×</button>
         </div>
       </div>
     </Transition>
@@ -765,12 +830,19 @@ function toggleLocale() {
 
 .slide-up-enter-active,
 .slide-up-leave-active {
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
 }
 
 .slide-up-enter-from,
 .slide-up-leave-to {
   transform: translateY(100%);
+  opacity: 0;
+}
+
+.slide-up-enter-to,
+.slide-up-leave-from {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 .fade-enter-active,

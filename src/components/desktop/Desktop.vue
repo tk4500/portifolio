@@ -399,7 +399,8 @@ function handleReplayTour() {
   <!-- Desktop OS Experience (>= 768px) -->
   <div
     v-else
-    class="h-screen w-screen bg-[var(--desktop-bg)] text-white relative overflow-hidden grain-overlay"
+    class="h-screen w-screen bg-[var(--desktop-bg)] relative overflow-hidden grain-overlay transition-colors duration-300"
+    :class="systemStore.isDarkMode ? 'text-white' : 'text-zinc-900'"
     :style="{ background: systemStore.backgroundColor }"
     @click="handleDesktopClick"
   >

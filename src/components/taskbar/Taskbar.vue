@@ -237,7 +237,7 @@ const taskbarClass = computed(() => {
 
 <template>
   <div
-    class="glass bg-[var(--taskbar-bg)] text-white flex justify-between z-50 fixed select-none font-sans tracking-normal"
+    class="glass bg-[var(--taskbar-bg)] text-[var(--taskbar-text)] flex justify-between z-50 fixed select-none font-sans tracking-normal border-[var(--window-border)] transition-colors duration-200"
     :class="taskbarClass"
     @click.stop="closeDropdowns"
     @contextmenu="handleTaskbarContextMenu"
@@ -378,7 +378,7 @@ const taskbarClass = computed(() => {
         <button
           @click.stop="setLanguage('pt')"
           class="px-1.5 py-0.5 rounded text-[11px] font-semibold transition-all focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
-          :class="locale === 'pt' ? 'bg-[var(--accent)] text-white shadow-xs' : 'text-white/60 hover:text-white'"
+          :class="locale === 'pt' ? 'bg-[var(--accent)] text-zinc-950 font-bold shadow-xs' : 'opacity-70 hover:opacity-100'"
           aria-label="Português"
           title="Português"
         >
@@ -387,7 +387,7 @@ const taskbarClass = computed(() => {
         <button
           @click.stop="setLanguage('en')"
           class="px-1.5 py-0.5 rounded text-[11px] font-semibold transition-all focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
-          :class="locale === 'en' ? 'bg-[var(--accent)] text-white shadow-xs' : 'text-white/60 hover:text-white'"
+          :class="locale === 'en' ? 'bg-[var(--accent)] text-zinc-950 font-bold shadow-xs' : 'opacity-70 hover:opacity-100'"
           aria-label="English"
           title="English"
         >
@@ -406,7 +406,7 @@ const taskbarClass = computed(() => {
         <span class="opacity-70 hover:opacity-100">?</span>
       </button>
       
-      <div class="flex items-center gap-3 text-white" :class="isHorizontal ? 'flex-row pr-2' : 'flex-col pb-2'">
+      <div class="flex items-center gap-3 text-[var(--taskbar-text)]" :class="isHorizontal ? 'flex-row pr-2' : 'flex-col pb-2'">
         <span class="text-xs font-medium tracking-wide" :class="isHorizontal ? '' : 'writing-vertical-rl'">{{ time }}</span>
       </div>
     </div>

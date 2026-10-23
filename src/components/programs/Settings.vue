@@ -10,11 +10,31 @@ const languages: Array<'pt' | 'en'> = ['pt', 'en']
 const taskbarPositions: Array<'bottom' | 'top' | 'left' | 'right'> = ['bottom', 'top', 'left', 'right']
 
 const wallpapers = [
-  { id: 'darkGradient', value: 'linear-gradient(145deg, #0f0f14 0%, #1a1a24 50%, #12121a 100%)' },
-  { id: 'midnight', value: 'linear-gradient(145deg, #0b0f19 0%, #111827 50%, #0f172a 100%)' },
-  { id: 'sunset', value: 'linear-gradient(145deg, #1f120e 0%, #2a1810 50%, #180d09 100%)' },
-  { id: 'crimson', value: 'linear-gradient(145deg, #0a131a 0%, #0d1e2b 50%, #081119 100%)' }
+  {
+    id: 'darkGradient',
+    dark: 'linear-gradient(145deg, #0f0f14 0%, #1a1a24 50%, #12121a 100%)',
+    light: 'linear-gradient(145deg, #e4e7eb 0%, #f1f5f9 50%, #e2e8f0 100%)'
+  },
+  {
+    id: 'midnight',
+    dark: 'linear-gradient(145deg, #0b0f19 0%, #111827 50%, #0f172a 100%)',
+    light: 'linear-gradient(145deg, #dbeafe 0%, #e0e7ff 50%, #ede9fe 100%)'
+  },
+  {
+    id: 'sunset',
+    dark: 'linear-gradient(145deg, #1f120e 0%, #2a1810 50%, #180d09 100%)',
+    light: 'linear-gradient(145deg, #ffedd5 0%, #fef3c7 50%, #fee2e2 100%)'
+  },
+  {
+    id: 'crimson',
+    dark: 'linear-gradient(145deg, #0a131a 0%, #0d1e2b 50%, #081119 100%)',
+    light: 'linear-gradient(145deg, #ccfbf1 0%, #e0f2fe 50%, #e0e7ff 100%)'
+  }
 ]
+
+function getWallpaperValue(wall: typeof wallpapers[0]) {
+  return systemStore.isDarkMode ? wall.dark : wall.light
+}
 
 function handleLanguageChange(lang: 'pt' | 'en') {
   locale.value = lang
@@ -95,12 +115,12 @@ function handleLanguageChange(lang: 'pt' | 'en') {
           <button
             v-for="wall in wallpapers"
             :key="wall.id"
-            @click="systemStore.setBackgroundColor(wall.value)"
+            @click="systemStore.setBackgroundColor(getWallpaperValue(wall))"
             class="px-4 py-2 rounded-lg border transition-all font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] cursor-pointer flex items-center gap-2"
-            :class="systemStore.backgroundColor === wall.value ? 'bg-[var(--accent)] text-zinc-950 font-bold border-[var(--accent)] shadow-xs' : 'bg-transparent hover:bg-black/10 dark:hover:bg-white/10 border-[var(--window-border)]'"
-            :aria-pressed="systemStore.backgroundColor === wall.value"
+            :class="systemStore.backgroundColor === getWallpaperValue(wall) ? 'bg-[var(--accent)] text-zinc-950 font-bold border-[var(--accent)] shadow-xs' : 'bg-transparent hover:bg-black/10 dark:hover:bg-white/10 border-[var(--window-border)]'"
+            :aria-pressed="systemStore.backgroundColor === getWallpaperValue(wall)"
           >
-            <span class="w-3 h-3 rounded-full border border-white/20" :style="{ background: wall.value }"></span>
+            <span class="w-3.5 h-3.5 rounded-full border border-black/20 dark:border-white/20 shadow-xs" :style="{ background: getWallpaperValue(wall) }"></span>
             {{ t(`programs.settings.colors.${wall.id}`) }}
           </button>
         </div>

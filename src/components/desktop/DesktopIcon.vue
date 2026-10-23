@@ -201,7 +201,8 @@ function openProjectDetails(e: MouseEvent) {
 <template>
   <div
     ref="iconRef"
-    class="flex flex-col items-center justify-center w-24 h-24 rounded-lg hover:bg-white/10 cursor-pointer text-white group absolute transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+    class="flex flex-col items-center justify-center w-24 h-24 rounded-lg cursor-pointer group absolute transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+    :class="systemStore.isDarkMode ? 'text-white hover:bg-white/10' : 'text-zinc-900 hover:bg-black/5'"
     :style="style"
     :title="projectData?.description"
     role="button"
@@ -215,10 +216,18 @@ function openProjectDetails(e: MouseEvent) {
     @touchend="onMouseUp"
     @contextmenu="projectData ? openProjectDetails : undefined"
   >
-    <div class="w-12 h-12 bg-white/10 dark:bg-white/8 rounded-2xl shadow-[var(--shadow-md)] backdrop-blur-sm flex items-center justify-center mb-2 group-hover:scale-110 group-hover:shadow-[var(--shadow-lg)] transition-all duration-200 pointer-events-none border border-white/15 p-1">
+    <div
+      class="w-12 h-12 rounded-2xl shadow-[var(--shadow-md)] backdrop-blur-sm flex items-center justify-center mb-2 group-hover:scale-110 group-hover:shadow-[var(--shadow-lg)] transition-all duration-200 pointer-events-none border p-1"
+      :class="systemStore.isDarkMode ? 'bg-white/10 dark:bg-white/8 border-white/15' : 'bg-white/80 border-black/10 shadow-sm'"
+    >
       <Icon :icon="icon || 'icons/folder.svg'" :size="40" class="w-10 h-10 object-contain drop-shadow-sm" />
     </div>
-    <span style="font-size: var(--text-metadata); font-weight: var(--text-metadata-weight); letter-spacing: var(--text-metadata-tracking); line-height: var(--text-metadata-leading); text-shadow: var(--text-shadow-strong);" class="text-center select-none line-clamp-2 px-1 pointer-events-none">
+    <span
+      style="font-size: var(--text-metadata); font-weight: var(--text-metadata-weight); letter-spacing: var(--text-metadata-tracking); line-height: var(--text-metadata-leading);"
+      :style="systemStore.isDarkMode ? { textShadow: 'var(--text-shadow-strong)' } : {}"
+      class="text-center select-none line-clamp-2 px-1 pointer-events-none font-medium"
+      :class="systemStore.isDarkMode ? 'text-white' : 'text-zinc-900 font-semibold'"
+    >
       {{ skipTranslation ? titleKey : t(titleKey) }}
     </span>
   </div>
