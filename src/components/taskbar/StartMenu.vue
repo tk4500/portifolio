@@ -135,7 +135,7 @@ watch(() => systemStore.isStartMenuOpen, (isOpen) => {
       </div>
 
       <div class="flex-1 overflow-y-auto">
-        <h4 style="font-size: var(--text-metadata); font-weight: var(--text-metadata-weight); letter-spacing: var(--text-metadata-tracking); line-height: var(--text-metadata-leading);" class="opacity-40 tracking-wide mb-2 px-2" :class="{ 'hidden': isMobile }">{{ t('startMenu.apps') }}</h4>
+        <h3 style="font-size: var(--text-metadata); font-weight: var(--text-metadata-weight); letter-spacing: var(--text-metadata-tracking); line-height: var(--text-metadata-leading);" class="opacity-40 tracking-wide mb-2 px-2" :class="{ 'hidden': isMobile }">{{ t('startMenu.apps') }}</h3>
         <div class="grid" :class="isMobile ? 'grid-cols-3 sm:grid-cols-4 gap-4 py-2' : 'grid-cols-1 gap-1'">
           <button
             v-for="app in apps"

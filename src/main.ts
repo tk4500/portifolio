@@ -7,9 +7,18 @@ import App from './App.vue'
 import en from './locales/en.json'
 import pt from './locales/pt.json'
 
+const savedLocale = typeof localStorage !== 'undefined' ? localStorage.getItem('portfolio-locale') : null
+const initialLocale = (savedLocale === 'pt' || savedLocale === 'en')
+  ? savedLocale
+  : (navigator.language.split('-')[0] === 'pt' ? 'pt' : 'en')
+
+if (typeof document !== 'undefined') {
+  document.documentElement.lang = initialLocale
+}
+
 const i18n = createI18n({
   legacy: false, // Use Composition API
-  locale: navigator.language.split('-')[0] === 'pt' ? 'pt' : 'en', // auto-detect
+  locale: initialLocale,
   fallbackLocale: 'en',
   messages: {
     en,

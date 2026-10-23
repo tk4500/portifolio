@@ -10,6 +10,17 @@ const { t, locale } = useI18n()
 const categories = computed(() => {
   return (stackDataRaw as any)[locale.value] || (stackDataRaw as any)['en']
 })
+
+function getProficiency(level: number) {
+  if (locale.value === 'pt') {
+    if (level >= 90) return { label: 'Principal / Produção', tier: 'core' }
+    if (level >= 80) return { label: 'Avançado / Diário', tier: 'advanced' }
+    return { label: 'Ecosistema / Tooling', tier: 'proficient' }
+  }
+  if (level >= 90) return { label: 'Core / Production', tier: 'core' }
+  if (level >= 80) return { label: 'Advanced / Daily', tier: 'advanced' }
+  return { label: 'Ecosystem / Tooling', tier: 'proficient' }
+}
 </script>
 
 <template>
@@ -40,25 +51,27 @@ const categories = computed(() => {
             class="border rounded-xl p-3 hover:-translate-y-0.5 hover:shadow-lg transition-all flex flex-col justify-between group focus:outline-none focus-visible:ring-2" style="border-color: var(--tertiary-subtle); background: var(--tertiary-subtle);"
             tabindex="0"
           >
-            <div class="flex items-center gap-3 mb-3">
+            <div class="flex items-center gap-3 mb-2">
               <div class="w-8 h-8 flex-shrink-0 p-1.5 rounded-lg flex items-center justify-center" style="background: var(--tertiary); color: white;">
                 <Icon :icon="item.icon" :size="32" />
               </div>
               <span class="font-medium text-sm truncate" :title="item.name">{{ item.name }}</span>
             </div>
 
-            <!-- Usage level bar -->
-            <div class="mt-auto">
-              <div class="flex justify-between text-[10px] opacity-50 mb-1 tabular-nums">
-                <span>{{ t('programs.stack.usage') || 'Usage' }}</span>
-                <span>{{ item.level }}%</span>
-              </div>
-              <div class="w-full rounded-full h-1 overflow-hidden" style="background: var(--tertiary-subtle);">
-                <div
-                  class="h-1 rounded-full transition-all duration-1000 ease-out" style="background: var(--tertiary);"
-                  :style="`width: ${item.level}%`"
-                ></div>
-              </div>
+            <!-- Senior proficiency badge -->
+            <div class="mt-auto pt-2 border-t border-[var(--window-border)]/40 flex items-center justify-between">
+              <span class="text-[11px] font-medium tracking-tight opacity-75">
+                {{ getProficiency(item.level).label }}
+              </span>
+              <span
+                class="w-2 h-2 rounded-full"
+                :class="{
+                  'bg-[var(--accent)]': getProficiency(item.level).tier === 'core',
+                  'bg-[var(--secondary)]': getProficiency(item.level).tier === 'advanced',
+                  'bg-white/40': getProficiency(item.level).tier === 'proficient'
+                }"
+                :title="getProficiency(item.level).label"
+              ></span>
             </div>
           </div>
         </div>

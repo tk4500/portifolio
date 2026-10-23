@@ -32,7 +32,7 @@ const activeTab = ref((aboutDataRaw as any)['en'].tabs[0].id)
             :href="profile.resume"
             target="_blank"
             rel="noopener noreferrer"
-            class="mt-3 sm:mt-4 md:mt-0 md:absolute md:top-6 md:right-6 px-4 py-2 bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white text-sm font-medium rounded-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2 w-full sm:w-auto flex-shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2"
+            class="mt-3 sm:mt-4 md:mt-0 md:absolute md:top-6 md:right-6 px-4 py-2 bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-zinc-950 text-sm font-semibold rounded-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2 w-full sm:w-auto flex-shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
             {{ locale === 'pt' ? 'Currículo' : 'Resume' }}
@@ -58,7 +58,7 @@ const activeTab = ref((aboutDataRaw as any)['en'].tabs[0].id)
       <!-- Tab Content -->
       <div class="p-4 sm:p-6">
         <div v-for="tab in tabs" :key="tab.id" v-show="activeTab === tab.id" class="space-y-4 sm:space-y-5 max-w-3xl mx-auto">
-          <div v-for="(item, idx) in tab.items" :key="idx" class="border-l-2 pl-4 py-1 relative hover:border-[var(--secondary)] transition-colors" style="border-color: var(--secondary-subtle);">>
+          <div v-for="(item, idx) in tab.items" :key="idx" class="border-l-2 pl-4 py-1 relative hover:border-[var(--secondary)] transition-colors" style="border-color: var(--secondary-subtle);">
             <div class="absolute w-2.5 h-2.5 bg-[var(--accent)] rounded-full -left-[7px] top-2.5"></div>
             <div class="flex justify-between items-start mb-1 sm:flex-row flex-col sm:items-center gap-1 sm:gap-4">
               <h2 class="text-sm md:text-base font-semibold break-words tracking-tight">{{ item.title || item.role || item.degree }}</h2>

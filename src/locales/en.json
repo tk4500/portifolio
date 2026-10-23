@@ -30,7 +30,9 @@
     "activeWindows": "Active windows",
     "noActiveWindows": "No windows open",
     "clickToStart": "Open Start menu",
-    "keyboardHelp": "Keyboard shortcuts"
+    "keyboardHelp": "Keyboard shortcuts",
+    "language": "Language",
+    "languageSelect": "Select language"
   },
   "startMenu": {
     "developer": "Developer",
@@ -61,6 +63,12 @@
     },
     "settings": {
       "title": "Settings",
+      "language": "Language",
+      "languageDescription": "Choose your preferred interface language",
+      "languages": {
+        "pt": "Português",
+        "en": "English"
+      },
       "theme": "Theme",
       "themeDescription": "Color scheme",
       "themes": {
@@ -69,12 +77,14 @@
         "system": "System Default"
       },
       "positions": {
+        "title": "Taskbar Position",
         "bottom": "Bottom",
         "top": "Top",
         "left": "Left",
         "right": "Right"
       },
       "colors": {
+        "title": "Wallpaper Background",
         "darkGradient": "Dark Gradient",
         "lightBlue": "Soft Blue",
         "midnight": "Midnight",

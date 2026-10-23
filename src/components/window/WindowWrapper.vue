@@ -297,20 +297,20 @@ onUnmounted(() => {
       <div class="flex items-center gap-2 overflow-hidden">
         <Icon v-if="windowState.icon" :icon="windowState.icon" :size="20" />
         <span style="font-size: var(--text-label); font-weight: var(--text-label-weight); letter-spacing: var(--text-label-tracking); line-height: var(--text-label-leading);" class="text-[var(--window-title-text)] truncate font-sans">
-          {{ t(windowState.titleKey) }}
+          {{ windowState.skipTranslation ? windowState.titleKey : t(windowState.titleKey) }}
         </span>
       </div>
 
       <!-- Window Controls -->
-      <div class="flex gap-2">
-        <button @click.stop="minimize" aria-label="Minimize window" class="w-11 h-11 flex items-center justify-center rounded hover:bg-black/10 text-[var(--window-title-text)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">
+      <div class="flex items-center gap-1.5">
+        <button @click.stop="minimize" aria-label="Minimize window" class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-black/10 text-[var(--window-title-text)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="1" y="5" width="10" height="2" fill="currentColor"/></svg>
         </button>
-        <button @click.stop="toggleMaximize" aria-label="Maximize window" class="w-11 h-11 flex items-center justify-center rounded hover:bg-black/10 text-[var(--window-title-text)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">
+        <button @click.stop="toggleMaximize" aria-label="Maximize window" class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-black/10 text-[var(--window-title-text)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">
           <svg v-if="!windowState.isMaximized" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="1.5" y="1.5" width="9" height="9" stroke="currentColor" stroke-width="1.5"/></svg>
           <svg v-else width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="1.5" y="3.5" width="7" height="7" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 3.5V1.5H10.5V8.5H8.5" stroke="currentColor" stroke-width="1.5"/></svg>
         </button>
-        <button @click.stop="close" aria-label="Close window" class="w-11 h-11 flex items-center justify-center rounded hover:bg-[var(--danger)] hover:text-white text-[var(--window-title-text)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--danger)]">
+        <button @click.stop="close" aria-label="Close window" class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-[var(--danger)] hover:text-white text-[var(--window-title-text)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--danger)]">
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2 2L10 10M10 2L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         </button>
       </div>

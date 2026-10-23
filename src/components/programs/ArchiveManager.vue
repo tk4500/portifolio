@@ -13,11 +13,12 @@ const projects = computed(() => (projectsDataRaw as any)[locale.value] || (proje
 function openProject(project: any) {
   windowsStore.registerOrOpenWindow({
     appId: `projectViewer_${project.id}`,
-    titleKey: project.name, // using raw string here for dynamic titles
+    titleKey: project.name,
+    skipTranslation: true,
     component: 'projectViewer',
     props: { project },
-    width: 700,
-    height: 500,
+    width: 750,
+    height: 550,
     icon: project.icon,
     allowMultiple: true
   })
@@ -44,7 +45,7 @@ function openProject(project: any) {
       <div
         v-for="project in projects"
         :key="project.id"
-        class="w-24 flex flex-col items-center gap-1 p-2 rounded-lg cursor-pointer group hover:-translate-y-0.5 hover:shadow-md transition-all focus:outline-none" style="background: var(--secondary-subtle);"
+        class="w-24 flex flex-col items-center gap-1 p-2 rounded-lg cursor-pointer group hover:-translate-y-0.5 hover:shadow-md transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]" style="background: var(--secondary-subtle);"
         role="button"
         tabindex="0"
         @keydown.enter="openProject(project)"

@@ -29,7 +29,10 @@
     "notifications": "Notificações",
     "activeWindows": "Janelas ativas",
     "noActiveWindows": "Nenhuma janela aberta",
-    "clickToStart": "Clique para abrir o menu Iniciar"
+    "clickToStart": "Clique para abrir o menu Iniciar",
+    "keyboardHelp": "Atalhos de teclado",
+    "language": "Idioma",
+    "languageSelect": "Selecionar idioma"
   },
   "startMenu": {
     "developer": "Desenvolvedor",
@@ -60,6 +63,12 @@
     },
     "settings": {
       "title": "Configurações do Sistema",
+      "language": "Idioma",
+      "languageDescription": "Escolha seu idioma preferido para a interface",
+      "languages": {
+        "pt": "Português",
+        "en": "English"
+      },
       "theme": "Tema",
       "themeDescription": "Escolha seu esquema de cores preferido",
       "themes": {
@@ -68,12 +77,14 @@
         "system": "Padrão do Sistema"
       },
       "positions": {
+        "title": "Posição da Barra de Tarefas",
         "bottom": "Embaixo",
         "top": "No topo",
         "left": "Esquerda",
         "right": "Direita"
       },
       "colors": {
+        "title": "Plano de Fundo da Área de Trabalho",
         "darkGradient": "Gradiente Escuro",
         "lightBlue": "Azul Suave",
         "midnight": "Meia-noite",

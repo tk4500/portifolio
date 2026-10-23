@@ -89,6 +89,12 @@ function updateTime() {
   time.value = now.toLocaleTimeString(locale.value, { hour: '2-digit', minute: '2-digit' })
 }
 
+function setLanguage(lang: 'pt' | 'en') {
+  locale.value = lang
+  systemStore.setLocale(lang)
+  updateTime()
+}
+
 let timer: number
 let initialTimer: number
 
@@ -246,7 +252,7 @@ const taskbarClass = computed(() => {
           :class="[
             isHorizontal ? 'px-4 h-9' : 'w-9 h-9 min-h-[36px] min-w-[36px] mt-1',
             systemStore.isStartMenuOpen ? 'bg-white/30' : '',
-            { 'shadow-[0_0_8px_var(--accent)]/30': windowsStore.activeWindows.length === 0 && !systemStore.isStartMenuOpen && !isMobile }
+            { 'ring-1 ring-[var(--accent)]/50 shadow-[0_2px_8px_rgba(0,0,0,0.3)]': windowsStore.activeWindows.length === 0 && !systemStore.isStartMenuOpen && !isMobile }
           ]"
           :aria-expanded="systemStore.isStartMenuOpen"
           :aria-label="t('taskbar.start')"
@@ -362,6 +368,33 @@ const taskbarClass = computed(() => {
 
     <!-- System Tray -->
     <div class="flex items-center text-sm shrink-0 h-full" :class="isHorizontal ? 'flex-row gap-2' : 'flex-col w-full gap-2'">
+      <!-- Language Switcher Toggle -->
+      <div
+        class="flex items-center bg-white/10 rounded-md p-0.5"
+        :class="isHorizontal ? 'flex-row' : 'flex-col'"
+        role="group"
+        :aria-label="t('taskbar.languageSelect')"
+      >
+        <button
+          @click.stop="setLanguage('pt')"
+          class="px-1.5 py-0.5 rounded text-[11px] font-semibold transition-all focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
+          :class="locale === 'pt' ? 'bg-[var(--accent)] text-white shadow-xs' : 'text-white/60 hover:text-white'"
+          aria-label="Português"
+          title="Português"
+        >
+          PT
+        </button>
+        <button
+          @click.stop="setLanguage('en')"
+          class="px-1.5 py-0.5 rounded text-[11px] font-semibold transition-all focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
+          :class="locale === 'en' ? 'bg-[var(--accent)] text-white shadow-xs' : 'text-white/60 hover:text-white'"
+          aria-label="English"
+          title="English"
+        >
+          EN
+        </button>
+      </div>
+
       <!-- Keyboard Shortcuts Help Indicator -->
       <button
         @click.stop="$emit('show-shortcuts')"

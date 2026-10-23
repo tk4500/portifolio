@@ -38,6 +38,30 @@ function openLiveSite() {
     allowMultiple: true
   })
 }
+
+function getTechName(iconPath: string): string {
+  const file = iconPath.split('/').pop()?.replace('-original.svg', '').replace('.svg', '') || ''
+  const map: Record<string, string> = {
+    angular: 'Angular',
+    vuejs: 'Vue.js',
+    react: 'React',
+    javascript: 'JavaScript',
+    typescript: 'TypeScript',
+    html5: 'HTML5',
+    css3: 'CSS3',
+    tailwindcss: 'Tailwind CSS',
+    primeng: 'PrimeNG',
+    pinia: 'Pinia',
+    vitejs: 'Vite',
+    nodejs: 'Node.js',
+    python: 'Python',
+    postgresql: 'PostgreSQL',
+    mongodb: 'MongoDB',
+    docker: 'Docker',
+    git: 'Git'
+  }
+  return map[file.toLowerCase()] || file.charAt(0).toUpperCase() + file.slice(1)
+}
 </script>
 
 <template>
@@ -63,8 +87,16 @@ function openLiveSite() {
       <!-- Tech Stack -->
       <div v-if="currentProject.stack && currentProject.stack.length > 0" class="flex flex-wrap gap-3">
         <h2 class="w-full text-xs font-semibold tracking-wide opacity-40">{{ t('programs.projectViewer.techStack') }}</h2>
-        <div v-for="(techIcon, idx) in currentProject.stack" :key="idx" class="w-10 h-10 bg-black/[0.04] dark:bg-white/[0.04] p-2 rounded-lg border border-[var(--window-border)] flex items-center justify-center hover:shadow-md hover:scale-105 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]" tabindex="0">
+        <div
+          v-for="(techIcon, idx) in currentProject.stack"
+          :key="idx"
+          class="flex items-center gap-2 bg-black/[0.04] dark:bg-white/[0.04] px-2.5 py-1.5 rounded-lg border border-[var(--window-border)] hover:shadow-sm hover:scale-105 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+          tabindex="0"
+          :title="getTechName(techIcon)"
+          :aria-label="getTechName(techIcon)"
+        >
           <Icon :icon="techIcon" :size="20" />
+          <span class="text-xs font-medium">{{ getTechName(techIcon) }}</span>
         </div>
       </div>
 
@@ -73,7 +105,7 @@ function openLiveSite() {
         <button
           v-if="currentProject.url"
           @click="openLiveSite"
-          class="px-5 py-2.5 bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white font-medium rounded-lg shadow-sm hover:shadow-md transition-all flex items-center gap-2 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--accent)]"
+          class="px-5 py-2.5 bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-zinc-950 font-semibold rounded-lg shadow-sm hover:shadow-md transition-all flex items-center gap-2 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--accent)] cursor-pointer"
         >
           <span>🌐</span> {{ t('programs.projectViewer.openLiveSite') }}
         </button>

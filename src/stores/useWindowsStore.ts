@@ -44,8 +44,21 @@ export const useWindowsStore = defineStore('windows', () => {
   }
 
   // Configuration for initial window spawn positions
-  let nextSpawnX = 50
-  let nextSpawnY = 50
+  let nextSpawnOffset = 0
+
+  function getSpawnCoords(width = 600, height = 450) {
+    if (typeof window !== 'undefined' && window.innerWidth >= 768) {
+      const centerX = Math.max(260, Math.round((window.innerWidth - width) / 2))
+      const centerY = Math.max(40, Math.round((window.innerHeight - height) / 2) - 20)
+      const stagger = (nextSpawnOffset * 28) % 140
+      nextSpawnOffset++
+      return {
+        x: Math.max(240, Math.min(window.innerWidth - width - 40, centerX + stagger)),
+        y: Math.max(30, Math.min(window.innerHeight - height - 80, centerY + stagger))
+      }
+    }
+    return { x: 50, y: 50 }
+  }
 
   const activeWindows = computed(() => windows.value.filter(w => w.isOpen))
 
@@ -68,10 +81,9 @@ export const useWindowsStore = defineStore('windows', () => {
       if (!existing.isOpen) {
         existing.isOpen = true
         existing.isMinimized = false
-        // Reset position slightly staggered
-        existing.x = nextSpawnX
-        existing.y = nextSpawnY
-        incrementSpawnCoords()
+        const coords = getSpawnCoords(existing.width, existing.height)
+        existing.x = coords.x
+        existing.y = coords.y
       } else if (existing.isMinimized) {
         existing.isMinimized = false
       }
@@ -82,6 +94,7 @@ export const useWindowsStore = defineStore('windows', () => {
     // Create new window
     highestZIndex.value++
     normalizeZIndexes()
+    const coords = getSpawnCoords(newWindow.width, newWindow.height)
     windows.value.push({
       ...newWindow,
       id: targetId as string,
@@ -90,18 +103,9 @@ export const useWindowsStore = defineStore('windows', () => {
       isMaximized: false,
       snappedPosition: null,
       zIndex: highestZIndex.value,
-      x: nextSpawnX,
-      y: nextSpawnY
+      x: coords.x,
+      y: coords.y
     })
-
-    incrementSpawnCoords()
-  }
-
-  function incrementSpawnCoords() {
-    nextSpawnX += 30
-    nextSpawnY += 30
-    if (nextSpawnX > 300) nextSpawnX = 50
-    if (nextSpawnY > 300) nextSpawnY = 50
   }
 
   function closeWindow(id: string) {

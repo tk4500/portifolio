@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
@@ -50,11 +50,25 @@ watch(() => currentStep.value, (newStep) => {
   highlightedElement.value = step.highlight || null
 })
 
+function handleKeydown(e: KeyboardEvent) {
+  if (e.key === 'Escape' && props.show) {
+    e.preventDefault()
+    skip()
+  }
+}
+
 watch(() => props.show, (isShown) => {
   if (isShown) {
     currentStep.value = 0
     highlightedElement.value = null
+    window.addEventListener('keydown', handleKeydown)
+  } else {
+    window.removeEventListener('keydown', handleKeydown)
   }
+}, { immediate: true })
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown)
 })
 
 function nextStep() {

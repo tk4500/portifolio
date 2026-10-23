@@ -102,7 +102,25 @@ function onMouseUp(e: MouseEvent | TouchEvent) {
 }
 
 function open() {
-  // If this icon has a URL, open it in an iframe window
+  // If this icon has projectData, open the case study viewer by default (avoids CORS/CSP iframe blocks)
+  if (props.projectData) {
+    windowsStore.registerOrOpenWindow({
+      appId: `project_viewer_${props.projectData.id}`,
+      titleKey: props.projectData.name,
+      component: 'projectViewer',
+      width: 750,
+      height: 600,
+      icon: props.icon,
+      allowMultiple: false,
+      skipTranslation: true,
+      props: {
+        project: props.projectData
+      }
+    })
+    return
+  }
+
+  // If this icon has a standalone URL without project metadata, open iframe
   if (props.url) {
     windowsStore.registerOrOpenWindow({
       appId: props.id,
@@ -117,38 +135,52 @@ function open() {
         title: props.titleKey
       }
     })
-  } else {
-    // Regular app window
-    windowsStore.registerOrOpenWindow({
-      appId: props.id,
-      titleKey: props.titleKey,
-      component: props.id,
-      width: 600,
-      height: 400,
-      icon: props.icon,
-      allowMultiple: props.id === 'archive'
-    })
+    return
   }
+
+  // Regular app window
+  const appDimensions: Record<string, { width: number; height: number }> = {
+    about: { width: 640, height: 520 },
+    archive: { width: 700, height: 500 },
+    stack: { width: 600, height: 500 },
+    contact: { width: 500, height: 420 },
+    settings: { width: 550, height: 450 }
+  }
+
+  const dims = appDimensions[props.id] || { width: 600, height: 400 }
+
+  windowsStore.registerOrOpenWindow({
+    appId: props.id,
+    titleKey: props.titleKey,
+    component: props.id,
+    width: dims.width,
+    height: dims.height,
+    icon: props.icon,
+    allowMultiple: props.id === 'archive'
+  })
 }
 
 function openProjectDetails(e: MouseEvent) {
   e.preventDefault()
   e.stopPropagation()
   
-  if (props.projectData) {
+  // Right-click provides direct live preview if URL exists
+  if (props.url && props.projectData) {
     windowsStore.registerOrOpenWindow({
-      appId: `project_viewer_${props.projectData.id}`,
-      titleKey: props.projectData.name,
-      component: 'projectViewer',
-      width: 700,
-      height: 600,
+      appId: `live_${props.id}`,
+      titleKey: `Live: ${props.projectData.name}`,
+      component: 'iframe',
+      width: 1000,
+      height: 700,
       icon: props.icon,
       allowMultiple: false,
-      skipTranslation: true,
       props: {
-        project: props.projectData
+        url: props.url,
+        title: props.titleKey
       }
     })
+  } else {
+    open()
   }
 }
 </script>
@@ -156,7 +188,7 @@ function openProjectDetails(e: MouseEvent) {
 <template>
   <div
     ref="iconRef"
-    class="flex flex-col items-center justify-center w-24 h-24 rounded hover:bg-white/10 cursor-pointer text-white group absolute transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
+    class="flex flex-col items-center justify-center w-24 h-24 rounded-lg hover:bg-white/10 cursor-pointer text-white group absolute transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
     :style="style"
     :title="projectData?.description"
     role="button"

@@ -274,14 +274,30 @@ const currentTime = ref(new Date().toLocaleTimeString([], { hour: '2-digit', min
 setInterval(() => {
   currentTime.value = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 }, 60000)
+
+function toggleLocale() {
+  const nextLocale = locale.value === 'pt' ? 'en' : 'pt'
+  locale.value = nextLocale
+  systemStore.setLocale(nextLocale)
+}
 </script>
 
 <template>
   <div class="mobile-os fixed inset-0 bg-gradient-to-b from-sky-400 to-sky-300 dark:from-slate-800 dark:to-slate-900 overflow-hidden">
     
     <!-- Status Bar -->
-    <div class="status-bar h-6 bg-black/10 dark:bg-white/5 flex items-center justify-between px-4 text-xs" style="color: var(--text);">
-      <span>{{ currentTime }}</span>
+    <div class="status-bar h-6 bg-black/10 dark:bg-white/5 flex items-center justify-between px-4 text-xs select-none" style="color: var(--text);">
+      <div class="flex items-center gap-2">
+        <span>{{ currentTime }}</span>
+        <button
+          @click="toggleLocale"
+          class="px-1.5 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:hover:bg-white/20 transition-colors cursor-pointer"
+          :aria-label="t('taskbar.languageSelect')"
+          title="Switch language"
+        >
+          {{ locale }}
+        </button>
+      </div>
       <div class="flex gap-2 items-center">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M5 12.55a11 11 0 0 1 14 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/>

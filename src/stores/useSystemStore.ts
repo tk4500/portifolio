@@ -14,6 +14,21 @@ export const useSystemStore = defineStore('system', () => {
   const backgroundColor = ref('linear-gradient(145deg, #0f0f14 0%, #1a1a24 50%, #12121a 100%)')
   const isStartMenuOpen = ref(false)
   const theme = ref<'light' | 'dark' | 'system'>('system')
+  const locale = ref<'pt' | 'en'>(
+    typeof localStorage !== 'undefined' && (localStorage.getItem('portfolio-locale') === 'pt' || localStorage.getItem('portfolio-locale') === 'en')
+      ? (localStorage.getItem('portfolio-locale') as 'pt' | 'en')
+      : (typeof navigator !== 'undefined' && navigator.language.split('-')[0] === 'pt' ? 'pt' : 'en')
+  )
+
+  function setLocale(newLocale: 'pt' | 'en') {
+    locale.value = newLocale
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('portfolio-locale', newLocale)
+    }
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = newLocale
+    }
+  }
 
   // Apply theme to HTML class
   function applyTheme(newTheme: 'light' | 'dark' | 'system') {
@@ -78,10 +93,12 @@ export const useSystemStore = defineStore('system', () => {
     backgroundColor,
     isStartMenuOpen,
     theme,
+    locale,
     desktopIcons,
     setTaskbarPosition,
     setBackgroundColor,
     applyTheme,
+    setLocale,
     toggleStartMenu,
     closeStartMenu,
     updateIconPosition

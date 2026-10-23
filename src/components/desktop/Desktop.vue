@@ -25,28 +25,47 @@ const isMobile = computed(() => screenWidth.value < 768)
 // Onboarding state
 const showWelcomeTour = ref(false)
 
-// Generate desktop icons from projects with live URLs
+// Generate desktop icons with multi-column layout
 const desktopIcons = computed(() => {
   const projects = (projectsDataRaw as any)[locale.value] || (projectsDataRaw as any)['en']
   const liveProjects = projects
     .filter((p: any) => p.url && p.url.trim() !== '')
-    .map((p: any, index: number) => ({
+    .map((p: any) => ({
       id: `project_${p.id}`,
       titleKey: p.name, // Already localized from projects.json
       icon: p.icon,
       url: p.url,
       skipTranslation: true, // Don't translate, already localized
-      projectData: p, // Pass full project data for right-click modal
-      initialX: 20,
-      initialY: 20 + (index * 110) // Stack vertically
+      projectData: p // Pass full project data
     }))
   
-  // Add core apps
-  return [
-    { id: 'about', titleKey: 'desktop.icons.about', icon: 'icons/user.svg', initialX: 20, initialY: 20 },
-    { id: 'archive', titleKey: 'desktop.icons.projects', icon: 'icons/folder.svg', initialX: 20, initialY: 130 },
-    ...liveProjects.map((p: any, i: number) => ({ ...p, initialY: 240 + (i * 110) }))
+  // Core system applications
+  const systemApps = [
+    { id: 'about', titleKey: 'desktop.icons.about', icon: 'icons/user.svg' },
+    { id: 'archive', titleKey: 'desktop.icons.projects', icon: 'icons/folder.svg' },
+    { id: 'stack', titleKey: 'desktop.icons.stack', icon: 'icons/tools.svg' },
+    { id: 'contact', titleKey: 'desktop.icons.contact', icon: 'icons/mail.svg' },
+    { id: 'settings', titleKey: 'desktop.icons.settings', icon: 'icons/settings.svg' }
   ]
+
+  const allIcons = [...systemApps, ...liveProjects]
+
+  // Multi-column grid placement (4 icons per column to prevent vertical overflow)
+  const maxRowsPerCol = 4
+  const startX = 20
+  const startY = 20
+  const stepX = 110
+  const stepY = 110
+
+  return allIcons.map((icon, idx) => {
+    const col = Math.floor(idx / maxRowsPerCol)
+    const row = idx % maxRowsPerCol
+    return {
+      ...icon,
+      initialX: startX + col * stepX,
+      initialY: startY + row * stepY
+    }
+  })
 })
 
 // ARIA Announcer for Window Focus
@@ -211,8 +230,8 @@ function handleKeydown(e: KeyboardEvent) {
     return
   }
   
-  // Ctrl+W: Close active window
-  if (e.ctrlKey && e.key === 'w') {
+  // Alt+W: Close active window
+  if (e.altKey && e.key.toLowerCase() === 'w') {
     e.preventDefault()
     const visibleWindows = windowsStore.activeWindows.filter(w => !w.isMinimized)
     if (visibleWindows.length === 0) return
@@ -359,7 +378,7 @@ function handleReplayTour() {
   <!-- Desktop OS Experience (>= 768px) -->
   <div
     v-else
-    class="h-screen w-screen bg-[var(--desktop-bg)] relative overflow-auto grain-overlay"
+    class="h-screen w-screen bg-[var(--desktop-bg)] text-white relative overflow-hidden grain-overlay"
     :style="{ background: systemStore.backgroundColor }"
     @click="handleDesktopClick"
   >
@@ -414,7 +433,7 @@ function handleReplayTour() {
               v-for="(win, idx) in altTabWindows"
               :key="win.id"
               class="flex flex-col items-center gap-2 p-4 rounded-lg transition-all min-w-[120px]"
-              :class="idx === altTabIndex ? 'bg-[var(--accent)] text-white scale-105' : 'bg-black/5 dark:bg-white/5 text-[var(--window-title-text)]'"
+              :class="idx === altTabIndex ? 'bg-[var(--accent)] text-black font-bold scale-105' : 'bg-black/5 dark:bg-white/5 text-[var(--window-title-text)]'"
             >
               <div class="text-3xl">{{ win.icon || '🪟' }}</div>
               <div class="text-sm font-medium text-center line-clamp-2">{{ t(win.titleKey) }}</div>
@@ -428,7 +447,7 @@ function handleReplayTour() {
     <Transition name="slide-down">
       <div
         v-if="shortcutToast"
-        class="fixed top-20 left-1/2 -translate-x-1/2 bg-[var(--accent)] text-white px-4 py-2 rounded-lg shadow-lg z-[100] font-sans text-sm"
+        class="fixed top-20 left-1/2 -translate-x-1/2 bg-[var(--accent)] text-black font-semibold px-4 py-2 rounded-lg shadow-lg z-[100] font-sans text-sm"
       >
         {{ shortcutToast.text }}
       </div>
@@ -438,9 +457,9 @@ function handleReplayTour() {
     <Transition name="slide-down">
       <div
         v-if="showDiscoveryTooltip"
-        class="fixed top-20 left-1/2 -translate-x-1/2 bg-[var(--accent)] text-white px-5 py-3 rounded-lg shadow-xl z-[100] font-sans text-sm max-w-sm text-center"
+        class="fixed top-20 left-1/2 -translate-x-1/2 bg-[var(--accent)] text-black font-medium px-5 py-3 rounded-lg shadow-xl z-[100] font-sans text-sm max-w-sm text-center"
       >
-        💡 <strong>Tip:</strong> Press <kbd class="px-2 py-1 mx-1 bg-white/20 rounded font-mono text-xs">?</kbd> for keyboard shortcuts, or click the <strong>?</strong> in the taskbar
+        💡 <strong>Tip:</strong> Press <kbd class="px-2 py-1 mx-1 bg-black/15 text-black rounded font-mono text-xs">?</kbd> for keyboard shortcuts, or click the <strong>?</strong> in the taskbar
       </div>
     </Transition>
 

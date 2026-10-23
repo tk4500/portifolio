@@ -65,7 +65,7 @@ onUnmounted(() => {
             <div class="flex items-center justify-between py-2">
               <span class="text-sm text-[var(--window-title-text)]">{{ t('shortcuts.closeWindow') }}</span>
               <div class="flex gap-1">
-                <kbd class="px-2 py-1 text-xs font-mono bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded shadow-sm">Ctrl</kbd>
+                <kbd class="px-2 py-1 text-xs font-mono bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded shadow-sm">Alt</kbd>
                 <span class="text-[var(--text-secondary)]">+</span>
                 <kbd class="px-2 py-1 text-xs font-mono bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded shadow-sm">W</kbd>
               </div>
