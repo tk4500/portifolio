@@ -221,6 +221,14 @@ function goHome() {
 }
 
 function goBack() {
+  if (showAppDrawer.value) {
+    showAppDrawer.value = false
+    return
+  }
+  if (showRecents.value) {
+    showRecents.value = false
+    return
+  }
   if (currentApp.value) {
     goHome()
   }
