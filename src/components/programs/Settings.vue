@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useSystemStore } from '../../stores/useSystemStore'
 import { useI18n } from 'vue-i18n'
+import Icon from '../ui/Icon.vue'
 
 const systemStore = useSystemStore()
 const { t, locale } = useI18n()

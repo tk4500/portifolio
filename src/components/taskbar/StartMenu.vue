@@ -38,7 +38,8 @@ const profileData = computed(() => {
   return {
     name: about?.profile?.name || 'User',
     firstName: about?.profile?.name?.split(' ')[0] || 'User',
-    avatar: about?.profile?.avatar || 'pfp.jpeg'
+    avatar: about?.profile?.avatar || 'pfp.jpeg',
+    resume: about?.profile?.resume || 'Resume.pdf'
   }
 })
 
@@ -121,10 +122,22 @@ watch(() => systemStore.isStartMenuOpen, (isOpen) => {
         <div class="w-12 h-12 bg-[var(--accent-subtle)] rounded-full flex items-center justify-center border border-[var(--accent)]/10 shrink-0 overflow-hidden">
           <img :src="profileData.avatar" :alt="profileData.name" loading="lazy" class="w-full h-full object-cover" />
         </div>
-        <div>
-          <h2 style="font-size: var(--text-heading); font-weight: var(--text-heading-weight); letter-spacing: var(--text-heading-tracking); line-height: var(--text-heading-leading);" class="tracking-tight">{{ profileData.firstName }}</h2>
+        <div class="flex-1 min-w-0">
+          <h2 style="font-size: var(--text-heading); font-weight: var(--text-heading-weight); letter-spacing: var(--text-heading-tracking); line-height: var(--text-heading-leading);" class="tracking-tight truncate">{{ profileData.firstName }}</h2>
           <p class="text-xs opacity-60">{{ t('startMenu.portfolioSystem') }}</p>
         </div>
+        <a
+          v-if="profileData.resume"
+          :href="profileData.resume"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="px-2.5 py-1.5 rounded-lg bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-zinc-950 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+          :title="`${t('desktop.resume')} (${profileData.resume})`"
+          :aria-label="t('desktop.resume')"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          <span class="hidden sm:inline">{{ t('desktop.resume') }}</span>
+        </a>
       </div>
 
       <div class="flex-1 overflow-y-auto">

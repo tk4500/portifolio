@@ -7,6 +7,7 @@ import DesktopIcon from './DesktopIcon.vue'
 import MobileOS from '../mobile/MobileOS.vue'
 import LoadingSpinner from '../ui/LoadingSpinner.vue'
 import ErrorState from '../ui/ErrorState.vue'
+import Icon from '../ui/Icon.vue'
 import { useWindowsStore } from '../../stores/useWindowsStore'
 import { useSystemStore } from '../../stores/useSystemStore'
 import { defineAsyncComponent, onMounted, onUnmounted, watch, ref, computed } from 'vue'
@@ -14,6 +15,8 @@ import { useI18n } from 'vue-i18n'
 import { useWindowSize } from '@vueuse/core'
 import projectsDataRaw from '../../assets/data/projects.json'
 import appsDataRaw from '../../assets/data/apps.json'
+import aboutDataRaw from '../../assets/data/about.json'
+import contactDataRaw from '../../assets/data/contact.json'
 
 const windowsStore = useWindowsStore()
 const systemStore = useSystemStore()
@@ -22,6 +25,43 @@ const { width: screenWidth } = useWindowSize()
 
 // Responsive detection
 const isMobile = computed(() => screenWidth.value < 768)
+
+// Dynamic profile and contact data for quick access
+const currentProfile = computed(() => {
+  const lang = locale.value as 'pt' | 'en'
+  return (aboutDataRaw as any)[lang]?.profile || aboutDataRaw.pt.profile
+})
+
+const emailAddress = computed(() => {
+  const emailItem = contactDataRaw.en.find(item => item.id === 'email')
+  return emailItem ? emailItem.url.replace('mailto:', '') : 'tarcisioluizpereirabogo@gmail.com'
+})
+
+const emailCopied = ref(false)
+function copyEmail() {
+  if (emailAddress.value) {
+    navigator.clipboard.writeText(emailAddress.value)
+    emailCopied.value = true
+    setTimeout(() => {
+      emailCopied.value = false
+    }, 2000)
+  }
+}
+
+const quickAccessPosition = computed(() => {
+  switch (systemStore.taskbarPosition) {
+    case 'bottom':
+      return 'bottom-16 right-6'
+    case 'top':
+      return 'bottom-6 right-6'
+    case 'right':
+      return 'bottom-6 right-16'
+    case 'left':
+      return 'bottom-6 right-6'
+    default:
+      return 'bottom-16 right-6'
+  }
+})
 
 // Onboarding state
 const showWelcomeTour = ref(false)
@@ -238,8 +278,8 @@ function handleKeydown(e: KeyboardEvent) {
     return
   }
   
-  // Win+D: Show desktop (minimize all)
-  if ((e.metaKey || e.key === 'Meta' || e.key === 'OS') && e.key.toLowerCase() === 'd') {
+  // Win+D or Alt+D: Show desktop (minimize all)
+  if (((e.metaKey || e.key === 'Meta' || e.key === 'OS') && e.key.toLowerCase() === 'd') || (e.altKey && e.key.toLowerCase() === 'd')) {
     e.preventDefault()
     const hasVisibleWindows = windowsStore.activeWindows.some(w => !w.isMinimized)
     windowsStore.activeWindows.forEach(w => {
@@ -254,8 +294,8 @@ function handleKeydown(e: KeyboardEvent) {
     return
   }
   
-  // Win+[1-9]: Focus nth window
-  if ((e.metaKey || e.key === 'Meta' || e.key === 'OS') && /^[1-9]$/.test(e.key)) {
+  // Win+[1-9] or Alt+[1-9]: Focus nth window
+  if (((e.metaKey || e.key === 'Meta' || e.key === 'OS') && /^[1-9]$/.test(e.key)) || (e.altKey && /^[1-9]$/.test(e.key))) {
     e.preventDefault()
     const index = parseInt(e.key) - 1
     const sortedWindows = [...windowsStore.activeWindows].sort((a, b) => b.zIndex - a.zIndex)
@@ -416,6 +456,61 @@ function handleReplayTour() {
       :skip-translation="icon.skipTranslation"
       :project-data="icon.projectData"
     />
+
+    <!-- Desktop Quick Access Card (Subtle recruiter anchor) -->
+    <div
+      class="fixed z-0 select-none pointer-events-auto transition-all duration-300 hidden md:flex flex-col gap-2 p-3.5 rounded-2xl bg-white/40 dark:bg-zinc-900/40 backdrop-blur-md border border-black/5 dark:border-white/10 shadow-sm hover:shadow-md hover:bg-white/60 dark:hover:bg-zinc-900/60 max-w-xs group"
+      :class="quickAccessPosition"
+      @click.stop
+    >
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-full bg-[var(--accent)] text-zinc-950 font-bold text-xs flex items-center justify-center shrink-0 shadow-sm font-sans">
+          TS
+        </div>
+        <div class="min-w-0">
+          <p class="text-xs font-semibold text-[var(--window-title-text)] truncate leading-tight font-sans">
+            {{ currentProfile.name }}
+          </p>
+          <p class="text-[11px] text-[var(--text-secondary)] truncate leading-tight mt-0.5 font-sans">
+            {{ currentProfile.role }}
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-1.5 pt-1 border-t border-black/5 dark:border-white/5 font-sans">
+        <!-- Resume download -->
+        <a
+          :href="currentProfile.resume"
+          download
+          class="flex-1 flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-[var(--accent)] text-zinc-950 hover:brightness-105 active:scale-95 transition-all shadow-sm cursor-pointer"
+          :title="`${t('desktop.resume')} (${currentProfile.resume})`"
+          :aria-label="`${t('desktop.resume')} (${currentProfile.resume})`"
+        >
+          <svg class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          <span class="truncate">{{ t('desktop.resume') }}</span>
+        </a>
+
+        <!-- 1-Click Email copy -->
+        <button
+          @click="copyEmail"
+          class="flex items-center justify-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-[var(--window-title-text)] active:scale-95 transition-all cursor-pointer"
+          :title="emailCopied ? t('programs.contact.copied') : emailAddress"
+          :aria-label="emailCopied ? t('programs.contact.copied') : t('programs.contact.email')"
+        >
+          <svg v-if="!emailCopied" class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+          <svg v-else class="w-3.5 h-3.5 shrink-0 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+          <span v-if="emailCopied" class="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold">
+            {{ t('programs.contact.copied') }}
+          </span>
+        </button>
+      </div>
+    </div>
 
     <!-- Active Windows -->
     <TransitionGroup name="window">

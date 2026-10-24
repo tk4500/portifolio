@@ -130,7 +130,8 @@
       "screenshots": "Screenshots",
       "noScreenshots": "No screenshots yet. Visit the live site to see this project.",
       "techStack": "Tech Stack",
-      "livePrefix": "Live:"
+      "livePrefix": "Live:",
+      "iframeLoading": "Loading..."
     },
     "stack": {
       "description": "Technologies I work with.",

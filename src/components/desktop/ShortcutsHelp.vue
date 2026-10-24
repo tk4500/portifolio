@@ -87,16 +87,20 @@ onUnmounted(() => {
             </div>
             <div class="flex items-center justify-between py-2">
               <span class="text-sm text-[var(--window-title-text)]">{{ t('shortcuts.showDesktop') }}</span>
-              <div class="flex gap-1">
+              <div class="flex gap-1 items-center">
                 <kbd class="px-2 py-1 text-xs font-mono bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded shadow-sm">Win</kbd>
+                <span class="text-[var(--text-secondary)] text-xs">/</span>
+                <kbd class="px-2 py-1 text-xs font-mono bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded shadow-sm">Alt</kbd>
                 <span class="text-[var(--text-secondary)]">+</span>
                 <kbd class="px-2 py-1 text-xs font-mono bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded shadow-sm">D</kbd>
               </div>
             </div>
             <div class="flex items-center justify-between py-2">
               <span class="text-sm text-[var(--window-title-text)]">{{ t('shortcuts.focusWindow') }}</span>
-              <div class="flex gap-1">
+              <div class="flex gap-1 items-center">
                 <kbd class="px-2 py-1 text-xs font-mono bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded shadow-sm">Win</kbd>
+                <span class="text-[var(--text-secondary)] text-xs">/</span>
+                <kbd class="px-2 py-1 text-xs font-mono bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded shadow-sm">Alt</kbd>
                 <span class="text-[var(--text-secondary)]">+</span>
                 <kbd class="px-2 py-1 text-xs font-mono bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded shadow-sm">1-9</kbd>
               </div>

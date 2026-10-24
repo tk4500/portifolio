@@ -174,7 +174,7 @@ function open() {
     width: dims.width,
     height: dims.height,
     icon: props.icon,
-    allowMultiple: props.id === 'archive'
+    allowMultiple: false
   })
 }
 

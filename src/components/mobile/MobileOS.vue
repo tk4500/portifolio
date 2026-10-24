@@ -528,7 +528,7 @@ function toggleLocale() {
                   {{ allApps.find(a => a.id === appId)?.name }}
                 </h3>
                 <p class="text-xs text-[var(--text-secondary)] opacity-80 truncate mt-0.5">
-                  {{ allApps.find(a => a.id === appId)?.type === 'app' ? t('desktop.quickLinks') : 'Project' }}
+                  {{ allApps.find(a => a.id === appId)?.type === 'app' ? t('startMenu.apps') : t('desktop.icons.projects') }}
                 </p>
               </div>
               <div class="w-8 h-8 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center opacity-60 group-hover:opacity-100 group-hover:bg-[var(--accent)] group-hover:text-zinc-950 transition-all text-xs">
