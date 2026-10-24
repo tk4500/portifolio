@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Icon from '../ui/Icon.vue'
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { useWindowsStore } from '../../stores/useWindowsStore'
 import { useSystemStore } from '../../stores/useSystemStore'
 import { useI18n } from 'vue-i18n'
@@ -22,6 +22,14 @@ const systemStore = useSystemStore()
 const { t } = useI18n()
 
 const iconRef = ref<HTMLElement | null>(null)
+
+const iconTooltip = computed(() => {
+  const name = props.skipTranslation ? props.titleKey : t(props.titleKey)
+  if (props.projectData?.description) {
+    return `${name} — ${props.projectData.description}`
+  }
+  return name
+})
 
 // Let the icon be draggable
 const { x, y, style } = useDraggable(iconRef, {
@@ -201,7 +209,8 @@ function openProjectDetails(e: MouseEvent) {
     class="flex flex-col items-center justify-center w-24 h-24 rounded-lg cursor-pointer group absolute transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
     :class="systemStore.isDarkMode ? 'text-white hover:bg-white/10' : 'text-zinc-900 hover:bg-black/5'"
     :style="style"
-    :title="projectData?.description"
+    :title="iconTooltip"
+    :aria-label="skipTranslation ? titleKey : t(titleKey)"
     role="button"
     tabindex="0"
     @click="handleClick"
@@ -224,7 +233,6 @@ function openProjectDetails(e: MouseEvent) {
       :style="systemStore.isDarkMode ? { textShadow: 'var(--text-shadow-strong)' } : {}"
       class="text-center select-none truncate max-w-full px-1.5 pointer-events-none font-medium"
       :class="systemStore.isDarkMode ? 'text-white' : 'text-zinc-900 font-semibold'"
-      :title="skipTranslation ? titleKey : t(titleKey)"
     >
       {{ skipTranslation ? titleKey : t(titleKey) }}
     </span>

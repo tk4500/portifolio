@@ -6,6 +6,7 @@ import { computed, ref, watch } from 'vue'
 import { useWindowSize } from '@vueuse/core'
 import Icon from '../ui/Icon.vue'
 import aboutDataRaw from '../../assets/data/about.json'
+import apps from '../../assets/data/apps.json'
 
 const systemStore = useSystemStore()
 const windowsStore = useWindowsStore()
@@ -30,14 +31,6 @@ const menuClass = computed(() => {
     default: return 'w-72 rounded-xl'
   }
 })
-
-const apps = [
-  { id: 'about', titleKey: 'desktop.icons.about', icon: 'icons/user.svg' },
-  { id: 'archive', titleKey: 'desktop.icons.projects', icon: 'icons/folder.svg' },
-  { id: 'stack', titleKey: 'desktop.icons.stack', icon: 'icons/tools.svg' },
-  { id: 'contact', titleKey: 'desktop.icons.contact', icon: 'icons/mail.svg' },
-  { id: 'settings', titleKey: 'desktop.icons.settings', icon: 'icons/settings.svg' },
-]
 
 // Profile data from about.json
 const profileData = computed(() => {
@@ -141,7 +134,9 @@ watch(() => systemStore.isStartMenuOpen, (isOpen) => {
             v-for="app in apps"
             :key="app.id"
             @click="launchApp(app.id, app.titleKey, app.icon)"
-            class="flex rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+            :aria-label="t(app.titleKey)"
+            :title="t(app.titleKey)"
+            class="flex rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] cursor-pointer"
             :class="isMobile ? 'flex-col items-center justify-center p-3 hover:bg-black/5 dark:hover:bg-white/5 active:bg-black/10 dark:active:bg-white/10 text-center' : 'items-center gap-3 px-3 py-2 hover:bg-black/10 dark:hover:bg-white/10 text-left'"
           >
             <Icon :icon="app.icon" :size="32" :class="isMobile ? 'mb-1.5' : ''" />
@@ -154,7 +149,9 @@ watch(() => systemStore.isStartMenuOpen, (isOpen) => {
       <div class="border-t border-[var(--window-border)] pt-2 mt-2">
          <button
            @click="launchApp('power', 'Power', '🔌')"
-           class="w-full flex gap-3 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--danger)]"
+           :aria-label="confirmCloseAll ? t('startMenu.confirmCloseAll') : t('startMenu.closeAll')"
+           :title="confirmCloseAll ? t('startMenu.confirmCloseAll') : t('startMenu.closeAll')"
+           class="w-full flex gap-3 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--danger)] cursor-pointer"
            :class="[
              confirmCloseAll ? 'bg-[var(--danger)] text-white hover:bg-[var(--danger-hover)]' : 'hover:bg-[var(--danger)] hover:text-white',
              isMobile ? 'flex-col items-center justify-center p-3 text-center active:bg-[var(--danger)] active:text-white' : 'items-center px-3 py-2 text-left'

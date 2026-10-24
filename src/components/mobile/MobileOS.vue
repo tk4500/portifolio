@@ -4,6 +4,7 @@ import { useSystemStore } from '../../stores/useSystemStore'
 import { useWindowsStore } from '../../stores/useWindowsStore'
 import { useI18n } from 'vue-i18n'
 import projectsDataRaw from '../../assets/data/projects.json'
+import appsDataRaw from '../../assets/data/apps.json'
 import Icon from '../ui/Icon.vue'
 
 const systemStore = useSystemStore()
@@ -41,13 +42,11 @@ const isLightWallpaper = computed(() => {
   const bg = systemStore.backgroundColor.toLowerCase()
   return bg.includes('#e4e7eb') || bg.includes('#dbeafe') || bg.includes('#ffedd5') || bg.includes('#ccfbf1') || bg.includes('rgb(228') || bg.includes('rgb(219') || bg.includes('rgb(255') || bg.includes('rgb(204')
 })
-const homeApps = computed(() => [
-  { id: 'about', name: t('desktop.icons.about'), icon: 'icons/user.svg', type: 'app' },
-  { id: 'archive', name: t('desktop.icons.projects'), icon: 'icons/folder.svg', type: 'app' },
-  { id: 'stack', name: t('desktop.icons.stack'), icon: 'icons/tools.svg', type: 'app' },
-  { id: 'contact', name: t('desktop.icons.contact'), icon: 'icons/mail.svg', type: 'app' },
-  { id: 'settings', name: t('desktop.icons.settings'), icon: 'icons/settings.svg', type: 'app' },
-])
+const homeApps = computed(() => appsDataRaw.map(app => ({
+  ...app,
+  name: t(app.titleKey),
+  type: 'app'
+})))
 
 // All apps (shown in app drawer)
 const allApps = computed(() => {
@@ -312,7 +311,7 @@ function toggleLocale() {
           class="px-1.5 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase active:scale-95 transition-all cursor-pointer border"
           :class="isLightWallpaper ? 'bg-black/10 hover:bg-black/15 text-zinc-900 border-black/10' : 'bg-white/15 hover:bg-white/25 text-white border-white/10'"
           :aria-label="t('taskbar.languageSelect')"
-          title="Switch language"
+          :title="t('taskbar.languageSelect')"
         >
           {{ locale }}
         </button>
@@ -431,8 +430,9 @@ function toggleLocale() {
           </div>
           <button
             @click="showAppDrawer = false"
-            class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-black/10 dark:hover:bg-white/10 transition-colors text-[var(--window-title-text)]"
-            aria-label="Close"
+            class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-black/10 dark:hover:bg-white/10 transition-colors text-[var(--window-title-text)] cursor-pointer"
+            :aria-label="t('mobile.close')"
+            :title="t('mobile.close')"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
               <path d="M18 6L6 18M6 6l12 12"/>
@@ -497,8 +497,9 @@ function toggleLocale() {
           </div>
           <button
             @click="showRecents = false"
-            class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-black/10 dark:hover:bg-white/10 transition-colors text-[var(--window-title-text)]"
-            aria-label="Close"
+            class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-black/10 dark:hover:bg-white/10 transition-colors text-[var(--window-title-text)] cursor-pointer"
+            :aria-label="t('mobile.close')"
+            :title="t('mobile.close')"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
               <path d="M18 6L6 18M6 6l12 12"/>
@@ -582,7 +583,7 @@ function toggleLocale() {
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
             </svg>
-            View on GitHub
+            {{ t('programs.projectViewer.viewSource') }}
           </a>
         </div>
       </div>
@@ -610,7 +611,7 @@ function toggleLocale() {
           
           <!-- Tech Stack -->
           <div v-if="longPressApp.stack && longPressApp.stack.length > 0" class="space-y-2">
-            <h4 class="text-xs font-medium opacity-60 uppercase tracking-wide">Tech Stack</h4>
+            <h4 class="text-xs font-medium opacity-60 uppercase tracking-wide">{{ t('programs.projectViewer.techStack') }}</h4>
             <div class="flex flex-wrap gap-2">
               <div
                 v-for="tech in longPressApp.stack"
@@ -625,7 +626,7 @@ function toggleLocale() {
           
           <!-- Screenshots Preview -->
           <div v-if="longPressApp.screenshots && longPressApp.screenshots.length > 0" class="space-y-2">
-            <h4 class="text-xs font-medium opacity-60 uppercase tracking-wide">Screenshots</h4>
+            <h4 class="text-xs font-medium opacity-60 uppercase tracking-wide">{{ t('programs.projectViewer.screenshots') }}</h4>
             <div class="grid grid-cols-3 gap-2">
               <img
                 v-for="(screenshot, idx) in longPressApp.screenshots.slice(0, 3)"
@@ -650,7 +651,7 @@ function toggleLocale() {
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
               </svg>
-              Open Live Site
+              {{ t('programs.projectViewer.openLiveSite') }}
             </a>
             <a
               v-if="longPressApp.github"
@@ -663,16 +664,16 @@ function toggleLocale() {
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
               </svg>
-              GitHub
+              {{ t('programs.projectViewer.viewSource') }}
             </a>
           </div>
           
           <button
             @click="closeInfoDialog"
-            class="w-full h-11 rounded-lg font-medium transition-colors"
+            class="w-full h-11 rounded-lg font-medium transition-colors cursor-pointer"
             style="background: var(--window-border);"
           >
-            Close
+            {{ t('mobile.close') }}
           </button>
         </div>
       </div>
@@ -683,7 +684,7 @@ function toggleLocale() {
       class="android-nav fixed bottom-0 left-0 right-0 h-14 backdrop-blur-xl border-t flex items-center justify-around z-50 px-3 select-none transition-colors duration-200"
       :class="isLightWallpaper ? 'bg-white/80 border-black/10 text-zinc-900 shadow-md' : 'bg-black/50 dark:bg-black/60 border-white/10 text-white'"
       role="navigation"
-      aria-label="System Navigation"
+      :aria-label="t('mobile.menu')"
     >
       <!-- Back -->
       <button
@@ -694,7 +695,8 @@ function toggleLocale() {
           isLightWallpaper ? 'hover:bg-black/5 active:bg-black/10 text-zinc-900' : 'hover:bg-white/10 active:bg-white/15 text-white',
           !(currentApp || showAppDrawer || showRecents) ? 'cursor-default' : ''
         ]"
-        aria-label="Back"
+        :aria-label="t('mobile.back')"
+        :title="t('mobile.back')"
       >
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="15 18 9 12 15 6"></polyline>
@@ -706,7 +708,8 @@ function toggleLocale() {
         @click="goHome"
         class="flex-1 max-w-[72px] h-11 flex items-center justify-center rounded-xl active:scale-90 transition-all cursor-pointer"
         :class="isLightWallpaper ? 'hover:bg-black/5 active:bg-black/10 text-zinc-900' : 'hover:bg-white/10 active:bg-white/15 text-white'"
-        aria-label="Home"
+        :aria-label="t('mobile.home')"
+        :title="t('mobile.home')"
       >
         <div class="w-4 h-4 rounded-full border-2 border-current"></div>
       </button>
@@ -719,7 +722,8 @@ function toggleLocale() {
           isLightWallpaper ? 'hover:bg-black/5 active:bg-black/10 text-zinc-900' : 'hover:bg-white/10 active:bg-white/15 text-white',
           showRecents ? (isLightWallpaper ? 'bg-black/10 text-[var(--accent)]' : 'bg-white/15 text-[var(--accent)]') : ''
         ]"
-        aria-label="Recent apps"
+        :aria-label="t('mobile.recent')"
+        :title="t('mobile.recent')"
       >
         <div class="w-4 h-4 rounded-sm border-2 border-current"></div>
         <span v-if="recentApps.length > 0" class="absolute top-2 right-4 w-1.5 h-1.5 rounded-full bg-[var(--accent)]"></span>
@@ -733,7 +737,8 @@ function toggleLocale() {
           isLightWallpaper ? 'hover:bg-black/5 active:bg-black/10 text-zinc-900' : 'hover:bg-white/10 active:bg-white/15 text-white',
           showAppDrawer ? (isLightWallpaper ? 'bg-black/10 text-[var(--accent)]' : 'bg-white/15 text-[var(--accent)]') : ''
         ]"
-        aria-label="Apps"
+        :aria-label="t('mobile.apps')"
+        :title="t('mobile.apps')"
       >
         <div class="grid grid-cols-2 gap-0.5">
           <div class="w-1.5 h-1.5 rounded-[1px] bg-current"></div>
@@ -753,23 +758,27 @@ function toggleLocale() {
       >
         <div class="flex items-start gap-3">
           <div class="flex-1">
-            <p class="text-sm font-semibold mb-2">Project Badges</p>
+            <p class="text-sm font-semibold mb-2">{{ t('mobile.badges.title') }}</p>
             <div class="text-xs space-y-1.5 opacity-95">
               <div class="flex items-center gap-1.5">
                 <span class="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center text-[10px]">🌐</span>
-                <span>Live site (direct case study)</span>
+                <span>{{ t('mobile.badges.live') }}</span>
               </div>
               <div class="flex items-center gap-1.5">
                 <span class="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center text-[10px]">📸</span>
-                <span>Screenshots (view gallery)</span>
+                <span>{{ t('mobile.badges.screenshots') }}</span>
               </div>
               <div class="flex items-center gap-1.5">
                 <span class="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center text-[10px]">🔗</span>
-                <span>GitHub only (source code)</span>
+                <span>{{ t('mobile.badges.github') }}</span>
               </div>
             </div>
           </div>
-          <button class="text-white/80 hover:text-white text-xl leading-none cursor-pointer">×</button>
+          <button
+            class="text-white/80 hover:text-white text-xl leading-none cursor-pointer"
+            :aria-label="t('mobile.close')"
+            :title="t('mobile.close')"
+          >×</button>
         </div>
       </div>
     </Transition>

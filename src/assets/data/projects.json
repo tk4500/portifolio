@@ -197,7 +197,7 @@
     },
     {
       "id": "portfolio_os",
-      "name": "Portfólio OS (Desktop Metaphor)",
+      "name": "Portfólio OS (Metáfora Desktop)",
       "description": "Um site de portfólio dinâmico e interativo que imita um ambiente clássico de sistema operacional desktop. Construído com Vue 3 e Tailwind CSS, possui janelas arrastáveis, uma barra de tarefas dinâmica e conteúdo totalmente alimentado por JSON com suporte bilíngue (EN/PT).",
       "url": "https://portifolio.tarcisio.site/",
       "github": "https://github.com/tk4500/portifolio",

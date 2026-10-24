@@ -255,7 +255,8 @@ const taskbarClass = computed(() => {
             { 'ring-1 ring-[var(--accent)]/50 shadow-[0_2px_8px_rgba(0,0,0,0.3)]': windowsStore.activeWindows.length === 0 && !systemStore.isStartMenuOpen && !isMobile }
           ]"
           :aria-expanded="systemStore.isStartMenuOpen"
-          :aria-label="t('taskbar.start')"
+          :aria-label="t('taskbar.startTooltip')"
+          :title="t('taskbar.startTooltip')"
         >
           <span class="relative flex items-center justify-center">
             <Icon icon="icons/windows.svg" :size="20" class="drop-shadow-xs" />
@@ -298,10 +299,10 @@ const taskbarClass = computed(() => {
                 : 'bg-transparent hover:bg-white/10 border-transparent',
               isHorizontal ? 'pl-3 h-9 max-w-[150px]' : 'w-9 h-9 min-h-[36px] min-w-[36px] max-w-[36px] justify-center !pr-0 !pl-0'
             ]"
-            :aria-label="group.length > 1 ? t(group[0].titleKey) + ' (' + group.length + ' windows)' : t(group[0].titleKey)"
+            :aria-label="group.length > 1 ? `${t(group[0].titleKey)} (${group.length} ${t('taskbar.windowsCount')})` : t(group[0].titleKey)"
             :aria-expanded="openDropdownId === group[0].appId"
             :aria-haspopup="group.length > 1 ? 'menu' : false"
-            :title="t(group[0].titleKey)"
+            :title="group.length > 1 ? `${t(group[0].titleKey)} (${group.length} ${t('taskbar.windowsCount')})` : t(group[0].titleKey)"
           >
             <Icon v-if="group[0].icon" :icon="group[0].icon" :size="20" :class="isHorizontal ? 'mr-1' : ''" />
             <span v-if="isHorizontal" class="truncate">{{ t(group[0].titleKey) }}</span>
@@ -320,8 +321,8 @@ const taskbarClass = computed(() => {
             v-if="isHorizontal"
             @click.stop="group.forEach(w => windowsStore.closeWindow(w.id))"
             class="absolute right-1 top-1/2 -translate-y-1/2 w-5 h-5 rounded hover:bg-[var(--danger)] hover:text-white flex items-center justify-center opacity-100 sm:opacity-0 group-hover/taskbar:opacity-100 transition-opacity focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--danger)] focus:opacity-100"
-            aria-label="Close all windows"
-            title="Close all windows"
+            :aria-label="t('taskbar.closeAll')"
+            :title="t('taskbar.closeAll')"
           >
             <svg width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2L10 10M10 2L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
@@ -355,7 +356,8 @@ const taskbarClass = computed(() => {
                  <button
                    @click.stop="windowsStore.closeWindow(win.id)"
                    class="w-5 h-5 rounded hover:bg-[var(--danger)] hover:text-white flex items-center justify-center opacity-100 sm:opacity-0 group-hover/item:opacity-100 transition-opacity focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--danger)] focus:opacity-100"
-                   aria-label="Close window"
+                   :aria-label="t('taskbar.closeWindow')"
+                   :title="t('taskbar.closeWindow')"
                  >
                    <svg width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2L10 10M10 2L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
                  </button>
@@ -380,7 +382,7 @@ const taskbarClass = computed(() => {
           class="px-1.5 py-0.5 rounded text-[11px] font-semibold transition-all focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
           :class="locale === 'pt' ? 'bg-[var(--accent)] text-zinc-950 font-bold shadow-xs' : 'opacity-70 hover:opacity-100'"
           aria-label="Português"
-          title="Português"
+          :title="locale === 'pt' ? 'Português (ativo)' : 'Mudar para Português'"
         >
           PT
         </button>
@@ -389,7 +391,7 @@ const taskbarClass = computed(() => {
           class="px-1.5 py-0.5 rounded text-[11px] font-semibold transition-all focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
           :class="locale === 'en' ? 'bg-[var(--accent)] text-zinc-950 font-bold shadow-xs' : 'opacity-70 hover:opacity-100'"
           aria-label="English"
-          title="English"
+          :title="locale === 'en' ? 'English (active)' : 'Switch to English'"
         >
           EN
         </button>
@@ -400,14 +402,14 @@ const taskbarClass = computed(() => {
         @click.stop="$emit('show-shortcuts')"
         class="text-[var(--taskbar-text)] hover:bg-white/10 rounded transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white text-sm font-medium"
         :class="isHorizontal ? 'px-2 py-1' : 'px-1 py-1'"
-        :aria-label="t('taskbar.keyboardHelp')"
-        title="Keyboard shortcuts (Press ?)"
+        :aria-label="t('taskbar.keyboardHelpTooltip')"
+        :title="t('taskbar.keyboardHelpTooltip')"
       >
         <span class="opacity-70 hover:opacity-100">?</span>
       </button>
       
       <div class="flex items-center gap-3 text-[var(--taskbar-text)]" :class="isHorizontal ? 'flex-row pr-2' : 'flex-col pb-2'">
-        <span class="text-xs font-medium tracking-wide" :class="isHorizontal ? '' : 'writing-vertical-rl'">{{ time }}</span>
+        <span class="text-xs font-medium tracking-wide" :class="isHorizontal ? '' : 'writing-vertical-rl'" :title="t('taskbar.time')">{{ time }}</span>
       </div>
     </div>
 

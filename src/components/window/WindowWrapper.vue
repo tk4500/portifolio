@@ -299,6 +299,7 @@ onUnmounted(() => {
       class="h-10 bg-[var(--window-titlebar)] border-b border-[var(--window-border)] flex items-center justify-between px-3 select-none transition-opacity duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-inset"
       :class="isFocused ? 'opacity-100' : 'opacity-70'"
       @dblclick="toggleMaximize"
+      :title="windowState.isMaximized ? t('window.restore') : t('window.maximize')"
       tabindex="0"
     >
       <div class="flex items-center gap-2 overflow-hidden">
@@ -314,14 +315,29 @@ onUnmounted(() => {
 
       <!-- Window Controls -->
       <div class="flex items-center gap-1.5">
-        <button @click.stop="minimize" aria-label="Minimize window" class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-black/10 text-[var(--window-title-text)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">
+        <button
+          @click.stop="minimize"
+          :aria-label="t('window.minimize')"
+          :title="t('window.minimize')"
+          class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-black/10 text-[var(--window-title-text)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] cursor-pointer"
+        >
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="1" y="5" width="10" height="2" fill="currentColor"/></svg>
         </button>
-        <button @click.stop="toggleMaximize" aria-label="Maximize window" class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-black/10 text-[var(--window-title-text)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">
+        <button
+          @click.stop="toggleMaximize"
+          :aria-label="windowState.isMaximized ? t('window.restore') : t('window.maximize')"
+          :title="windowState.isMaximized ? t('window.restore') : t('window.maximize')"
+          class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-black/10 text-[var(--window-title-text)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] cursor-pointer"
+        >
           <svg v-if="!windowState.isMaximized" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="1.5" y="1.5" width="9" height="9" stroke="currentColor" stroke-width="1.5"/></svg>
           <svg v-else width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="1.5" y="3.5" width="7" height="7" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 3.5V1.5H10.5V8.5H8.5" stroke="currentColor" stroke-width="1.5"/></svg>
         </button>
-        <button @click.stop="close" aria-label="Close window" class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-[var(--danger)] hover:text-white text-[var(--window-title-text)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--danger)]">
+        <button
+          @click.stop="close"
+          :aria-label="t('window.close')"
+          :title="t('window.close')"
+          class="w-8 h-8 flex items-center justify-center rounded-md hover:bg-[var(--danger)] hover:text-white text-[var(--window-title-text)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--danger)] cursor-pointer"
+        >
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2 2L10 10M10 2L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         </button>
       </div>

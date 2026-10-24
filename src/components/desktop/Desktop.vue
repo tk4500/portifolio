@@ -13,6 +13,7 @@ import { defineAsyncComponent, onMounted, onUnmounted, watch, ref, computed } fr
 import { useI18n } from 'vue-i18n'
 import { useWindowSize } from '@vueuse/core'
 import projectsDataRaw from '../../assets/data/projects.json'
+import appsDataRaw from '../../assets/data/apps.json'
 
 const windowsStore = useWindowsStore()
 const systemStore = useSystemStore()
@@ -39,14 +40,8 @@ const desktopIcons = computed(() => {
       projectData: p // Pass full project data
     }))
   
-  // Core system applications
-  const systemApps = [
-    { id: 'about', titleKey: 'desktop.icons.about', icon: 'icons/user.svg' },
-    { id: 'archive', titleKey: 'desktop.icons.projects', icon: 'icons/folder.svg' },
-    { id: 'stack', titleKey: 'desktop.icons.stack', icon: 'icons/tools.svg' },
-    { id: 'contact', titleKey: 'desktop.icons.contact', icon: 'icons/mail.svg' },
-    { id: 'settings', titleKey: 'desktop.icons.settings', icon: 'icons/settings.svg' }
-  ]
+  // Core system applications loaded from centralized apps.json
+  const systemApps = appsDataRaw
 
   const allIcons = [...systemApps, ...liveProjects]
 
@@ -77,7 +72,8 @@ watch(() => windowsStore.activeWindows.map(w => w.zIndex), () => {
   
   const highestZIndexWindow = activeWindows.reduce((prev, curr) => (prev.zIndex > curr.zIndex ? prev : curr))
   if (!highestZIndexWindow.isMinimized) {
-    ariaLiveMessage.value = `${t(highestZIndexWindow.titleKey)} focused`
+    const title = highestZIndexWindow.skipTranslation ? highestZIndexWindow.titleKey : t(highestZIndexWindow.titleKey)
+    ariaLiveMessage.value = t('desktop.windowFocused', { title })
   }
 }, { deep: true })
 

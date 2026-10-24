@@ -48,6 +48,8 @@ function openProject(project: any) {
         class="w-24 flex flex-col items-center gap-1 p-2 rounded-lg cursor-pointer group hover:-translate-y-0.5 hover:shadow-md transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]" style="background: var(--secondary-subtle);"
         role="button"
         tabindex="0"
+        :title="project.name + (project.description ? ' — ' + project.description : '')"
+        :aria-label="project.name"
         @keydown.enter="openProject(project)"
         @keydown.space.prevent="openProject(project)"
         @click="openProject(project)"

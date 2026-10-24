@@ -18,7 +18,7 @@ const activeTab = ref((aboutDataRaw as any)['en'].tabs[0].id)
       <!-- Header -->
       <div class="border-b border-[var(--window-border)] p-4 md:p-6 flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 relative">
         <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-2xl flex-shrink-0 flex items-center justify-center overflow-hidden border border-[var(--window-border)] shadow-[var(--shadow-md)]">
-          <img v-if="profile.avatar" :src="profile.avatar" alt="Tarcísio Luiz profile photo" loading="lazy" class="w-full h-full object-cover" @error="(e) => (e.target as HTMLImageElement).style.display = 'none'" />
+          <img v-if="profile.avatar" :src="profile.avatar" :alt="profile.name" loading="lazy" class="w-full h-full object-cover" @error="(e) => (e.target as HTMLImageElement).style.display = 'none'" />
           <span v-else class="text-3xl sm:text-4xl">🧑‍💻</span>
         </div>
 

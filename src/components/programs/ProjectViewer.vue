@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useWindowsStore } from '../../stores/useWindowsStore'
 import projectsDataRaw from '../../assets/data/projects.json'
+import stackDataRaw from '../../assets/data/stack.json'
 import Icon from '../ui/Icon.vue'
 
 const props = defineProps<{
@@ -27,40 +28,41 @@ const currentProject = computed(() => {
 })
 
 function openLiveSite() {
+  const prefix = t('programs.projectViewer.livePrefix') || 'Live:'
   windowsStore.registerOrOpenWindow({
     appId: 'iframe',
-    titleKey: `Live: ${currentProject.value.name}`,
+    titleKey: `${prefix} ${currentProject.value.name}`,
     component: 'iframe',
-    props: { url: currentProject.value.url },
+    props: { url: currentProject.value.url, title: currentProject.value.name },
     width: 800,
     height: 600,
-    icon: '🌐',
+    icon: currentProject.value.icon || 'icons/projects/portfolio-os.svg',
     allowMultiple: true
   })
 }
 
-function getTechName(iconPath: string): string {
-  const file = iconPath.split('/').pop()?.replace('-original.svg', '').replace('.svg', '') || ''
-  const map: Record<string, string> = {
-    angular: 'Angular',
-    vuejs: 'Vue.js',
-    react: 'React',
-    javascript: 'JavaScript',
-    typescript: 'TypeScript',
-    html5: 'HTML5',
-    css3: 'CSS3',
-    tailwindcss: 'Tailwind CSS',
-    primeng: 'PrimeNG',
-    pinia: 'Pinia',
-    vitejs: 'Vite',
-    nodejs: 'Node.js',
-    python: 'Python',
-    postgresql: 'PostgreSQL',
-    mongodb: 'MongoDB',
-    docker: 'Docker',
-    git: 'Git'
+// Dynamic technology name lookup directly from centralized stack.json
+const techLookup = computed(() => {
+  const categories = (stackDataRaw as any)[locale.value] || (stackDataRaw as any)['en'] || []
+  const map: Record<string, string> = {}
+  for (const cat of categories) {
+    for (const item of cat.items || []) {
+      if (item.icon && item.name) {
+        map[item.icon] = item.name
+        const file = item.icon.split('/').pop()?.replace('-original.svg', '').replace('.svg', '').replace('.png', '')
+        if (file) map[file.toLowerCase()] = item.name
+      }
+    }
   }
-  return map[file.toLowerCase()] || file.charAt(0).toUpperCase() + file.slice(1)
+  return map
+})
+
+function getTechName(iconPath: string): string {
+  if (techLookup.value[iconPath]) {
+    return techLookup.value[iconPath]
+  }
+  const file = iconPath.split('/').pop()?.replace('-original.svg', '').replace('.svg', '').replace('.png', '') || ''
+  return techLookup.value[file.toLowerCase()] || file.charAt(0).toUpperCase() + file.slice(1)
 }
 </script>
 

@@ -68,6 +68,18 @@
           "name": "Next.js",
           "icon": "icons/nextjs-original.svg",
           "level": 75
+        },
+        {
+          "id": "axios",
+          "name": "Axios",
+          "icon": "icons/axios-plain.svg",
+          "level": 85
+        },
+        {
+          "id": "blockly",
+          "name": "Blockly",
+          "icon": "icons/blockly.png",
+          "level": 80
         }
       ]
     },
@@ -127,6 +139,12 @@
           "name": "SQLAlchemy",
           "icon": "icons/sqlalchemy-original.svg",
           "level": 75
+        },
+        {
+          "id": "sqlite",
+          "name": "SQLite",
+          "icon": "icons/sqlite-original.svg",
+          "level": 80
         }
       ]
     },
@@ -252,6 +270,18 @@
           "name": "Figma",
           "icon": "icons/figma-original.svg",
           "level": 60
+        },
+        {
+          "id": "gradle",
+          "name": "Gradle",
+          "icon": "icons/gradle-original.svg",
+          "level": 75
+        },
+        {
+          "id": "github_alt",
+          "name": "GitHub",
+          "icon": "icons/github.svg",
+          "level": 90
         }
       ]
     },
@@ -348,6 +378,18 @@
           "name": "Next.js",
           "icon": "icons/nextjs-original.svg",
           "level": 75
+        },
+        {
+          "id": "axios",
+          "name": "Axios",
+          "icon": "icons/axios-plain.svg",
+          "level": 85
+        },
+        {
+          "id": "blockly",
+          "name": "Blockly",
+          "icon": "icons/blockly.png",
+          "level": 80
         }
       ]
     },
@@ -407,6 +449,12 @@
           "name": "SQLAlchemy",
           "icon": "icons/sqlalchemy-original.svg",
           "level": 75
+        },
+        {
+          "id": "sqlite",
+          "name": "SQLite",
+          "icon": "icons/sqlite-original.svg",
+          "level": 80
         }
       ]
     },
@@ -532,6 +580,18 @@
           "name": "Figma",
           "icon": "icons/figma-original.svg",
           "level": 60
+        },
+        {
+          "id": "gradle",
+          "name": "Gradle",
+          "icon": "icons/gradle-original.svg",
+          "level": 75
+        },
+        {
+          "id": "github_alt",
+          "name": "GitHub",
+          "icon": "icons/github.svg",
+          "level": 90
         }
       ]
     },

@@ -6,6 +6,7 @@ const { t } = useI18n()
 
 const props = defineProps<{
   url: string
+  title?: string
 }>()
 
 // Iframe loading states
@@ -131,6 +132,7 @@ onMounted(() => {
     <iframe
       v-show="!isLoading && !hasError"
       :src="iframeUrl"
+      :title="title || 'Web Preview'"
       class="w-full h-full border-none"
       @load="handleLoad"
       @error="handleError"

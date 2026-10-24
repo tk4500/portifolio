@@ -9,7 +9,15 @@
     "recent": "Recent",
     "no_recent": "No recent apps",
     "coming_soon": "Coming Soon",
-    "close": "Close"
+    "close": "Close",
+    "back": "Back",
+    "home": "Home",
+    "badges": {
+      "title": "Project Badges",
+      "live": "Live site (direct case study)",
+      "screenshots": "Screenshots (view gallery)",
+      "github": "GitHub only (source code)"
+    }
   },
   "desktop": {
     "icons": {
@@ -20,19 +28,32 @@
       "stack": "Stack"
     },
     "quickLinks": "Quick Links",
-    "resume": "Resume"
+    "resume": "Resume",
+    "windowFocused": "{title} focused"
   },
   "taskbar": {
-    "start": "Open Start menu",
-    "minimize": "Minimize all windows",
+    "start": "Start",
+    "startTooltip": "Open Start menu",
+    "minimize": "Show Desktop",
+    "minimizeTooltip": "Minimize all windows (Win+D)",
     "time": "Current time",
     "notifications": "Notifications",
     "activeWindows": "Active windows",
     "noActiveWindows": "No windows open",
     "clickToStart": "Open Start menu",
     "keyboardHelp": "Keyboard shortcuts",
+    "keyboardHelpTooltip": "Keyboard shortcuts (?)",
     "language": "Language",
-    "languageSelect": "Select language"
+    "languageSelect": "Select language",
+    "closeAll": "Close all windows",
+    "closeWindow": "Close window",
+    "windowsCount": "windows"
+  },
+  "window": {
+    "minimize": "Minimize window",
+    "maximize": "Maximize window",
+    "restore": "Restore window",
+    "close": "Close window"
   },
   "startMenu": {
     "developer": "Developer",
@@ -108,11 +129,17 @@
       "viewSource": "View Source",
       "screenshots": "Screenshots",
       "noScreenshots": "No screenshots yet. Visit the live site to see this project.",
-      "techStack": "Tech Stack"
+      "techStack": "Tech Stack",
+      "livePrefix": "Live:"
     },
     "stack": {
       "description": "Technologies I work with.",
-      "usage": "Experience"
+      "usage": "Experience",
+      "proficiency": {
+        "core": "Core / Production",
+        "advanced": "Advanced / Daily",
+        "ecosystem": "Ecosystem / Tooling"
+      }
     },
     "errors": {
       "loadFailed": "Failed to Load",
@@ -153,14 +180,6 @@
     "back": "Back",
     "next": "Next",
     "getStarted": "Get Started"
-  },
-  "projectNames": {
-    "WinThor B2B Integration": "WinThor B2B Integration",
-    "Portfólio OS (Desktop Metaphor)": "Portfolio OS (Desktop Metaphor)",
-    "Desktop Metaphor Portfolio": "Desktop Metaphor Portfolio",
-    "Dev's Journey": "Dev's Journey",
-    "Aula Maker": "Aula Maker",
-    "GeoTetraArmor (Fork)": "GeoTetraArmor (Fork)"
   },
   "shortcuts": {
     "title": "Keyboard Shortcuts",

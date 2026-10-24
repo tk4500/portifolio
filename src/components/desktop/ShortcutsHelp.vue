@@ -45,8 +45,9 @@ onUnmounted(() => {
         </div>
         <button
           @click="emit('close')"
-          class="w-8 h-8 rounded-md hover:bg-black/5 dark:hover:bg-white/5 flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+          class="w-8 h-8 rounded-md hover:bg-black/5 dark:hover:bg-white/5 flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] cursor-pointer"
           :aria-label="t('shortcuts.close')"
+          :title="t('shortcuts.close')"
         >
           <span class="text-lg">✕</span>
         </button>

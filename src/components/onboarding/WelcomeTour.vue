@@ -149,8 +149,9 @@ function handleBackdropClick(e: MouseEvent) {
           <!-- Close button -->
           <button
             @click="skip"
-            class="absolute top-4 right-4 w-8 h-8 rounded-full hover:bg-black/10 dark:hover:bg-white/10 flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+            class="absolute top-4 right-4 w-8 h-8 rounded-full hover:bg-black/10 dark:hover:bg-white/10 flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] cursor-pointer"
             :aria-label="t('onboarding.skip')"
+            :title="t('onboarding.skip')"
           >
             <svg width="16" height="16" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M2 2L10 10M10 2L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>

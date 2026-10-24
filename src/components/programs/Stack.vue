@@ -12,14 +12,9 @@ const categories = computed(() => {
 })
 
 function getProficiency(level: number) {
-  if (locale.value === 'pt') {
-    if (level >= 90) return { label: 'Principal / Produção', tier: 'core' }
-    if (level >= 80) return { label: 'Avançado / Diário', tier: 'advanced' }
-    return { label: 'Ecosistema / Tooling', tier: 'proficient' }
-  }
-  if (level >= 90) return { label: 'Core / Production', tier: 'core' }
-  if (level >= 80) return { label: 'Advanced / Daily', tier: 'advanced' }
-  return { label: 'Ecosystem / Tooling', tier: 'proficient' }
+  if (level >= 90) return { label: t('programs.stack.proficiency.core'), tier: 'core' }
+  if (level >= 80) return { label: t('programs.stack.proficiency.advanced'), tier: 'advanced' }
+  return { label: t('programs.stack.proficiency.ecosystem'), tier: 'proficient' }
 }
 </script>
 

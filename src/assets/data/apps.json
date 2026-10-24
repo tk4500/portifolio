@@ -1,0 +1,43 @@
+[
+  {
+    "id": "about",
+    "titleKey": "desktop.icons.about",
+    "icon": "icons/user.svg",
+    "component": "about",
+    "width": 600,
+    "height": 500
+  },
+  {
+    "id": "archive",
+    "titleKey": "desktop.icons.projects",
+    "icon": "icons/folder.svg",
+    "component": "archive",
+    "width": 600,
+    "height": 450,
+    "allowMultiple": true
+  },
+  {
+    "id": "stack",
+    "titleKey": "desktop.icons.stack",
+    "icon": "icons/tools.svg",
+    "component": "stack",
+    "width": 600,
+    "height": 450
+  },
+  {
+    "id": "contact",
+    "titleKey": "desktop.icons.contact",
+    "icon": "icons/mail.svg",
+    "component": "contact",
+    "width": 600,
+    "height": 450
+  },
+  {
+    "id": "settings",
+    "titleKey": "desktop.icons.settings",
+    "icon": "icons/settings.svg",
+    "component": "settings",
+    "width": 600,
+    "height": 450
+  }
+]

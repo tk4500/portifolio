@@ -61,6 +61,7 @@ function handleLanguageChange(lang: 'pt' | 'en') {
             class="px-4 py-2 rounded-lg border transition-all font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] cursor-pointer"
             :class="locale === lang ? 'bg-[var(--accent)] text-zinc-950 font-bold border-[var(--accent)] shadow-xs' : 'bg-transparent hover:bg-black/10 dark:hover:bg-white/10 border-[var(--window-border)]'"
             :aria-pressed="locale === lang"
+            :title="t(`programs.settings.languages.${lang}`)"
           >
             {{ t(`programs.settings.languages.${lang}`) }} ({{ lang.toUpperCase() }})
           </button>
@@ -81,6 +82,7 @@ function handleLanguageChange(lang: 'pt' | 'en') {
             class="px-4 py-2 rounded-lg border transition-all font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] cursor-pointer"
             :class="systemStore.theme === thm ? 'bg-[var(--accent)] text-zinc-950 font-bold border-[var(--accent)] shadow-xs' : 'bg-transparent hover:bg-black/10 dark:hover:bg-white/10 border-[var(--window-border)]'"
             :aria-pressed="systemStore.theme === thm"
+            :title="t(`programs.settings.themes.${thm}`)"
           >
             {{ t(`programs.settings.themes.${thm}`) }}
           </button>
@@ -92,7 +94,7 @@ function handleLanguageChange(lang: 'pt' | 'en') {
         <h2 class="text-lg font-semibold mb-2 flex items-center gap-2">
           <Icon icon="icons/cube.svg" :size="20" /> {{ t('programs.settings.positions.title') || 'Taskbar Position' }}
         </h2>
-        <div class="flex gap-2 flex-wrap" role="group" aria-label="Taskbar Position">
+        <div class="flex gap-2 flex-wrap" role="group" :aria-label="t('programs.settings.positions.title')">
           <button
             v-for="pos in taskbarPositions"
             :key="pos"
@@ -100,6 +102,7 @@ function handleLanguageChange(lang: 'pt' | 'en') {
             class="px-4 py-2 rounded-lg border transition-all font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] cursor-pointer"
             :class="systemStore.taskbarPosition === pos ? 'bg-[var(--accent)] text-zinc-950 font-bold border-[var(--accent)] shadow-xs' : 'bg-transparent hover:bg-black/10 dark:hover:bg-white/10 border-[var(--window-border)]'"
             :aria-pressed="systemStore.taskbarPosition === pos"
+            :title="t(`programs.settings.positions.${pos}`)"
           >
             {{ t(`programs.settings.positions.${pos}`) }}
           </button>
@@ -111,7 +114,7 @@ function handleLanguageChange(lang: 'pt' | 'en') {
         <h2 class="text-lg font-semibold mb-2 flex items-center gap-2">
           <Icon icon="icons/document.svg" :size="20" /> {{ t('programs.settings.colors.title') || 'Wallpaper Background' }}
         </h2>
-        <div class="flex gap-2 flex-wrap" role="group" aria-label="Wallpaper Background">
+        <div class="flex gap-2 flex-wrap" role="group" :aria-label="t('programs.settings.colors.title')">
           <button
             v-for="wall in wallpapers"
             :key="wall.id"
@@ -119,6 +122,7 @@ function handleLanguageChange(lang: 'pt' | 'en') {
             class="px-4 py-2 rounded-lg border transition-all font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] cursor-pointer flex items-center gap-2"
             :class="systemStore.backgroundColor === getWallpaperValue(wall) ? 'bg-[var(--accent)] text-zinc-950 font-bold border-[var(--accent)] shadow-xs' : 'bg-transparent hover:bg-black/10 dark:hover:bg-white/10 border-[var(--window-border)]'"
             :aria-pressed="systemStore.backgroundColor === getWallpaperValue(wall)"
+            :title="t(`programs.settings.colors.${wall.id}`)"
           >
             <span class="w-3.5 h-3.5 rounded-full border border-black/20 dark:border-white/20 shadow-xs" :style="{ background: getWallpaperValue(wall) }"></span>
             {{ t(`programs.settings.colors.${wall.id}`) }}

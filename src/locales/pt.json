@@ -9,7 +9,15 @@
     "recent": "Recentes",
     "no_recent": "Nenhum aplicativo recente",
     "coming_soon": "Em Breve",
-    "close": "Fechar"
+    "close": "Fechar",
+    "back": "Voltar",
+    "home": "Início",
+    "badges": {
+      "title": "Legenda dos Projetos",
+      "live": "Site no ar (estudo de caso)",
+      "screenshots": "Capturas de tela (ver galeria)",
+      "github": "Apenas GitHub (código fonte)"
+    }
   },
   "desktop": {
     "icons": {
@@ -20,19 +28,32 @@
       "stack": "Stack"
     },
     "quickLinks": "Acesso Rápido",
-    "resume": "Currículo"
+    "resume": "Currículo",
+    "windowFocused": "{title} em foco"
   },
   "taskbar": {
-    "start": "Iniciar — Abrir menu para ver todos os apps",
-    "minimize": "Mostrar Área de Trabalho — Minimizar todas as janelas",
+    "start": "Iniciar",
+    "startTooltip": "Abrir menu Iniciar",
+    "minimize": "Mostrar Área de Trabalho",
+    "minimizeTooltip": "Minimizar todas as janelas (Win+D)",
     "time": "Hora atual",
     "notifications": "Notificações",
     "activeWindows": "Janelas ativas",
     "noActiveWindows": "Nenhuma janela aberta",
-    "clickToStart": "Clique para abrir o menu Iniciar",
+    "clickToStart": "Abrir menu Iniciar",
     "keyboardHelp": "Atalhos de teclado",
+    "keyboardHelpTooltip": "Atalhos de teclado (?)",
     "language": "Idioma",
-    "languageSelect": "Selecionar idioma"
+    "languageSelect": "Selecionar idioma",
+    "closeAll": "Fechar todas as janelas",
+    "closeWindow": "Fechar janela",
+    "windowsCount": "janelas"
+  },
+  "window": {
+    "minimize": "Minimizar janela",
+    "maximize": "Maximizar janela",
+    "restore": "Restaurar janela",
+    "close": "Fechar janela"
   },
   "startMenu": {
     "developer": "Desenvolvedor",
@@ -109,11 +130,17 @@
       "screenshots": "Capturas de Tela",
       "noScreenshots": "Nenhuma captura de tela disponível. Visite o site ou o repositório para ver em ação.",
       "techStack": "Tecnologias Utilizadas",
-      "iframeLoading": "Carregando..."
+      "iframeLoading": "Carregando...",
+      "livePrefix": "Ao Vivo:"
     },
     "stack": {
       "description": "Tecnologias, frameworks e ferramentas que utilizo.",
-      "usage": "Nível de Uso"
+      "usage": "Nível de Uso",
+      "proficiency": {
+        "core": "Principal / Produção",
+        "advanced": "Avançado / Diário",
+        "ecosystem": "Ecossistema / Ferramentas"
+      }
     },
     "errors": {
       "loadFailed": "Falha ao Carregar",
@@ -154,14 +181,6 @@
     "back": "Voltar",
     "next": "Próximo",
     "getStarted": "Começar"
-  },
-  "projectNames": {
-    "WinThor B2B Integration": "Integração WinThor B2B",
-    "Portfólio OS (Desktop Metaphor)": "Portfólio OS (Metáfora Desktop)",
-    "Desktop Metaphor Portfolio": "Portfólio Metáfora Desktop",
-    "Dev's Journey": "Jornada do Dev",
-    "Aula Maker": "Aula Maker",
-    "GeoTetraArmor (Fork)": "GeoTetraArmor (Fork)"
   },
   "shortcuts": {
     "title": "Atalhos de Teclado",
