@@ -4,7 +4,7 @@
       "id": "track_implant",
       "name": "Track-Implant (Dental Traceability SaaS)",
       "description": "A high-integrity multi-tenant clinical SaaS and mobile-first PWA for dental implant and surgical lot traceability. Features a 2-stage multimodal AI pipeline (Gemini Vision + Google Search Grounding for barcode/label extraction), strict PostgreSQL 16 Row-Level Security (RLS), 9-field hybrid vector search (pgvector 768d + pg_trgm), and 20-year medical compliance with irreversible LGPD anonymization.",
-      "url": "",
+      "url": "https://trackimplant.tarcisio.site/",
       "github": "",
       "icon": "icons/projects/track-implant.svg",
       "screenshots": [
@@ -183,7 +183,7 @@
       "id": "track_implant",
       "name": "Track-Implant (Rastreabilidade Odontológica)",
       "description": "Plataforma SaaS multi-tenant e PWA mobile-first para rastreabilidade clínica, cirúrgica e de lotes de implantes odontológicos. Possui pipeline de IA multimodal em 2 estágios (Gemini Vision + Google Search Grounding para extração de etiquetas/fichas), isolamento estrito via PostgreSQL 16 Row-Level Security (RLS), busca híbrida em 9 campos (pgvector 768d + pg_trgm) e conformidade LGPD com retenção de 20 anos e anonimização irreversível.",
-      "url": "",
+      "url": "https://trackimplant.tarcisio.site/",
       "github": "",
       "icon": "icons/projects/track-implant.svg",
       "screenshots": [
