@@ -12,7 +12,8 @@ const props = defineProps<{
   icon?: string
   initialX: number
   initialY: number
-  url?: string // Optional URL for live project links
+  url?: string // Optional URL for live project links (internal iframe)
+  externalUrl?: string // Optional external URL (opens in new browser tab)
   skipTranslation?: boolean // Set true for already-localized project names
   projectData?: any // Full project metadata for right-click modal
 }>()
@@ -120,6 +121,15 @@ function handleClick() {
 }
 
 function open() {
+  // If this icon has projectData, check if directOpen or externalOnly is requested
+  if (props.projectData?.directOpen || props.projectData?.externalOnly) {
+    const ext = props.projectData.externalUrl || props.projectData.external_url || props.externalUrl
+    if (ext) {
+      window.open(ext, '_blank', 'noopener,noreferrer')
+      return
+    }
+  }
+
   // If this icon has projectData, open the case study viewer by default (avoids CORS/CSP iframe blocks)
   if (props.projectData) {
     windowsStore.registerOrOpenWindow({
@@ -135,6 +145,12 @@ function open() {
         project: props.projectData
       }
     })
+    return
+  }
+
+  // If this icon has a standalone external URL without project metadata, open new tab
+  if (props.externalUrl) {
+    window.open(props.externalUrl, '_blank', 'noopener,noreferrer')
     return
   }
 
@@ -197,6 +213,9 @@ function openProjectDetails(e: MouseEvent) {
         title: props.titleKey
       }
     })
+  } else if (props.projectData?.externalUrl || props.projectData?.external_url || props.externalUrl) {
+    const ext = props.projectData?.externalUrl || props.projectData?.external_url || props.externalUrl
+    window.open(ext, '_blank', 'noopener,noreferrer')
   } else {
     open()
   }

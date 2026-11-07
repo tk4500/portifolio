@@ -70,12 +70,13 @@ const showWelcomeTour = ref(false)
 const desktopIcons = computed(() => {
   const projects = (projectsDataRaw as any)[locale.value] || (projectsDataRaw as any)['en']
   const liveProjects = projects
-    .filter((p: any) => p.url && p.url.trim() !== '')
+    .filter((p: any) => (p.url && p.url.trim() !== '') || (p.externalUrl && p.externalUrl.trim() !== '') || (p.external_url && p.external_url.trim() !== ''))
     .map((p: any) => ({
       id: `project_${p.id}`,
       titleKey: p.name, // Already localized from projects.json
       icon: p.icon,
       url: p.url,
+      externalUrl: p.externalUrl || p.external_url,
       skipTranslation: true, // Don't translate, already localized
       projectData: p // Pass full project data
     }))
@@ -453,6 +454,7 @@ function handleReplayTour() {
       :initial-x="icon.initialX"
       :initial-y="icon.initialY"
       :url="icon.url"
+      :external-url="icon.externalUrl"
       :skip-translation="icon.skipTranslation"
       :project-data="icon.projectData"
     />

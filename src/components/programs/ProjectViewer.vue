@@ -12,9 +12,16 @@ const props = defineProps<{
     name?: string
     description?: string
     url?: string
+    externalUrl?: string
+    external_url?: string
+    externalUrlLabel?: string
+    external_url_label?: string
+    directOpen?: boolean
+    externalOnly?: boolean
     github?: string
     icon?: string
     screenshots?: string[]
+    stack?: string[]
   }
 }>()
 
@@ -25,6 +32,30 @@ const windowsStore = useWindowsStore()
 const currentProject = computed(() => {
   const currentLocaleProjects = (projectsDataRaw as any)[locale.value] || (projectsDataRaw as any)['en']
   return currentLocaleProjects.find((p: any) => p.id === props.project.id) || props.project
+})
+
+const externalUrl = computed(() => {
+  return currentProject.value.externalUrl || currentProject.value.external_url || ''
+})
+
+const externalLabel = computed(() => {
+  if (currentProject.value.externalUrlLabel) return currentProject.value.externalUrlLabel
+  if (currentProject.value.external_url_label) return currentProject.value.external_url_label
+
+  const link = externalUrl.value.toLowerCase()
+  if (link.includes('modrinth.com')) {
+    return locale.value === 'pt' ? 'Ver no Modrinth' : 'View on Modrinth'
+  }
+  if (link.includes('curseforge.com')) {
+    return locale.value === 'pt' ? 'Ver no CurseForge' : 'View on CurseForge'
+  }
+  if (link.includes('steampowered.com') || link.includes('steamcommunity.com')) {
+    return locale.value === 'pt' ? 'Ver na Steam' : 'View on Steam'
+  }
+  if (link.includes('npmjs.com')) {
+    return locale.value === 'pt' ? 'Ver no npm' : 'View on npm'
+  }
+  return t('programs.projectViewer.openExternalLink') || (locale.value === 'pt' ? 'Acessar Link Externo' : 'Visit External Link')
 })
 
 function openLiveSite() {
@@ -104,6 +135,7 @@ function getTechName(iconPath: string): string {
 
       <!-- Actions -->
       <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+        <!-- Live site (internal OS window / iframe) -->
         <button
           v-if="currentProject.url"
           @click="openLiveSite"
@@ -111,6 +143,25 @@ function getTechName(iconPath: string): string {
         >
           <Icon icon="icons/projects/portfolio-os.svg" :size="18" /> {{ t('programs.projectViewer.openLiveSite') }}
         </button>
+
+        <!-- External link (opens in a new browser tab) -->
+        <a
+          v-if="externalUrl"
+          :href="externalUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-2 px-4 py-2 rounded-lg transition-colors text-sm cursor-pointer"
+          :class="!currentProject.url ? 'bg-[var(--accent)] text-zinc-950 font-semibold hover:bg-[var(--accent-hover)] shadow-sm' : 'bg-black/5 dark:bg-white/5 border border-[var(--window-border)] hover:bg-black/10 dark:hover:bg-white/10 font-medium'"
+        >
+          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+            <polyline points="15 3 21 3 21 9"/>
+            <line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+          {{ externalLabel }}
+        </a>
+
+        <!-- View Source (GitHub) -->
         <a
           v-if="currentProject.github"
           :href="currentProject.github"

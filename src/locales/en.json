@@ -126,6 +126,7 @@
     },
     "projectViewer": {
       "openLiveSite": "View Live Site",
+      "openExternalLink": "Visit External Link",
       "viewSource": "View Source",
       "screenshots": "Screenshots",
       "noScreenshots": "No screenshots yet. Visit the live site to see this project.",

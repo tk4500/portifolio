@@ -126,6 +126,7 @@
     },
     "projectViewer": {
       "openLiveSite": "Abrir Site Ao Vivo",
+      "openExternalLink": "Acessar Link Externo",
       "viewSource": "Ver Código (GitHub)",
       "screenshots": "Capturas de Tela",
       "noScreenshots": "Nenhuma captura de tela disponível. Visite o site ou o repositório para ver em ação.",

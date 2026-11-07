@@ -57,10 +57,12 @@ const allApps = computed(() => {
     description: p.description,
     icon: p.icon,
     url: p.url,
+    externalUrl: p.externalUrl || p.external_url,
+    externalUrlLabel: p.externalUrlLabel || p.external_url_label,
     github: p.github,
     screenshots: p.screenshots,
     stack: p.stack,
-    type: p.url && p.url.trim() !== '' ? 'live-project' : 'non-live-project'
+    type: (p.url && p.url.trim() !== '') || (p.externalUrl && p.externalUrl.trim() !== '') || (p.external_url && p.external_url.trim() !== '') ? 'live-project' : 'non-live-project'
   }))
   
   return [
@@ -82,15 +84,37 @@ function hasPhoneScreenshots(project: any): boolean {
 }
 
 // Task 2: Project action classifier
-function getProjectAction(project: any): 'live-site' | 'screenshots' | 'github-prompt' {
-  // Priority: live site > screenshots > GitHub prompt
+function getProjectAction(project: any): 'live-site' | 'external-link' | 'screenshots' | 'github-prompt' {
+  // Priority: live site > external link > screenshots > GitHub prompt
   if (project.url && project.url.trim() !== '') {
     return 'live-site'
+  }
+  if (project.externalUrl || project.external_url) {
+    return 'external-link'
   }
   if (hasPhoneScreenshots(project)) {
     return 'screenshots'
   }
   return 'github-prompt'
+}
+
+function getExternalLabel(project: any): string {
+  if (project.externalUrlLabel) return project.externalUrlLabel
+  if (project.external_url_label) return project.external_url_label
+  const link = (project.externalUrl || project.external_url || '').toLowerCase()
+  if (link.includes('modrinth.com')) {
+    return locale.value === 'pt' ? 'Ver no Modrinth' : 'View on Modrinth'
+  }
+  if (link.includes('curseforge.com')) {
+    return locale.value === 'pt' ? 'Ver no CurseForge' : 'View on CurseForge'
+  }
+  if (link.includes('steampowered.com') || link.includes('steamcommunity.com')) {
+    return locale.value === 'pt' ? 'Ver na Steam' : 'View on Steam'
+  }
+  if (link.includes('npmjs.com')) {
+    return 'Ver no npm'
+  }
+  return t('programs.projectViewer.openExternalLink') || (locale.value === 'pt' ? 'Acessar Link Externo' : 'Visit External Link')
 }
 
 // Async components
@@ -639,7 +663,7 @@ function toggleLocale() {
           </div>
           
           <!-- Actions -->
-          <div class="flex gap-2">
+          <div class="flex flex-col sm:flex-row gap-2">
             <a
               v-if="longPressApp.url"
               :href="longPressApp.url"
@@ -652,6 +676,19 @@ function toggleLocale() {
                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
               </svg>
               {{ t('programs.projectViewer.openLiveSite') }}
+            </a>
+            <a
+              v-if="longPressApp.externalUrl || longPressApp.external_url"
+              :href="longPressApp.externalUrl || longPressApp.external_url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex-1 h-11 rounded-lg flex items-center justify-center gap-2 font-medium transition-colors"
+              :style="!longPressApp.url ? 'background: var(--accent); color: white;' : 'background: var(--accent-subtle); color: var(--accent);'"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+              </svg>
+              {{ getExternalLabel(longPressApp) }}
             </a>
             <a
               v-if="longPressApp.github"
