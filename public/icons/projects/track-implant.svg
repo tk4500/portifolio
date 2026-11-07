@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="track-implant-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#334e69" />
+      <stop offset="50%" stop-color="#2d4159" />
+      <stop offset="100%" stop-color="#1a2635" />
+    </linearGradient>
+    <linearGradient id="ti-symbol" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#E2E8F0" />
+    </linearGradient>
+    <filter id="ti-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#000000" flood-opacity="0.3" />
+    </filter>
+  </defs>
+
+  <!-- Squircle Base Frame -->
+  <rect x="6" y="6" width="52" height="52" rx="16" fill="url(#track-implant-bg)" />
+  <rect x="6" y="6" width="52" height="52" rx="16" stroke="rgba(255,255,255,0.22)" stroke-width="1.5" />
+
+  <!-- Track-Implant "Ti" Brand Ligature -->
+  <g filter="url(#ti-shadow)">
+    <!-- T top bar & U curve rising into i -->
+    <path
+      d="M19 22 H31 V26 H27.5 V33 C27.5 37 30 39.5 34 39.5 C38 39.5 40.5 37 40.5 33 V26 H44.5 V33 C44.5 39.5 40 43.5 34 43.5 C28 43.5 23.5 39.5 23.5 33 V26 H19 Z"
+      fill="url(#ti-symbol)"
+    />
+    <!-- Dot of the 'i' -->
+    <rect x="40.5" y="20.5" width="4" height="4" rx="1" fill="#FFFFFF" />
+  </g>
+
+  <!-- Clinical / Traceability Badge (Medical Cross & Shield) -->
+  <circle cx="47" cy="47" r="7.5" fill="#0d7a36" stroke="#FFFFFF" stroke-width="2" />
+  <path d="M47 43.5 V50.5 M43.5 47 H50.5" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" />
+</svg>
